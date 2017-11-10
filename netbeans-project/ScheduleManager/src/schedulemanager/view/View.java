@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package schedulemanager;
+package schedulemanager.view;
 
 /**
- *
- * @author marco
+ * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
  */
 public class View extends javax.swing.JFrame {
 

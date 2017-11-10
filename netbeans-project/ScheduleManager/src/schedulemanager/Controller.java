@@ -6,7 +6,7 @@
 package schedulemanager;
 
 /**
- * Controller class - the only one that knows about the application logic
+ * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
  */
 public class Controller {
     

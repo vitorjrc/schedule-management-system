@@ -6,7 +6,7 @@
 package schedulemanager;
 
 /**
- * Model class - the only one that knows about the data source
+ * Model class - The only one that knows about the data source. It knows nothing about neither view nor controller.
  */
 public class Model {
     
