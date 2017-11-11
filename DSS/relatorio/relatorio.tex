@@ -74,22 +74,22 @@ Neste relatório será feita uma abordagem inicial ao projeto de Desenvolvimento
 \label{sec:1}
 
 Este projeto tem como objetivo desenvolver um sistema capaz de alocar e gerir os turnos de um curso. A sua execução permitirá consolidar conhecimentos ao nível da programação em linguagens de objetos e introduz abordagens organizadas e estruturadas de desenvolvimento de software a partir de modelação e representação de dados em UML 2.x. 
-Nesta fase intermédia do trabalho foi-nos então sugerido o concebimento da representação gráfica ou diagramas nessa linguagem.
+Nesta fase intermédia do trabalho foi então sugerida a concepção da representação gráfica ou diagramas nessa linguagem.
 
 \section{Problema}
 \label{sec:2}
 
 \hspace{3mm}
 
-Pretende-se desenvolver um sistema que atribui turnos ou um horário aos alunos do curso e que possibilita a ocorrência de trocas entre estes. As trocas estão condicionadas pela existência de dois alunos interessados em trocar de turno, no caso de pertencerem ao regime normal e, são feitas sem condicionalismos no caso do aluno ser trabalhador estudante.
+Pretende-se desenvolver um sistema que atribui turnos (e, deste modo, um horário) aos alunos do curso e possibilita a ocorrência de trocas entre estes. As trocas estão condicionadas pela existência de dois alunos interessados em trocar de turno, no caso de pertencerem ao regime normal e, são feitas sem condicionalismos no caso do aluno ser trabalhador estudante.
 Neste momento, deve apresentar-se uma análise de requisitos da qual resultará um Modelo de Domínio, um Modelo de Use Case e uma proposta de interface gráfica.
 
 \section{Solução}
 \label{sec:3}
 
 
-A nossa solução baseia-se na UML - Unified Modeling Language, linguagem útil na elaboração, modelação e documentação da estrutura de projetos de software e de sistemas orientados a objetos. Portanto, auxilia os developers de programas a visualizarem os seus sistemas através de diagramas padronizados.
-Até ao momento, a nossa solução foi implementada com base em:
+A solução apresentada baseia-se na UML - Unified Modeling Language, linguagem útil na elaboração, modelação e documentação da estrutura de projetos de software e de sistemas orientados a objetos. Portanto, auxilia os developers de programas a visualizarem os seus sistemas através de diagramas padronizados.
+Até ao momento, a solução foi implementada com base em:
 
 \begin{itemize}
     \item Esquema de Domínio;
@@ -108,10 +108,15 @@ O modelo de domínio analisa o problema de uma perspetiva concetual e é a repre
 \includegraphics[width=12cm]{diagramausecase}\break
 Diagrama que mostra o que o programa faz do ponto de vista do utilizador ou seja, consegue mostrar as principais funcionalidades do sistema e as suas interações com os atores do sistema. Por isso, os diagramas de use case são compostos por atores (utilizadores do sistema), por use case (funcionalidade) e pelas comunicações entre atores e use case.
 
+A equipa equacionou várias hipóteses para que fosse possível representar interações de utilizadores idênticos (como Trabalhador-estudante e Aluno, ou Docente-Responsável e Docente). Relativamente ao primeiro tuplo (Trabalhador-estudante e Aluno), decidiu-se pela unificação em Aluno, uma vez que o sistema será baseado numa bolsa de trocas, contrariamente ao plano inicial que seria cada aluno propôr a troca a um outro (tal como desenvolvido no sistema SWAP em vigor). Com esta bolsa de trocas, todos os alunos (trabalhadores-estudantes ou não) teriam igualdade de oportunidade de troca, tendo sido assumido que, caso houvesse um trabalhador-estudante com problemas de turnos, este contactaria diretamente a DC (tal como acontece na realidade), dispensando-se essa responsabilidade do programa. No que toca ao segundo tuplo (Docente-Responsável e Docente), depois de refletir sobre a pertinência de haver uma entidade Docente (que não responsável da UC) e sabendo que a única interação que poderia ter seria a de registar faltas, decidiu-se pela sua retirada. O motivo desta decisão prende-se pelo objetivo da Plataforma a ser desenvolvida, a saber, resolver um problema de atribuição de horários, e não pela marcação de faltas (apesar das mesmas terem uma implicação no horário de um Aluno, caso este falte a mais de 25 por cento das aulas). Deste modo, assume-se que as faltas serão contabilizadas tal como o são no momento e, a dada altura, o Docente-Responsável aperceber-se-á que determinado aluno deve ser removido do turno, funcionalidade essa que está disponível.
+
+A Direção de Curso foi criada com o objetivo de poder ser o controlador principal de todo o sistema, sendo que pode fazer qualquer operação sem problema (mesmo que implique, a título de exemplo, inscrever um Aluno num turno que já está cheio). Tendo este caráter, qualquer problema de compatibilidade operado por este interviniente não será da responsabilidade de verificação do programa.
+
 \subsection{Especificação textual dos Use Case}
-Dado que um cenário é uma sequência de passos da interação entre ator e sistema, então a especificação textual dos casos de uso é um documento que descreve os vários cenários possíveis entre as comunicações de um mesmo objetivo ou funcionalidade.
+Dado que um cenário é uma sequência de passos da interação entre ator e sistema, então a especificação textual dos casos de uso é um documento que descreve os vários cenários possíveis entre as comunicações de um mesmo objetivo ou funcionalidade. Apenas serão explicados alguns dos Use Cases (considerados mais importantes), uma vez que a sua explanação é suficiente para a compreensão de todo o problema.
 
 \subsubsection{Atribuir docente a turno}
+
 \includegraphics[width=12cm]{atribuidocenteturno}\break
 
 \subsubsection{Atribuir turno a aluno}
