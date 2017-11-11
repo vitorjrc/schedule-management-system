@@ -116,13 +116,13 @@ A Direção de Curso foi criada com o objetivo de poder ser o controlador princi
 Dado que um cenário é uma sequência de passos da interação entre ator e sistema, então a especificação textual dos casos de uso é um documento que descreve os vários cenários possíveis entre as comunicações de um mesmo objetivo ou funcionalidade. Apenas serão explicados alguns dos Use Cases (considerados mais importantes), uma vez que a sua explanação é suficiente para a compreensão de todo o problema.
 
 \subsubsection{Atribuir docente a turno}
-
 \includegraphics[width=12cm]{atribuidocenteturno}\break
 
 \subsubsection{Atribuir turno a aluno}
 \includegraphics[width=12cm]{atribuiturnoaluno}\break
 
 \subsubsection{Atribuir UC a turno}
+Responsabilidade do DC, que poderá atribuir a um turno a correspondente UC. O sistema apenas verifica a existência do turno e UC especificados, registando a atribuição.
 \includegraphics[width=12cm]{atribuiucaturno}\break
 
 \subsubsection{Registar docente}
@@ -132,24 +132,31 @@ Dado que um cenário é uma sequência de passos da interação entre ator e sis
 \includegraphics[width=12cm]{criarturnos}\break
 
 \subsubsection{Criar UC}
+Responsabilidade do DC, que deve inserir a UC no sistema, preenchendo os campos necessários à caracterização da mesma. O sistema verifica a inserção dos dados e cria a UC, caso tudo esteja correto.
 \includegraphics[width=12cm]{criaruc}\break
 
 \subsubsection{Efectuar Login}
+O utilizador (Aluno, Docente ou DC) faz login. As suas credenciais são verificadas e, caso aprovadas, terá acesso à sua área pessoal de acordo com os seus privilégios. O login é negado caso o utilizador seja inexistente ou a password não seja a correta.
 \includegraphics[width=12cm]{efectuarlogin}\break
 
 \subsubsection{Remover aluno de turno}
+Responsabilidade atribuída ao Docente-Responsável, que apenas terá de indicar o aluno que quer remover e. O sistema verifica a existência do aluno e será responsável pela identificação do turno onde aquele aluno está inscrito, removendo-o.
 \includegraphics[width=12cm]{removeralunoturno}\break
 
 \subsubsection{Definir número máximo de alunos por turno prático}
+Responsabilidade atribuída ao Docente-Responsável, que poderá definir um número de alunos máximo dentro dos intervalo 0 até CAPACIDADE DA SALA, sendo esta a única verificação feita pelo sistema. No fim, o número será definido.
 \includegraphics[width=12cm]{definiralunos}\break
 
 \subsubsection{Inscreve aluno em turno}
+Responsabilidade atribuída ao Docente-Responsável que, segundo uma política de utilização responsável, não terá qualquer problema em adicionar qualquer aluno ao turno desejado (da UC que leciona), mesmo que aquele esteja cheio. Apenas se verifica a existência daquele aluno no sistema.
 \includegraphics[width=12cm]{inscreveralunoturno}\break
 
 \subsubsection{Efectuar Registo}
+Só efetuado por alunos que, durante o registo, escolherão o seu regime e também as UCs a que se querem inscrever. É feita a verificação de inserção dos dados.
 \includegraphics[width=12cm]{efectuarregisto}\break
 
 \subsubsection{Propôr Troca}
+Só efetuado por alunos sendo que, após seleção do turno e UC desejados, é lançada essa proposta para a bolsa de trocas. Posteriormente (e não sendo visível ao utiilzador), o sistema verificará se existem propostas com reciprocidade, efetuando a troca automaticamente. Apenas é verificada a seleção de UC e turnos.
 \includegraphics[width=12cm]{proportroca}\break
 
 
@@ -172,6 +179,7 @@ Dado que um cenário é uma sequência de passos da interação entre ator e sis
 
 \pagebreak
 \section{Conclusões}
+Foram encontradas algumas dificuldades na realização deste trabalho, principalmente no que toca à realização do Diagrama de Use Cases. Depois de alguma discussão, a equipa definiu que tipo de implementação o sistema teria (ie., se as trocas seriam propostas diretas ou em forma de bolsa) e, a partir desse momento, tornou-se mais fácil o processo de elaboração dos Use Cases e de definição dos Atores do sistema. Este processo foi importante pois permitiu a consciencialização das implicações que a escolha de determinados Use Cases teria no sistema, sendo que a equipa está confiante na elaboração de software correspondente, tendo consciência que outros dificuldades poderão surgir e que, eventualmente, faça sentido alterar o Diagrama.
 \label{sec:4}
 
 \hspace{3mm}
