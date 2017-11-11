@@ -20,11 +20,9 @@ public class ScheduleManager {
         Controller controller = new Controller();
         View view = new View();
         
-        // Pass model to controller
+        // Pass model and view to controller
         controller.setModel(model);
-        
-        // Pass controller to view
-        view.setController(controller);
+        controller.setView(view);
     }
     
 }
