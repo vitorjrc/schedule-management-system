@@ -1,15 +1,28 @@
 package schedulemanager.view;
 
+import java.util.ArrayList;
+import java.util.function.Consumer; // This is the type we are going to use for callback methods.
+                                    // A Consumer<T> is a function that receives one parameter of type T and returns nothing.
+
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
  */
 public class View extends javax.swing.JFrame {
+    
+    private ArrayList<Consumer> loginListeners; // Example array of callbacks to call when a login happens
 
     /**
      * Creates new form View
      */
     public View() {
         initComponents();
+    }
+    
+    // Example method that receives a callback from the controller
+    // The controller calls this method by passing its own method,
+    // which we call when an event happens (in this case, when the user presses login)
+    public void onLogin(Consumer callback) {
+        loginListeners.add(callback);
     }
 
     /**
@@ -35,10 +48,7 @@ public class View extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    public static void start() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
