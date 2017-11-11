@@ -1,13 +1,13 @@
 package schedulemanager;
 
+import schedulemanager.model.Model;
+import schedulemanager.view.View;
+
 /**
  * Main class that initializes the application
  */
 public class ScheduleManager {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
         // Initialize model, view, and controller
