@@ -35,7 +35,7 @@ public class View extends javax.swing.JFrame {
     
     // Method that sets an icon for the program
     private void seticon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.jpg")));           
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logotipo_Interface.jpg")));           
     }
 
     /**
