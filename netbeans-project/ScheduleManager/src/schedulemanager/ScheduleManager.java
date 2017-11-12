@@ -14,6 +14,7 @@ public class ScheduleManager {
         Model model = new Model();
         Controller controller = new Controller();
         View view = new View();
+        view.setVisible(true);
         
         // Pass model and view to controller
         controller.setModel(model);
