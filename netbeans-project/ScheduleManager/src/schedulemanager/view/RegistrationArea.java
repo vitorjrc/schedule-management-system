@@ -14,8 +14,8 @@ public class RegistrationArea extends javax.swing.JDialog {
     /**
      * Creates new form RegistrationArea
      */
-    public RegistrationArea(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public RegistrationArea(java.awt.Frame parent) {
+        super(parent);
         initComponents();
     }
 
