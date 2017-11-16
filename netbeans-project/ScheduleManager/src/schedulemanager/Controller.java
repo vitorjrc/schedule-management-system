@@ -25,11 +25,19 @@ public class Controller {
     
     public void attachToView() {
     	view.onRegister(this::onRegister);
+        view.getRegistrationArea().RegisterButton(this::RegisterButton);
     }
     
     // Called when the view sends a onRegister event
     private void onRegister(ArrayList<String> data) {
         view.openRegistrationArea().showCourses(model.getCourses());
     }
+    
+    private void RegisterButton(ArrayList<String> data) {
+        // view.getRegistrationArea().showCourses(model.getCourses());
+        for(int i = 0; i < data.size(); i++) {   
+            System.out.print(data.get(i));
+    }  
+}
     
 }

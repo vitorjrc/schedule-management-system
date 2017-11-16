@@ -10,7 +10,9 @@ import java.util.function.Consumer; // This is the type we are going to use for 
  */
 public class View extends javax.swing.JFrame {
     
-    private ArrayList<Consumer<ArrayList<String>>> registerListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
+    private RegistrationArea registrationDialog = new RegistrationArea(View.this);
+    private LoginArea loginDialog = new LoginArea(View.this);
+    private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
 
     public View() {
         initComponents();
@@ -30,7 +32,7 @@ public class View extends javax.swing.JFrame {
     // which we call when an event happens (in this case, when the user presses login)
     public void onRegister(Consumer<ArrayList<String>> callback) {
         
-        registerListeners.add(callback);
+        registeredListeners.add(callback);
     }
     
     // Method that sets an icon for the program
@@ -353,20 +355,25 @@ public class View extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         ArrayList<String> sc = new ArrayList<String>(); 
-        Consumer method = registerListeners.get(0);
+        Consumer method = registeredListeners.get(0);
         method.accept(sc);
                 
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
     public RegistrationArea openRegistrationArea() {
         
-        RegistrationArea registrationDialog = new RegistrationArea(View.this);
-        
         registrationDialog.setVisible(true);
         
         return registrationDialog;
+    }
+    
+    public RegistrationArea getRegistrationArea() {
+        return registrationDialog;
+    }
+    
+    public LoginArea getLoginArea() {
+        return loginDialog;
     }
     
     public static void start() {

@@ -10,12 +10,13 @@ import java.awt.*;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import java.util.*;
+import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 
 public class RegistrationArea extends javax.swing.JDialog {
+    
+    private ArrayList<Consumer<ArrayList<String>>> registListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
-    /**
-     * Creates new form RegistrationArea
-     */
     public RegistrationArea(java.awt.Frame parent) {
         super(parent);
         initComponents();
@@ -68,27 +69,11 @@ public class RegistrationArea extends javax.swing.JDialog {
 
         est.setBackground(new java.awt.Color(255, 255, 255));
         est.setText("Trabalhador-Estudante");
-        est.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estActionPerformed(evt);
-            }
-        });
 
         norm.setBackground(new java.awt.Color(255, 255, 255));
         norm.setText("Regime Normal");
-        norm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                normActionPerformed(evt);
-            }
-        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
-
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Área de Registo do Aluno:");
@@ -98,6 +83,11 @@ public class RegistrationArea extends javax.swing.JDialog {
         jLabel9.setText("UC's pretendidas:");
 
         jButton1.setText("Registar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
@@ -213,19 +203,23 @@ public class RegistrationArea extends javax.swing.JDialog {
         buttongroup.add(norm);
     }
     
-    private void estActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    private void normActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_normActionPerformed
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = registListeners.get(0);
+        
+        sc.add(jTextField10.getText());
+        sc.add(String.valueOf(jPasswordField1.getPassword()));
+        method.accept(sc);
+        
+        JOptionPane.showMessageDialog(null, "Registo Completo!");
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
-    
+    public void RegisterButton(Consumer<ArrayList<String>> callback) {
+        
+        registListeners.add(callback);
+    }    
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
