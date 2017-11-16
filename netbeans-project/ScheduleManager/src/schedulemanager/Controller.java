@@ -34,9 +34,9 @@ public class Controller {
     }
     
     private void RegisterButton(ArrayList<String> data) {
-        // view.getRegistrationArea().showCourses(model.getCourses());
+        
         for(int i = 0; i < data.size(); i++) {   
-            System.out.print(data.get(i));
+            System.out.print(data.get(i) + " ");
     }  
 }
     

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 public class RegistrationArea extends javax.swing.JDialog {
     
+    private ArrayList<JCheckBox> checkboxList = new ArrayList<JCheckBox>();
     private ArrayList<Consumer<ArrayList<String>>> registListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
     public RegistrationArea(java.awt.Frame parent) {
@@ -185,6 +186,7 @@ public class RegistrationArea extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     public void showCourses(ArrayList<String> courses) {
+        
         jPanel1.setLayout(new GridLayout(15, 2));
         jScrollPane1.getViewport().setSize(400, 400);
         
@@ -194,7 +196,9 @@ public class RegistrationArea extends javax.swing.JDialog {
             jPanel1.add(cb);
             jPanel1.revalidate();
             jPanel1.repaint(); 
+            checkboxList.add(cb);
         }
+        
     }
     
     // managing two buttons (trabalhador estudante e regime normal) so that only one of them can be selected at a time
@@ -203,6 +207,19 @@ public class RegistrationArea extends javax.swing.JDialog {
         buttongroup.add(norm);
     }
     
+    public ArrayList<String> CoursesChecked() {
+        
+        ArrayList<String> registeredCourses = new ArrayList<String>();
+        
+        for(JCheckBox cb: checkboxList) {
+            if (cb.isSelected()) {
+                registeredCourses.add(cb.getText());
+            }
+        }
+        
+        return registeredCourses;
+    }
+       
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         ArrayList<String> sc = new ArrayList<String>(); 
@@ -210,6 +227,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         
         sc.add(jTextField10.getText());
         sc.add(String.valueOf(jPasswordField1.getPassword()));
+        sc.addAll(CoursesChecked());
         method.accept(sc);
         
         JOptionPane.showMessageDialog(null, "Registo Completo!");
