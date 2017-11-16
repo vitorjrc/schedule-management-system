@@ -10,7 +10,7 @@ import java.util.function.Consumer; // This is the type we are going to use for 
  */
 public class View extends javax.swing.JFrame {
     
-    private ArrayList<Consumer<ArrayList<String>>> loginListeners; // Example array of callbacks to call when a login happens
+    private ArrayList<Consumer<ArrayList<String>>> registerListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
 
     public View() {
         initComponents();
@@ -28,8 +28,9 @@ public class View extends javax.swing.JFrame {
     // Example method that receives a callback from the controller
     // The controller calls this method by passing its own method,
     // which we call when an event happens (in this case, when the user presses login)
-    public void onLogin(Consumer<ArrayList<String>> callback) {
-        loginListeners.add(callback);
+    public void onRegister(Consumer<ArrayList<String>> callback) {
+        
+        registerListeners.add(callback);
     }
     
     // Method that sets an icon for the program
@@ -351,19 +352,21 @@ public class View extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        RegistrationArea registoDialog = new RegistrationArea(View.this);
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = registerListeners.get(0);
+        method.accept(sc);
+                
         
-        registoDialog.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     
-    public RegistrationArea abreregisto() {
+    public RegistrationArea openRegistrationArea() {
         
-        RegistrationArea registoDialog = new RegistrationArea(View.this);
+        RegistrationArea registrationDialog = new RegistrationArea(View.this);
         
-        registoDialog.setVisible(true);
+        registrationDialog.setVisible(true);
         
-        return registoDialog;
+        return registrationDialog;
     }
     
     public static void start() {

@@ -23,16 +23,13 @@ public class Controller {
         this.view = view;
     }
     
-    public void showuc() {
-        view.abreregisto().mostraucs(model.getPovoar());
-    }
-    
     public void attachToView() {
-    	view.onLogin(this::onLogin);
+    	view.onRegister(this::onRegister);
     }
     
-    // Called when the view sends a onLogin event
-    private void onLogin(ArrayList<String> data) {
-    	
+    // Called when the view sends a onRegister event
+    private void onRegister(ArrayList<String> data) {
+        view.openRegistrationArea().showCourses(model.getCourses());
     }
+    
 }

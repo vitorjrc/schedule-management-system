@@ -8,9 +8,9 @@ import java.util.*;
 
 public class Model {
     
-    private ArrayList<String> ucs = new ArrayList<String>();
+    private ArrayList<String> coursesList = new ArrayList<String>();
     
-    private ArrayList<String> povoar(ArrayList<String> ucs) {
+    private ArrayList<String> testCourses(ArrayList<String> ucs) {
         
         ucs.add("Álgebra Linear EI");
         ucs.add("Cálculo");
@@ -51,9 +51,9 @@ public class Model {
         return ucs;
     }
     
-    public ArrayList<String> getPovoar() {
+    public ArrayList<String> getCourses() {
         
-        return povoar(ucs);
+        return testCourses(coursesList);
     }
     
 }
