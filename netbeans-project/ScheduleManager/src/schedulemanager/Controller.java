@@ -1,9 +1,8 @@
 package schedulemanager;
 
+import java.util.ArrayList;
 import schedulemanager.model.Model;
 import schedulemanager.view.View;
-import java.util.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
@@ -16,16 +15,24 @@ public class Controller {
     private Model model;
     private View view;
     
-    void setModel(Model model) {
+    public void setModel(Model model) {
         this.model = model;
     }
     
-    void setView(View view) {
+    public void setView(View view) {
         this.view = view;
     }
     
-    void showuc() {
+    public void showuc() {
         view.abreregisto().mostraucs(model.getPovoar());
     }
-   
+    
+    public void attachToView() {
+    	view.onLogin(this::onLogin);
+    }
+    
+    // Called when the view sends a onLogin event
+    private void onLogin(ArrayList<String> data) {
+    	
+    }
 }

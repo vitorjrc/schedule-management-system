@@ -3,15 +3,14 @@ package schedulemanager.view;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.function.Consumer; // This is the type we are going to use for callback methods.
-                                    // A Consumer<T> is a function that receives one parameter of type T and returns nothing.
+import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
  */
 public class View extends javax.swing.JFrame {
     
-    private ArrayList<Consumer> loginListeners; // Example array of callbacks to call when a login happens
+    private ArrayList<Consumer<ArrayList<String>>> loginListeners; // Example array of callbacks to call when a login happens
 
     public View() {
         initComponents();
@@ -29,7 +28,7 @@ public class View extends javax.swing.JFrame {
     // Example method that receives a callback from the controller
     // The controller calls this method by passing its own method,
     // which we call when an event happens (in this case, when the user presses login)
-    public void onLogin(Consumer callback) {
+    public void onLogin(Consumer<ArrayList<String>> callback) {
         loginListeners.add(callback);
     }
     
@@ -83,7 +82,7 @@ public class View extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Dados Pessoais:");
 
-        jLabel4.setText("Número de ID:");
+        jLabel4.setText("NÃºmero de ID:");
 
         jLabel5.setText("Estatuto:");
 
@@ -143,7 +142,7 @@ public class View extends javax.swing.JFrame {
                 .addContainerGap(360, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Minha Área", jPanel1);
+        jTabbedPane1.addTab("Minha Ã�rea", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -160,7 +159,7 @@ public class View extends javax.swing.JFrame {
         jLabel11.setText("GodSwap");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel12.setText("Histórico de trocas:");
+        jLabel12.setText("HistÃ³rico de trocas:");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
