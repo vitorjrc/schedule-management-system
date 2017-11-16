@@ -19,6 +19,7 @@ public class ScheduleManager {
         // Pass model and view to controller
         controller.setModel(model);
         controller.setView(view);
+        controller.showuc();
     }
     
 }

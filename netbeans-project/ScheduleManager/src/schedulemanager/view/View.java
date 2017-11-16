@@ -19,7 +19,7 @@ public class View extends javax.swing.JFrame {
         // background - White
         getContentPane().setBackground(Color.WHITE);
         
-        // set JFrame to center of Screen
+        // set JFrame to center of screen
         this.setLocationRelativeTo(null);
         
         // icon
@@ -357,6 +357,16 @@ public class View extends javax.swing.JFrame {
         registoDialog.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
+    public RegistrationArea abreregisto() {
+        
+        RegistrationArea registoDialog = new RegistrationArea(View.this);
+        
+        registoDialog.setVisible(true);
+        
+        return registoDialog;
+    }
+    
     public static void start() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -2,6 +2,8 @@ package schedulemanager;
 
 import schedulemanager.model.Model;
 import schedulemanager.view.View;
+import java.util.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
@@ -22,4 +24,8 @@ public class Controller {
         this.view = view;
     }
     
+    void showuc() {
+        view.abreregisto().mostraucs(model.getPovoar());
+    }
+   
 }

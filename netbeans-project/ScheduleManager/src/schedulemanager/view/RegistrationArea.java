@@ -6,6 +6,10 @@
 package schedulemanager.view;
 
 import java.awt.Color;
+import java.awt.*;
+import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
+import java.util.*;
 
 public class RegistrationArea extends javax.swing.JDialog {
 
@@ -23,7 +27,8 @@ public class RegistrationArea extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
        
         this.justonebutton();
-    }
+
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,7 +40,6 @@ public class RegistrationArea extends javax.swing.JDialog {
     private void initComponents() {
 
         buttongroup = new javax.swing.ButtonGroup();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -48,6 +52,8 @@ public class RegistrationArea extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new JScrollPane(jPanel1);
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registo");
@@ -60,6 +66,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel10.setText("GodSwap");
 
+        est.setBackground(new java.awt.Color(255, 255, 255));
         est.setText("Trabalhador-Estudante");
         est.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,6 +74,7 @@ public class RegistrationArea extends javax.swing.JDialog {
             }
         });
 
+        norm.setBackground(new java.awt.Color(255, 255, 255));
         norm.setText("Regime Normal");
         norm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,13 +99,35 @@ public class RegistrationArea extends javax.swing.JDialog {
 
         jButton1.setText("Registar");
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 680, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 290, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(jPanel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,12 +149,12 @@ public class RegistrationArea extends javax.swing.JDialog {
                                 .addComponent(jButton1)
                                 .addGap(56, 56, 56)))
                         .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jLabel2))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,12 +187,26 @@ public class RegistrationArea extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void mostraucs(ArrayList<String> ucs) {
+        jPanel1.setLayout(new GridLayout(15, 2));
+        jScrollPane1.getViewport().setSize(400, 400);
+        
+        for(String s: ucs) {
+            JCheckBox cb = new JCheckBox(s);
+            cb.setBackground(Color.WHITE);
+            jPanel1.add(cb);
+            jPanel1.revalidate();
+            jPanel1.repaint(); 
+        }
+    }
+    
     // managing two buttons (trabalhador estudante e regime normal) so that only one of them can be selected at a time
     private void justonebutton() {
         buttongroup.add(est);
@@ -181,6 +225,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
 
+    
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -194,6 +239,7 @@ public class RegistrationArea extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField10;
