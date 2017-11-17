@@ -264,10 +264,10 @@ public class RegistrationArea extends javax.swing.JDialog {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = registListeners.get(0);
         
-        sc.add(jTextField10.getText());
-        sc.add(String.valueOf(jPasswordField1.getPassword()));
-        sc.add(jTextField11.getText());
-        sc.add(statusChecked());
+        sc.add(0, jTextField10.getText());
+        sc.add(1, String.valueOf(jPasswordField1.getPassword()));
+        sc.add(2, jTextField11.getText());
+        sc.add(3, statusChecked());
         
         sc.addAll(CoursesChecked());
         method.accept(sc);

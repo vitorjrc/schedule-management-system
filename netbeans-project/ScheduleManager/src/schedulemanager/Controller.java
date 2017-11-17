@@ -41,7 +41,7 @@ public class Controller {
                 
         ArrayList<String> new_Courses = new ArrayList<String>();
         
-        for(int i = 4; i < data.size() - 1 ; i++) {   
+        for(int i = 4; i < data.size(); i++) {   
             new_Courses.add(data.get(i));
         }
         
