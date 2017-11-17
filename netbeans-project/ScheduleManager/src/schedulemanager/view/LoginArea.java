@@ -6,9 +6,16 @@
 package schedulemanager.view;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import javax.swing.JOptionPane;
 
 public class LoginArea extends javax.swing.JDialog {
 
+    
+    private ArrayList<Consumer<ArrayList<String>>> loginListeners = new ArrayList<Consumer<ArrayList<String>>>();
+    
+    
     /**
      * Creates new form LoginArea
      */
@@ -61,6 +68,11 @@ public class LoginArea extends javax.swing.JDialog {
         });
 
         jButton1.setText("Entrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Área de Login:");
@@ -132,7 +144,22 @@ public class LoginArea extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    
+    //botao login, depois da funçao seguinte
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //array (para por no consumer)
+        ArrayList<String> sc = new ArrayList<String>(); 
+        //array de arrays
+        Consumer method = loginListeners.get(0);   
+        
+        sc.add(0, jTextField2.getText());
+        sc.add(1, String.valueOf(jPasswordField1.getPassword()));
+        method.accept(sc);  
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    //primeiro esta
+    public void loginButton(Consumer<ArrayList<String>> callback) {
+        loginListeners.add(callback);
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

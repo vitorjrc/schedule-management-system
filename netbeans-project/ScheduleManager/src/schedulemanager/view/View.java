@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
+import javax.swing.JOptionPane;
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
@@ -30,6 +31,7 @@ public class View extends javax.swing.JFrame {
     // Example method that receives a callback from the controller
     // The controller calls this method by passing its own method,
     // which we call when an event happens (in this case, when the user presses login)
+    //usar isto smp q quero mandar cenas para o array
     public void onRegister(Consumer<ArrayList<String>> callback) {
         
         registeredListeners.add(callback);
@@ -346,9 +348,6 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        LoginArea loginDialog = new LoginArea(View.this);
-        
         loginDialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -376,6 +375,18 @@ public class View extends javax.swing.JFrame {
         return loginDialog;
     }
     
+    public void showLoginError1(){
+         JOptionPane.showMessageDialog(null, "Utilizador não existente!");
+    }
+    
+    public void showLoginError2(){
+         JOptionPane.showMessageDialog(null, "Utilizador e palavra-passe não correspondem!");
+    }
+    
+    public void showLoginSuccess(){
+         JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
+    }
+            
     public static void start() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -9,7 +9,7 @@ import java.util.*;
 public class Model {
     
     private ArrayList<String> coursesList = new ArrayList<String>();
-    private HashMap<String, Student> studentsList = new HashMap<String, Student>();
+    private HashMap<String, Student> studentsList = new HashMap<String, Student>(); //String -> ID do aluno
     
     public HashMap<String, Student> getStudents() {
         return this.studentsList;

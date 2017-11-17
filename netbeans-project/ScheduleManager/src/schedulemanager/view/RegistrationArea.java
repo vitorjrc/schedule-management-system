@@ -261,7 +261,9 @@ public class RegistrationArea extends javax.swing.JDialog {
        
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        //array (para por no consumer)
         ArrayList<String> sc = new ArrayList<String>(); 
+        //array de arrays
         Consumer method = registListeners.get(0);
         
         sc.add(0, jTextField10.getText());

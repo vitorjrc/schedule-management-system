@@ -1,7 +1,9 @@
 package schedulemanager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import schedulemanager.model.Model;
+import schedulemanager.model.Student;
 import schedulemanager.view.View;
 
 /**
@@ -23,9 +25,12 @@ public class Controller {
         this.view = view;
     }
     
+    
+    //dar conhecimento dos metodos ao controller
     public void attachToView() {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
+        view.getLoginArea().loginButton(this::loginButton);
     }
     
     // Called when the view sends a onRegister event
@@ -53,6 +58,24 @@ public class Controller {
             String value = model.getStudents().get(id).toString();  
             System.out.println("id do aluno " + id + " " + value);  
         }    
+    }
+    
+    
+    
+    private void loginButton(ArrayList<String> data) {
+        String user_ID = data.get(0);
+        String user_passwd = data.get(1);
+        HashMap<String, Student> students = model.getStudents();
+    
+ 
+        if(!students.containsKey(user_ID))
+            view.showLoginError1();         //msg de erro user inexistente
+        else if(!students.get(user_ID).getPassword().equals(user_passwd))
+                view.showLoginError2();     //msg de erro password incorreta
+            else
+                view.showLoginSuccess();    //msg login efetuado com sucesso
+    
+    
     }
         
 }
