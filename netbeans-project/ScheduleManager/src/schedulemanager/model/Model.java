@@ -9,6 +9,11 @@ import java.util.*;
 public class Model {
     
     private ArrayList<String> coursesList = new ArrayList<String>();
+    private HashMap<String, Student> studentsList = new HashMap<String, Student>();
+    
+    public HashMap<String, Student> getStudents() {
+        return this.studentsList;
+    }
     
     private ArrayList<String> testCourses(ArrayList<String> ucs) {
         
@@ -55,5 +60,14 @@ public class Model {
         
         return testCourses(coursesList);
     }
+    
+    public Student registerStudent(String name, String id, String pass, String stat, ArrayList<String> courses){
+        Student newStudent = new Student(name, id, pass, stat, courses);
+        studentsList.put(id, newStudent);
+        
+        return newStudent;
+    }
+    
+    
     
 }

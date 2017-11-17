@@ -45,7 +45,7 @@ public class LoginArea extends javax.swing.JDialog {
         setTitle("Login");
         setResizable(false);
 
-        jLabel4.setText("Número de ID:");
+        jLabel4.setText("ID:");
 
         jLabel5.setText("Palavra-passe:");
 

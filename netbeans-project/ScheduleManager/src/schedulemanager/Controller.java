@@ -34,10 +34,31 @@ public class Controller {
     }
     
     private void RegisterButton(ArrayList<String> data) {
+        String new_ID = data.get(0);
+        String new_Password = data.get(1);
+        String new_Name = data.get(2);
+        String new_Status = data.get(3);
+                
+        ArrayList<String> new_Courses = new ArrayList<String>();
         
-        for(int i = 0; i < data.size(); i++) {   
-            System.out.print(data.get(i) + " ");
-    }  
-}
+        for(int i = 4; i < data.size() - 1 ; i++) {   
+            new_Courses.add(data.get(i));
+        }
+        
+        model.registerStudent(new_Name, new_ID, new_Password, new_Status, new_Courses);
+        
+        for (String id: model.getStudents().keySet()){
+
+            String key = id.toString();
+            String value = model.getStudents().get(id).toString();  
+            System.out.println("id do aluno " + id + " " + value);  
+
+
+} 
+    }
+    
+    
+    
+    
     
 }
