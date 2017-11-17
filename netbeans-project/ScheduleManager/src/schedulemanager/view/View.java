@@ -26,6 +26,10 @@ public class View extends javax.swing.JFrame {
         
         // icon
         seticon();
+        
+        // disabling tabs
+        jTabbedPane1.setEnabledAt(1, false);
+        jTabbedPane1.setEnabledAt(2, false);
     }
     
     // Example method that receives a callback from the controller
@@ -167,7 +171,7 @@ public class View extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Histórico de trocas:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -366,6 +370,17 @@ public class View extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    // method that fills fields where the list of user courses is required
+    public void setCoursesList(ArrayList<String> userCourses) {
+        
+        String[] coursesList = new String[userCourses.size()];
+        for(int i = 0; i < userCourses.size(); i++) {
+            coursesList[i]=userCourses.get(i);
+        }
+        
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+    }
     
     public RegistrationArea openRegistrationArea() {
         
@@ -392,6 +407,13 @@ public class View extends javax.swing.JFrame {
     
     public void showLoginSuccess(){
          JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
+         loginDialog.setVisible(false);
+    }
+    
+    // show tabs after login
+    public void showThingsAfterLogin(){
+        jTabbedPane1.setEnabledAt(1, true);
+        jTabbedPane1.setEnabledAt(2, true);
     }
             
     public static void start() {

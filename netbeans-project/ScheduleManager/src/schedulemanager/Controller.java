@@ -60,8 +60,6 @@ public class Controller {
         }    
     }
     
-    
-    
     private void loginButton(ArrayList<String> data) {
         String user_ID = data.get(0);
         String user_passwd = data.get(1);
@@ -72,10 +70,15 @@ public class Controller {
             view.showLoginError1();         //msg de erro user inexistente
         else if(!students.get(user_ID).getPassword().equals(user_passwd))
                 view.showLoginError2();     //msg de erro password incorreta
-            else
+        else {
                 view.showLoginSuccess();    //msg login efetuado com sucesso
-    
-    
+                // show interface things because user is logged
+                showInterfacethings(user_ID);
+        }
     }
-        
+    
+    private void showInterfacethings(String userID) {
+        view.setCoursesList(model.getStudents().get(userID).getCourses());
+        view.showThingsAfterLogin();
+    }
 }
