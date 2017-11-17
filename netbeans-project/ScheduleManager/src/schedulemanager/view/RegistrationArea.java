@@ -211,13 +211,13 @@ public class RegistrationArea extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void showCourses(ArrayList<String> courses) {
+    public void showCourses(ArrayList<?> courses) {
         
         jPanel1.setLayout(new GridLayout(15, 2));
         jScrollPane1.getViewport().setSize(400, 400);
         
-        for(String s: courses) {
-            JCheckBox cb = new JCheckBox(s);
+        for(Object c: courses) {
+            JCheckBox cb = new JCheckBox(c.toString());
             cb.setBackground(Color.WHITE);
             jPanel1.add(cb);
             jPanel1.revalidate();

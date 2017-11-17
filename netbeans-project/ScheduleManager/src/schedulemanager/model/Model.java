@@ -8,55 +8,55 @@ import java.util.*;
 
 public class Model {
     
-    private ArrayList<String> coursesList = new ArrayList<String>();
+    private ArrayList<Course> coursesList = new ArrayList<Course>();
     private HashMap<String, Student> studentsList = new HashMap<String, Student>(); //String -> ID do aluno
     
     public HashMap<String, Student> getStudents() {
         return this.studentsList;
     }
     
-    private ArrayList<String> testCourses(ArrayList<String> ucs) {
+    private ArrayList<Course> testCourses(ArrayList<Course> ucs) {
         
-        ucs.add("Álgebra Linear EI");
-        ucs.add("Cálculo");
-        ucs.add("Tópicos de Matemática Discreta");
-        ucs.add("Programação Funcional");
-        ucs.add("Elementos de Engenharia de Sistemas");
-        ucs.add("Laboratórios de Informática I");
-        ucs.add("Sistemas de Computação");
-        ucs.add("Análise");
-        ucs.add("Tópicos de Física Moderna");
-        ucs.add("Lógica EI");
-        ucs.add("Programação Imperativa");
-        ucs.add("Laboratórios de Informática II");
-        ucs.add("Introdução aos Sistemas Dinâmicos");
-        ucs.add("Estatística Aplicada");
-        ucs.add("Engenharia Económica");
-        ucs.add("Arquitetura de Computadores");
-        ucs.add("Comunicação de Dados");
-        ucs.add("Algoritmos e Complexidade");
-        ucs.add("Sistemas Operativos");
-        ucs.add("Programação Orientada aos Objetos");
-        ucs.add("Eletromagnetismo EE");
-        ucs.add("Cálculo de Programas");
-        ucs.add("Laboratórios de Informática III");
-        ucs.add("Bases de Dados");
-        ucs.add("Desenvolvimento de Sistemas de Software");
-        ucs.add("Modelos Determinísticos de Investigação Operacional");
-        ucs.add("Sistemas Distribuídos");
-        ucs.add("Redes de Computadores");
-        ucs.add("Métodos Numéricos e Otimização não Linear");
-        ucs.add("Sistemas de Representação de Conhecimento e Raciocínio");
-        ucs.add("Computação Gráfica");
-        ucs.add("Modelos Estocásticos de Investigação Operacional");
-        ucs.add("Comunicações por Computador");
-        ucs.add("Processamento de Linguagens");
-        ucs.add("Laboratórios de Informática IV");
+        ucs.add(new Course("Álgebra Linear EI"));
+        ucs.add(new Course("Cálculo"));
+        ucs.add(new Course("Tópicos de Matemática Discreta"));
+        ucs.add(new Course("Programação Funcional"));
+        ucs.add(new Course("Elementos de Engenharia de Sistemas"));
+        ucs.add(new Course("Laboratórios de Informática I"));
+        ucs.add(new Course("Sistemas de Computação"));
+        ucs.add(new Course("Análise"));
+        ucs.add(new Course("Tópicos de Física Moderna"));
+        ucs.add(new Course("Lógica EI"));
+        ucs.add(new Course("Programação Imperativa"));
+        ucs.add(new Course("Laboratórios de Informática II"));
+        ucs.add(new Course("Introdução aos Sistemas Dinâmicos"));
+        ucs.add(new Course("Estatística Aplicada"));
+        ucs.add(new Course("Engenharia Económica"));
+        ucs.add(new Course("Arquitetura de Computadores"));
+        ucs.add(new Course("Comunicação de Dados"));
+        ucs.add(new Course("Algoritmos e Complexidade"));
+        ucs.add(new Course("Sistemas Operativos"));
+        ucs.add(new Course("Programação Orientada aos Objetos"));
+        ucs.add(new Course("Eletromagnetismo EE"));
+        ucs.add(new Course("Cálculo de Programas"));
+        ucs.add(new Course("Laboratórios de Informática III"));
+        ucs.add(new Course("Bases de Dados"));
+        ucs.add(new Course("Desenvolvimento de Sistemas de Software"));
+        ucs.add(new Course("Modelos Determinísticos de Investigação Operacional"));
+        ucs.add(new Course("Sistemas Distribuídos"));
+        ucs.add(new Course("Redes de Computadores"));
+        ucs.add(new Course("Métodos Numéricos e Otimização não Linear"));
+        ucs.add(new Course("Sistemas de Representação de Conhecimento e Raciocínio"));
+        ucs.add(new Course("Computação Gráfica"));
+        ucs.add(new Course("Modelos Estocásticos de Investigação Operacional"));
+        ucs.add(new Course("Comunicações por Computador"));
+        ucs.add(new Course("Processamento de Linguagens"));
+        ucs.add(new Course("Laboratórios de Informática IV"));
         
         return ucs;
     }
     
-    public ArrayList<String> getCourses() {
+    public ArrayList<Course> getCourses() {
         
         return testCourses(coursesList);
     }
