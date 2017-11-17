@@ -52,13 +52,7 @@ public class Controller {
             String key = id.toString();
             String value = model.getStudents().get(id).toString();  
             System.out.println("id do aluno " + id + " " + value);  
-
-
-} 
+        }    
     }
-    
-    
-    
-    
-    
+        
 }
