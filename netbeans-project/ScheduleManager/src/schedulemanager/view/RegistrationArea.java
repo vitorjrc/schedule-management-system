@@ -275,6 +275,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         method.accept(sc);
         
         JOptionPane.showMessageDialog(null, "Registo Completo!");
+        dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

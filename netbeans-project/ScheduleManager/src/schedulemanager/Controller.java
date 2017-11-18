@@ -55,7 +55,7 @@ public class Controller {
         
         model.registerStudent(new_Name, new_ID, new_Password, new_Status, new_Courses);
         
-        for (String id: model.getStudents().keySet()){
+        for (String id: model.getStudents().keySet()) {
 
             String key = id.toString();
             String value = model.getStudents().get(id).toString();  
