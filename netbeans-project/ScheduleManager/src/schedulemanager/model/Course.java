@@ -31,6 +31,12 @@ public class Course implements Serializable {
             shifts.put(entry.getKey(),entry.getValue());
         }
     }
+    
+    public void createShift(String ID) {
+        
+        shifts.put(ID, new Shift(ID, 45, "Orlando", "A4"));
+    }
+    
 
     //METODOS DE INSTANCIA
     //GETTERS

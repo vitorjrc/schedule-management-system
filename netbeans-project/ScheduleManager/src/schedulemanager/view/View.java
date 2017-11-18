@@ -13,7 +13,9 @@ public class View extends javax.swing.JFrame {
     
     private RegistrationArea registrationDialog = new RegistrationArea(View.this);
     private LoginArea loginDialog = new LoginArea(View.this);
+    
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
+    private ArrayList<Consumer<ArrayList<String>>> eventsListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
     public View() {
         initComponents();
@@ -28,8 +30,8 @@ public class View extends javax.swing.JFrame {
         seticon();
         
         // disabling tabs
-        jTabbedPane1.setEnabledAt(1, false);
-        jTabbedPane1.setEnabledAt(2, false);
+        //jTabbedPane1.setEnabledAt(1, false);
+        //jTabbedPane1.setEnabledAt(2, false);
     }
     
     // Example method that receives a callback from the controller
@@ -39,6 +41,11 @@ public class View extends javax.swing.JFrame {
     public void onRegister(Consumer<ArrayList<String>> callback) {
         
         registeredListeners.add(callback);
+    }
+    
+    public void checkedCourse(Consumer<ArrayList<String>> callback) {
+        
+        eventsListeners.add(callback);
     }
     
     // Method that sets an icon for the program
@@ -171,9 +178,11 @@ public class View extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Histórico de trocas:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Realizar Pedido");
 
@@ -205,7 +214,7 @@ public class View extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addComponent(jLabel12)))
-                        .addGap(0, 517, Short.MAX_VALUE)))
+                        .addGap(0, 543, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
@@ -370,16 +379,39 @@ public class View extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        
+        String selected_course = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = eventsListeners.get(0);
+        
+        sc.add(selected_course);
+        
+        method.accept(sc);
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
     // method that fills fields where the list of user courses is required
     public void setCoursesList(ArrayList<String> userCourses) {
         
         String[] coursesList = new String[userCourses.size()];
         for(int i = 0; i < userCourses.size(); i++) {
-            coursesList[i]=userCourses.get(i);
+            coursesList[i] = userCourses.get(i);
         }
         
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+    }
+   
+    // metodo que mete a lista de turnos da UC que o user escolhe em cima (tab 2)
+    public void setShiftsList(ArrayList<String> shiftsCourses) {
+        
+        String[] shiftsList = new String[shiftsCourses.size()];
+        for(int i = 0; i < shiftsCourses.size(); i++) {
+            shiftsList[i] = shiftsCourses.get(i);
+        }
+        
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(shiftsList));
     }
     
     public RegistrationArea openRegistrationArea() {

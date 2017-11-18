@@ -8,55 +8,80 @@ import java.util.*;
 
 public class Model {
     
-    private ArrayList<Course> coursesList = new ArrayList<Course>();
+    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>();
     private HashMap<String, Student> studentsList = new HashMap<String, Student>(); //String -> ID do aluno
     
     public HashMap<String, Student> getStudents() {
         return this.studentsList;
     }
     
-    private ArrayList<Course> testCourses(ArrayList<Course> ucs) {
+    private LinkedHashMap<String, Course> testCourses(LinkedHashMap<String, Course> ucs) {
         
-        ucs.add(new Course("Álgebra Linear EI"));
-        ucs.add(new Course("Cálculo"));
-        ucs.add(new Course("Tópicos de Matemática Discreta"));
-        ucs.add(new Course("Programação Funcional"));
-        ucs.add(new Course("Elementos de Engenharia de Sistemas"));
-        ucs.add(new Course("Laboratórios de Informática I"));
-        ucs.add(new Course("Sistemas de Computação"));
-        ucs.add(new Course("Análise"));
-        ucs.add(new Course("Tópicos de Física Moderna"));
-        ucs.add(new Course("Lógica EI"));
-        ucs.add(new Course("Programação Imperativa"));
-        ucs.add(new Course("Laboratórios de Informática II"));
-        ucs.add(new Course("Introdução aos Sistemas Dinâmicos"));
-        ucs.add(new Course("Estatística Aplicada"));
-        ucs.add(new Course("Engenharia Económica"));
-        ucs.add(new Course("Arquitetura de Computadores"));
-        ucs.add(new Course("Comunicação de Dados"));
-        ucs.add(new Course("Algoritmos e Complexidade"));
-        ucs.add(new Course("Sistemas Operativos"));
-        ucs.add(new Course("Programação Orientada aos Objetos"));
-        ucs.add(new Course("Eletromagnetismo EE"));
-        ucs.add(new Course("Cálculo de Programas"));
-        ucs.add(new Course("Laboratórios de Informática III"));
-        ucs.add(new Course("Bases de Dados"));
-        ucs.add(new Course("Desenvolvimento de Sistemas de Software"));
-        ucs.add(new Course("Modelos Determinísticos de Investigação Operacional"));
-        ucs.add(new Course("Sistemas Distribuídos"));
-        ucs.add(new Course("Redes de Computadores"));
-        ucs.add(new Course("Métodos Numéricos e Otimização não Linear"));
-        ucs.add(new Course("Sistemas de Representação de Conhecimento e Raciocínio"));
-        ucs.add(new Course("Computação Gráfica"));
-        ucs.add(new Course("Modelos Estocásticos de Investigação Operacional"));
-        ucs.add(new Course("Comunicações por Computador"));
-        ucs.add(new Course("Processamento de Linguagens"));
-        ucs.add(new Course("Laboratórios de Informática IV"));
+        ucs.put("Álgebra Linear EI", new Course("Álgebra Linear EI"));
+        ucs.put("Cálculo", new Course("Cálculo"));
+        ucs.put("Tópicos de Matemática Discreta", new Course("Tópicos de Matemática Discreta"));
+        ucs.put("Programação Funcional", new Course("Programação Funcional"));
+        ucs.put("Elementos de Engenharia de Sistemas", new Course("Elementos de Engenharia de Sistemas"));
+        ucs.put("Laboratórios de Informática I", new Course("Laboratórios de Informática I"));
+        ucs.put("Sistemas de Computação", new Course("Sistemas de Computação"));
+        ucs.put("Análise", new Course("Análise"));
+        ucs.put("Tópicos de Física Moderna", new Course("Tópicos de Física Moderna"));
+        ucs.put("Lógica EI", new Course("Lógica EI"));
+        ucs.put("Programação Imperativa", new Course("Programação Imperativa"));
+        ucs.put("Laboratórios de Informática II", new Course("Laboratórios de Informática II"));
+        ucs.put("Introdução aos Sistemas Dinâmicos", new Course("Introdução aos Sistemas Dinâmicos"));
+        ucs.put("Estatística Aplicada", new Course("Estatística Aplicada"));
+        ucs.put("Engenharia Económica", new Course("Engenharia Económica"));
+        ucs.put("Arquitetura de Computadores", new Course("Arquitetura de Computadores"));
+        ucs.put("Comunicação de Dados", new Course("Comunicação de Dados"));
+        ucs.put("Algoritmos e Complexidade", new Course("Algoritmos e Complexidade"));
+        ucs.put("Sistemas Operativos", new Course("Sistemas Operativos"));
+        ucs.put("Programação Orientada aos Objetos", new Course("Programação Orientada aos Objetos"));
+        ucs.put("Eletromagnetismo EE", new Course("Eletromagnetismo EE"));
+        ucs.put("Cálculo de Programas", new Course("Cálculo de Programas"));
+        ucs.put("Laboratórios de Informática III", new Course("Laboratórios de Informática III"));
+        ucs.put("Bases de Dados", new Course("Bases de Dados"));
+        ucs.put("Desenvolvimento de Sistemas de Software", new Course("Desenvolvimento de Sistemas de Software"));
+        ucs.put("Modelos Determinísticos de Investigação Operacional", new Course("Modelos Determinísticos de Investigação Operacional"));
+        ucs.put("Sistemas Distribuídos", new Course("Sistemas Distribuídos"));
+        ucs.put("Redes de Computadores", new Course("Redes de Computadores"));
+        ucs.put("Métodos Numéricos e Otimização não Linear", new Course("Métodos Numéricos e Otimização não Linear"));
+        ucs.put("Sistemas de Representação de Conhecimento e Raciocínio", new Course("Sistemas de Representação de Conhecimento e Raciocínio"));
+        ucs.put("Computação Gráfica", new Course("Computação Gráfica"));
+        ucs.put("Modelos Estocásticos de Investigação Operacional", new Course("Modelos Estocásticos de Investigação Operacional"));
+        ucs.put("Comunicações por Computador", new Course("Comunicações por Computador"));
+        ucs.put("Processamento de Linguagens", new Course("Processamento de Linguagens"));
+        ucs.put("Laboratórios de Informática IV", new Course("Laboratórios de Informática IV"));
         
         return ucs;
     }
     
-    public ArrayList<Course> getCourses() {
+    private void testShifts() {
+        
+        coursesList.get("Cálculo").createShift("PL1");
+        coursesList.get("Cálculo").createShift("PL2");
+        coursesList.get("Cálculo").createShift("PL3");
+        coursesList.get("Cálculo").createShift("PL4");
+        coursesList.get("Cálculo").createShift("PL5");
+        
+    }
+    
+    public ArrayList<String> hashtoList() {
+        
+        this.testCourses(coursesList);
+        this.testShifts();
+        
+        ArrayList<String> testtoList = new ArrayList<String>();
+        
+        for (String courses: coursesList.keySet() ) { 
+            testtoList.add(courses);
+        }
+        
+        return testtoList;
+        
+    }
+    
+    public LinkedHashMap<String, Course> getCourses() {
         
         return testCourses(coursesList);
     }
@@ -66,6 +91,18 @@ public class Model {
         studentsList.put(id, newStudent);
         
         return newStudent;
+    }
+    
+    // metodo que devolve os turnos de uma cadeira
+    public ArrayList<String> courseShifts(String course) {
+    
+        ArrayList<String> courseShifts_list = new ArrayList<String>();
+                
+        for (Map.Entry<String, Shift> entry : this.coursesList.get(course).getShifts().entrySet()) {
+            courseShifts_list.add(entry.getKey());
+        }
+        
+        return courseShifts_list;
     }
     
     

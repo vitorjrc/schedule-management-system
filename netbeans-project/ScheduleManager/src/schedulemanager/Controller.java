@@ -1,7 +1,6 @@
 package schedulemanager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import schedulemanager.model.Model;
 import schedulemanager.model.Student;
 import schedulemanager.view.View;
@@ -25,17 +24,21 @@ public class Controller {
         this.view = view;
     }
     
+    // variável que nos diz o ID do user
+    private String loggedUserID;
+    
     
     //dar conhecimento dos metodos ao controller
     public void attachToView() {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
+        view.checkedCourse(this::checkedCourse);
     }
     
     // Called when the view sends a onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.openRegistrationArea().showCourses(model.getCourses());
+        view.openRegistrationArea().showCourses(model.hashtoList());
     }
     
     private void RegisterButton(ArrayList<String> data) {
@@ -74,11 +77,23 @@ public class Controller {
                 view.showLoginSuccess();    //msg login efetuado com sucesso
                 // show interface things because user is logged
                 showInterfacethings(user_ID);
+                loggedUserID = user_ID;
         }
     }
     
     private void showInterfacethings(String userID) {
         view.setCoursesList(model.getStudents().get(userID).getCourses());
         view.showThingsAfterLogin();
+    }
+    
+    // metodo que traz a disciplina que o user quer trocar
+    private void checkedCourse(ArrayList<String> data) {
+        String course = data.get(0);
+        
+        view.setShiftsList(model.courseShifts(course));
+        
+        // posteriormente, vamos usar a variavel loggedUserID para ir ver o turno do aluno e
+        // tirar esse turno desta lista pq ele nao pode querer trocar para o turno onde ja esta
+        
     }
 }
