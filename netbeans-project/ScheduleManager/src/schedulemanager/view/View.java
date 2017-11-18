@@ -30,8 +30,8 @@ public class View extends javax.swing.JFrame {
         seticon();
         
         // disabling tabs
-        //jTabbedPane1.setEnabledAt(1, false);
-        //jTabbedPane1.setEnabledAt(2, false);
+        jTabbedPane1.setEnabledAt(1, false);
+        jTabbedPane1.setEnabledAt(2, false);
     }
     
     // Example method that receives a callback from the controller
