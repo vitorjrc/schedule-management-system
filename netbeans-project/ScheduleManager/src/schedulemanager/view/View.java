@@ -486,7 +486,9 @@ public class View extends javax.swing.JFrame {
         jPanel4.setBackground(Color.white);
          for(String c: userCourses ) {
             JLabel lb = new JLabel("- " + c);
+            JLabel lbb = new JLabel("  ");
             jPanel4.add(lb);
+            jPanel4.add(lbb);
             jPanel4.revalidate();
             jPanel4.repaint(); 
         }
