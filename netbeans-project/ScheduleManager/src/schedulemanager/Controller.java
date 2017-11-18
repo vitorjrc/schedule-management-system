@@ -84,6 +84,8 @@ public class Controller {
     private void showInterfacethings(String userID) {
         view.setCoursesList(model.getStudents().get(userID).getCourses());
         view.setLoggedAs(model.getStudents().get(userID).getName());
+        view.setUserData(model.getStudents().get(userID).getName(), model.getStudents().get(userID).getStatus());
+        view.showUserUCs(model.getStudents().get(userID).getCourses());
         view.showThingsAfterLogin();
     }
     
