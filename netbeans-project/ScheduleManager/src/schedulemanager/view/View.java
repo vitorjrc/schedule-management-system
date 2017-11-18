@@ -18,6 +18,8 @@ public class View extends javax.swing.JFrame {
     private RegistrationArea registrationDialog;
     private LoginArea loginDialog;
     
+    private int registerOpened = 0;
+    
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> eventsListeners = new ArrayList<Consumer<ArrayList<String>>>();
     
@@ -422,16 +424,31 @@ public class View extends javax.swing.JFrame {
 
     //botao login
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
         loginDialog.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
+        if (registerOpened == 0) {
+            passingRegisterToController();
+        }
+        
+        registrationDialog.setVisible(true);
+        this.registrationOpen();
+        jButton1.setEnabled(false);  
+        jButton2.setEnabled(false);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void passingRegisterToController() {
+        
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = registeredListeners.get(0);
         method.accept(sc);
-                
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.registerOpened = 1;
+        
+    }
     
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         
@@ -507,16 +524,6 @@ public class View extends javax.swing.JFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(shiftsList));
     }
     
-    public RegistrationArea openRegistrationArea() {
-        
-        registrationDialog.setVisible(true);
-        this.registrationOpen();
-        jButton1.setEnabled(false);  
-        jButton2.setEnabled(false);  
-        
-        return registrationDialog;
-    }
-    
     // listening if RegistrationArea window is closed
     private void registrationOpen() {
         registrationDialog.addWindowListener(new WindowAdapter() {
@@ -524,8 +531,11 @@ public class View extends javax.swing.JFrame {
             public void windowClosed(WindowEvent e) {
                 jButton1.setEnabled(true);
                 jButton2.setEnabled(true);
+                
+                registrationDialog.resetDialog();
             }
         });
+        
     }
     
     public RegistrationArea getRegistrationArea() {
@@ -542,6 +552,19 @@ public class View extends javax.swing.JFrame {
     
     public void showLoginError2(){
          JOptionPane.showMessageDialog(null, "Utilizador e palavra-passe não correspondem!");
+    }
+    
+    public void showRegisterError1(){
+         JOptionPane.showMessageDialog(null, "Este utilizador já existe no sistema!");
+    }
+        
+    public void showRegisterError2(){
+         JOptionPane.showMessageDialog(null, "Deve preencher todos os campos!");
+    }
+    
+    public void showRegisterSuccess(){
+         JOptionPane.showMessageDialog(null, "Registo Efetuado com Sucesso!");
+         registrationDialog.dispose();
     }
     
     public void showLoginSuccess(){

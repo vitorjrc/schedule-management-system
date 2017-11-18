@@ -38,29 +38,39 @@ public class Controller {
     
     // Called when the view sends a onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.openRegistrationArea().showCourses(model.getUCsList());
+        view.getRegistrationArea().showCourses(model.getUCsList());
     }
     
     private void RegisterButton(ArrayList<String> data) {
         String new_ID = data.get(0);
+        
+        HashMap<String, Student> students = model.getStudents();
+        if(students.containsKey(new_ID)) {
+            view.showRegisterError1();   
+            return;
+        }
+        
         String new_Password = data.get(1);
         String new_Name = data.get(2);
         String new_Status = data.get(3);
                 
         ArrayList<String> new_Courses = new ArrayList<String>();
         
+        int found = 0;
         for(int i = 4; i < data.size(); i++) {   
             new_Courses.add(data.get(i));
+            if (!(data.get(i).equals("")))
+                found = 1;
         }
         
-        model.registerStudent(new_Name, new_ID, new_Password, new_Status, new_Courses);
+        if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("") || found == 0) {
+            view.showRegisterError2();
+        }
+        else { 
+            view.showRegisterSuccess();
+            model.registerStudent(new_Name, new_ID, new_Password, new_Status, new_Courses);
+        }
         
-        for (String id: model.getStudents().keySet()) {
-
-            String key = id.toString();
-            String value = model.getStudents().get(id).toString();  
-            System.out.println("id do aluno " + id + " " + value);  
-        }    
     }
     
     private void loginButton(ArrayList<String> data) {
@@ -84,7 +94,7 @@ public class Controller {
     private void showInterfacethings(String userID) {
         view.setCoursesList(model.getStudents().get(userID).getCourses());
         view.setLoggedAs(model.getStudents().get(userID).getName());
-        view.setUserData(model.getStudents().get(userID).getName(), model.getStudents().get(userID).getStatus());
+        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getStatus());
         view.showUserUCs(model.getStudents().get(userID).getCourses());
         view.showThingsAfterLogin();
     }

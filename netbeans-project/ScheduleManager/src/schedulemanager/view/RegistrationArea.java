@@ -219,6 +219,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         for(String c: coursesList.keySet() ) {
             JCheckBox cb = new JCheckBox(c);
             cb.setBackground(Color.WHITE);
+            
             jPanel1.add(cb);
             jPanel1.revalidate();
             jPanel1.repaint(); 
@@ -274,15 +275,26 @@ public class RegistrationArea extends javax.swing.JDialog {
         sc.addAll(CoursesChecked());
         method.accept(sc);
         
-        JOptionPane.showMessageDialog(null, "Registo Completo!");
-        dispose();
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void RegisterButton(Consumer<ArrayList<String>> callback) {
         
         registListeners.add(callback);
     }    
+    
+    public void resetDialog() {
+        
+        jTextField10.setText("");
+        jTextField11.setText("");
+        jPasswordField1.setText("");
+        
+        buttongroup.clearSelection();
+        
+        for(JCheckBox jcb: checkboxList) {
+            jcb.setSelected(false);
+        }
+        
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
