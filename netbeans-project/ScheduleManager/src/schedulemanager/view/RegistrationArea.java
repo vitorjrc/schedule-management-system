@@ -18,8 +18,8 @@ public class RegistrationArea extends javax.swing.JDialog {
     private ArrayList<JCheckBox> checkboxList = new ArrayList<JCheckBox>();
     private ArrayList<Consumer<ArrayList<String>>> registListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
-    public RegistrationArea(java.awt.Frame parent) {
-        super(parent);
+    public RegistrationArea(java.awt.Frame parent, ModalityType modalityType) {
+        super(parent, modalityType);
         initComponents();
         
         // background - White

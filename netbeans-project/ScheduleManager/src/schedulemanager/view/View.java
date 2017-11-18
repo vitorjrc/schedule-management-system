@@ -5,14 +5,15 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
 import javax.swing.JOptionPane;
+import java.awt.Dialog;
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
  */
 public class View extends javax.swing.JFrame {
     
-    private RegistrationArea registrationDialog = new RegistrationArea(View.this);
-    private LoginArea loginDialog = new LoginArea(View.this);
+    private RegistrationArea registrationDialog = new RegistrationArea(View.this, Dialog.ModalityType.APPLICATION_MODAL);
+    private LoginArea loginDialog = new LoginArea(View.this, Dialog.ModalityType.APPLICATION_MODAL);
     
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> eventsListeners = new ArrayList<Consumer<ArrayList<String>>>();
