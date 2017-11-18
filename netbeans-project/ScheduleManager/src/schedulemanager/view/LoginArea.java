@@ -153,7 +153,7 @@ public class LoginArea extends javax.swing.JDialog {
         
         sc.add(0, jTextField2.getText());
         sc.add(1, String.valueOf(jPasswordField1.getPassword()));
-        method.accept(sc);  
+        method.accept(sc);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //primeiro esta
