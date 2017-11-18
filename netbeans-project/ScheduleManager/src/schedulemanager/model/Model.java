@@ -66,6 +66,15 @@ public class Model {
         
     }
     
+    public LinkedHashMap<String, Course> getUCsList() {
+        
+        LinkedHashMap<String, Course> newCoursesList = new LinkedHashMap<String, Course>(testCourses(coursesList));
+        this.testShifts();
+        
+        return newCoursesList;
+    }
+    
+    /*
     public ArrayList<String> hashtoList() {
         
         this.testCourses(coursesList);
@@ -80,6 +89,8 @@ public class Model {
         return testtoList;
         
     }
+
+   */
     
     public LinkedHashMap<String, Course> getCourses() {
         

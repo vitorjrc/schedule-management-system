@@ -18,10 +18,10 @@ public class RegistrationArea extends javax.swing.JDialog {
     private ArrayList<JCheckBox> checkboxList = new ArrayList<JCheckBox>();
     private ArrayList<Consumer<ArrayList<String>>> registListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
-    public RegistrationArea(java.awt.Frame parent, ModalityType modalityType) {
-        super(parent, modalityType);
+    public RegistrationArea(javax.swing.JFrame parent) {
+        super(parent);
         initComponents();
-        
+       
         // background - White
         getContentPane().setBackground(Color.WHITE);
         
@@ -211,13 +211,13 @@ public class RegistrationArea extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void showCourses(ArrayList<?> courses) {
+    public void showCourses(LinkedHashMap<String, ?> coursesList) {
         
         jPanel1.setLayout(new GridLayout(15, 2));
         jScrollPane1.getViewport().setSize(400, 400);
         
-        for(Object c: courses) {
-            JCheckBox cb = new JCheckBox(c.toString());
+        for(String c: coursesList.keySet() ) {
+            JCheckBox cb = new JCheckBox(c);
             cb.setBackground(Color.WHITE);
             jPanel1.add(cb);
             jPanel1.revalidate();

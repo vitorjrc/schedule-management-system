@@ -19,8 +19,8 @@ public class LoginArea extends javax.swing.JDialog {
     /**
      * Creates new form LoginArea
      */
-    public LoginArea(java.awt.Frame parent, ModalityType modalityType) {
-        super(parent, modalityType);
+    public LoginArea(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         
         // background - White

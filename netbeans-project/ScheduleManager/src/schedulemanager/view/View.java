@@ -5,21 +5,25 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
 import javax.swing.JOptionPane;
-import java.awt.Dialog;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
  */
 public class View extends javax.swing.JFrame {
     
-    private RegistrationArea registrationDialog = new RegistrationArea(View.this, Dialog.ModalityType.APPLICATION_MODAL);
-    private LoginArea loginDialog = new LoginArea(View.this, Dialog.ModalityType.APPLICATION_MODAL);
+    private RegistrationArea registrationDialog;
+    private LoginArea loginDialog;
     
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> eventsListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
     public View() {
         initComponents();
+        
+        loginDialog = new LoginArea(View.this, true);
+        registrationDialog = new RegistrationArea(View.this);
         
         // background - White
         getContentPane().setBackground(Color.WHITE);
@@ -379,7 +383,7 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
                 
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         
         String selected_course = jComboBox2.getItemAt(jComboBox2.getSelectedIndex());
@@ -418,8 +422,22 @@ public class View extends javax.swing.JFrame {
     public RegistrationArea openRegistrationArea() {
         
         registrationDialog.setVisible(true);
+        this.registrationOpen();
+        jButton1.setEnabled(false);  
+        jButton2.setEnabled(false);  
         
         return registrationDialog;
+    }
+    
+    // listening if RegistrationArea window is closed
+    private void registrationOpen() {
+        registrationDialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                jButton1.setEnabled(true);
+                jButton2.setEnabled(true);
+            }
+        });
     }
     
     public RegistrationArea getRegistrationArea() {
@@ -441,12 +459,14 @@ public class View extends javax.swing.JFrame {
     public void showLoginSuccess(){
          JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
          loginDialog.setVisible(false);
+         jButton1.setEnabled(true);
     }
     
     // show tabs after login
     public void showThingsAfterLogin(){
         jTabbedPane1.setEnabledAt(1, true);
         jTabbedPane1.setEnabledAt(2, true);
+        jButton2.setEnabled(false);
     }
             
     public static void start() {

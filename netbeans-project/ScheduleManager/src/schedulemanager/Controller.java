@@ -38,7 +38,7 @@ public class Controller {
     
     // Called when the view sends a onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.openRegistrationArea().showCourses(model.hashtoList());
+        view.openRegistrationArea().showCourses(model.getUCsList());
     }
     
     private void RegisterButton(ArrayList<String> data) {
@@ -67,7 +67,6 @@ public class Controller {
         String user_ID = data.get(0);
         String user_passwd = data.get(1);
         HashMap<String, Student> students = model.getStudents();
-    
  
         if(!students.containsKey(user_ID))
             view.showLoginError1();         //msg de erro user inexistente
