@@ -172,7 +172,7 @@ INSERT INTO DocenteUC
 --
 -- Povoamento da tabela "UCAluno"
 INSERT INTO UCAluno
-	(AnoLetivo, Tipo, UC_Codigo, Aluno_Numero)
+	(AnoLetivo, Turno, UC_Codigo, Aluno_Numero)
 	VALUES
 		(1617, 'PL1', 365, 78985),
 		(1617, 'PL1', 423, 78985),
