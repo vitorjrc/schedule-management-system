@@ -4,8 +4,6 @@
 -- Povoamento inicial da base de dados
 -- ------------------------------------------------------
 -- ------------------------------------------------------
--- VERIFICAR POR NUMEROS REPETIDOS!!!
--- FAZER FORWARD ENGINEERING OUTRA VEZ!!!
 --
 -- Esquema: "TrocaTurnos"
 USE `trocaturnos` ;
@@ -19,6 +17,13 @@ ALTER TABLE trocaturnos.docente CONVERT TO CHARACTER SET utf8;
 ALTER TABLE trocaturnos.docenteuc CONVERT TO CHARACTER SET utf8;
 ALTER TABLE trocaturnos.uc CONVERT TO CHARACTER SET utf8;
 ALTER TABLE trocaturnos.ucaluno CONVERT TO CHARACTER SET utf8;
+
+
+-- DELETE FROM Aluno;
+-- DELETE FROM Docente;
+-- DELETE FROM UC;
+-- DELETE FROM DocenteUC;
+-- DELETE FROM UCAluno;
 
 
 --
@@ -65,7 +70,9 @@ INSERT INTO Aluno
 		(71544, 'Daniel Fernandes', 'Engenharia Informática'),
 		(80460, 'Daniel Macedo', 'Engenharia Informática'),
 		(81682, 'Flávio Martins', 'Engenharia Informática'),
-		(68892, 'Gil Sampaio', 'Engenharia Informática')
+		(68892, 'Gil Sampaio', 'Engenharia Informática'),
+		(51146, 'André Azevedo', 'Engenharia Informática')
+
 	;
 
 
