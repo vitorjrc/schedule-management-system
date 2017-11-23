@@ -29,49 +29,49 @@ ALTER TABLE trocaturnos.ucaluno CONVERT TO CHARACTER SET utf8;
 --
 -- Povoamento da tabela "Aluno"
 INSERT INTO Aluno
-	(Numero, Nome, Curso)
+	(Numero, Nome, Curso_Nome)
 	VALUES
-		(78985, 'Maria Inês Machado', 'Engenharia Informática'),
-		(77730, 'Vítor Campos', 'Engenharia Informática'),
-		(79116, 'Sérgio Godinho', 'Engenharia Informática'),
-		(77870, 'Diana Oliveira', 'Engenharia Informática'),
-		(76111, 'Marcos Matos', 'Engenharia Informática'),
-		(77321, 'Leonor Castro', 'Engenharia Informática'),
-		(78404, 'Bruno Silva', 'Engenharia Informática'),
-		(68503, 'Duarte Machado', 'Engenharia Informática'),
-		(69545, 'Gonçalo Oliveira', 'Engenharia Informática'),
-		(73435, 'Nuno Barreira', 'Engenharia Informática'),
-		(74584, 'Rafael Silva', 'Engenharia Informática'),
-		(81230, 'João Afonso', 'Engenharia Informática'),
-		(78790, 'Rafaela Santos', 'Engenharia Informática'),
-		(80828, 'Eduardo Barcelona', 'Engenharia Informática'),
-		(69308, 'Alexandre Marques', 'Engenharia Informática'),
-		(70920, 'André Maia', 'Engenharia Informática'),
-		(70815, 'Paulo Silva', 'Engenharia Informática'),
-		(76275, 'Sara Couto', 'Engenharia Informática'),
-		(78633, 'Artur Oliveira', 'Engenharia Informática'),
-		(73314, 'João Cruz', 'Engenharia Informática'),
-		(81122, 'Catarina Araújo', 'Engenharia Informática'),
-		(73941, 'Joaquim Rebelo', 'Engenharia Informática'),
-		(72974, 'João Cunha', 'Engenharia Informática'),
-		(80979, 'Ricardo Martins', 'Engenharia Informática'),
-		(76935, 'Válter Carvalho', 'Engenharia Informática'),
-		(75820, 'Miguel Cardoso', 'Engenharia Informática'),
-		(70608, 'Beatriz Sousa', 'Engenharia Informática'),
-		(77209, 'Juliana Pereira', 'Engenharia Informática'),
-		(80885, 'Francisco Lira', 'Engenharia Informática'),
-		(67848, 'João Soares', 'Engenharia Informática'),
-		(72111, 'Alexandre Pedrosa', 'Engenharia Informática'),
-		(78415, 'Sara Sampaio', 'Engenharia Informática'),
-		(70629, 'Anderson Vítor', 'Engenharia Informática'),
-		(66906, 'Hugo Gramacho', 'Engenharia Informática'),
-		(78789, 'Francisco Xavier', 'Engenharia Informática'),
-		(69634, 'Daniela Ribeiro', 'Engenharia Informática'),
-		(71544, 'Daniel Fernandes', 'Engenharia Informática'),
-		(80460, 'Daniel Macedo', 'Engenharia Informática'),
-		(81682, 'Flávio Martins', 'Engenharia Informática'),
-		(68892, 'Gil Sampaio', 'Engenharia Informática'),
-		(51146, 'André Azevedo', 'Engenharia Informática')
+		(78985, 'Maria Inês Machado', 'MIEI'),
+		(77730, 'Vítor Campos', 'MIEI'),
+		(79116, 'Sérgio Godinho', 'MIEI'),
+		(77870, 'Diana Oliveira', 'MIEI'),
+		(76111, 'Marcos Matos', 'MIEI'),
+		(77321, 'Leonor Castro', 'MIEI'),
+		(78404, 'Bruno Silva', 'MIEI'),
+		(68503, 'Duarte Machado', 'MIEI'),
+		(69545, 'Gonçalo Oliveira', 'MIEI'),
+		(73435, 'Nuno Barreira', 'MIEI'),
+		(74584, 'Rafael Silva', 'MIEI'),
+		(81230, 'João Afonso', 'MIEI'),
+		(78790, 'Rafaela Santos', 'MIEI'),
+		(80828, 'Eduardo Barcelona', 'MIEI'),
+		(69308, 'Alexandre Marques', 'MIEI'),
+		(70920, 'André Maia', 'MIEI'),
+		(70815, 'Paulo Silva', 'MIEI'),
+		(76275, 'Sara Couto', 'MIEI'),
+		(78633, 'Artur Oliveira', 'MIEI'),
+		(73314, 'João Cruz', 'MIEI'),
+		(81122, 'Catarina Araújo', 'MIEI'),
+		(73941, 'Joaquim Rebelo', 'MIEI'),
+		(72974, 'João Cunha', 'MIEI'),
+		(80979, 'Ricardo Martins', 'MIEI'),
+		(76935, 'Válter Carvalho', 'MIEI'),
+		(75820, 'Miguel Cardoso', 'MIEI'),
+		(70608, 'Beatriz Sousa', 'MIEI'),
+		(77209, 'Juliana Pereira', 'MIEI'),
+		(80885, 'Francisco Lira', 'MIEI'),
+		(67848, 'João Soares', 'MIEI'),
+		(72111, 'Alexandre Pedrosa', 'MIEI'),
+		(78415, 'Sara Sampaio', 'MIEI'),
+		(70629, 'Anderson Vítor', 'MIEI'),
+		(66906, 'Hugo Gramacho', 'MIEI'),
+		(78789, 'Francisco Xavier', 'MIEI'),
+		(69634, 'Daniela Ribeiro', 'MIEI'),
+		(71544, 'Daniel Fernandes', 'MIEI'),
+		(80460, 'Daniel Macedo', 'MIEI'),
+		(81682, 'Flávio Martins', 'MIEI'),
+		(68892, 'Gil Sampaio', 'MIEI'),
+		(51146, 'André Azevedo', 'MIEI')
 
 	;
 
@@ -301,6 +301,15 @@ INSERT INTO UCAluno
 		(1617, 'PL3', 010, 68892),
 		(1617, 'PL4', 702, 68892),
 		(1617, 'PL4', 667, 68892)
+
+	;
+
+--
+-- Povoamento da tabela "Curso"
+INSERT INTO Curso
+	(Nome)
+	VALUES
+		('MIEI')
 
 	;
 
