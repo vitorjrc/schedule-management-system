@@ -25,6 +25,14 @@ ALTER TABLE trocaturnos.ucaluno CONVERT TO CHARACTER SET utf8;
 -- DELETE FROM DocenteUC;
 -- DELETE FROM UCAluno;
 
+--
+-- Povoamento da tabela "Curso"
+INSERT INTO Curso
+	(Nome)
+	VALUES
+		('MIEI')
+
+	;
 
 --
 -- Povoamento da tabela "Aluno"
@@ -301,15 +309,6 @@ INSERT INTO UCAluno
 		(1617, 'PL3', 010, 68892),
 		(1617, 'PL4', 702, 68892),
 		(1617, 'PL4', 667, 68892)
-
-	;
-
---
--- Povoamento da tabela "Curso"
-INSERT INTO Curso
-	(Nome)
-	VALUES
-		('MIEI')
 
 	;
 
