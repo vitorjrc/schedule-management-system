@@ -24,11 +24,11 @@ public class Controller {
         this.view = view;
     }
     
-    // variável que nos diz o ID do user
+    // ID of currently logged in user
     private String loggedUserID;
     
     
-    //dar conhecimento dos metodos ao controller
+    // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
@@ -36,7 +36,7 @@ public class Controller {
         view.checkedCourse(this::checkedCourse);
     }
     
-    // Called when the view sends a onRegister event
+    // Called when the view sends an onRegister event
     private void onRegister(ArrayList<String> data) {
         view.getRegistrationArea().showCourses(model.getUCsList());
     }
@@ -74,28 +74,28 @@ public class Controller {
     }
     
     private void loginButton(ArrayList<String> data) {
-        String user_ID = data.get(0);
-        String user_passwd = data.get(1);
+        String userId = data.get(0);
+        String userPassword = data.get(1);
         HashMap<String, Student> students = model.getStudents();
  
-        if(!students.containsKey(user_ID))
+        if(!students.containsKey(userId))
             view.showLoginError1();         //msg de erro user inexistente
-        else if(!students.get(user_ID).getPassword().equals(user_passwd))
+        else if(!students.get(userId).getPassword().equals(userPassword))
                 view.showLoginError2();     //msg de erro password incorreta
         else {
                 view.showLoginSuccess();    //msg login efetuado com sucesso
                 // show interface things because user is logged
-                showInterfacethings(user_ID);
-                loggedUserID = user_ID;
+                showInterfaceThings(userId);
+                loggedUserID = userId;
         }
                 
     }
     
-    private void showInterfacethings(String userID) {
-        view.setCoursesList(model.getStudents().get(userID).getCourses());
+    private void showInterfaceThings(String userID) {
+        view.setCoursesList(model.getStudents().get(userID).getShifts());
         view.setLoggedAs(model.getStudents().get(userID).getName());
         view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getStatus());
-        view.showUserUCs(model.getStudents().get(userID).getCourses());
+        view.showUserUCs(model.getStudents().get(userID).getShifts());
         view.showThingsAfterLogin();
     }
     
