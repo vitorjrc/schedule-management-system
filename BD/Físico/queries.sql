@@ -55,26 +55,6 @@ DELIMITER ;
 
 CALL lista_alunos(79194);
 
--- --------------------------------------------------------------------
-/*
- Os docentes devem ser capazes de obter a lista dos alunos das UC's
- que lecionam.
-*/
-DROP PROCEDURE IF EXISTS lista_alunos;
-DELIMITER $$
-CREATE PROCEDURE lista_alunos(id_docente INT)
-BEGIN
-	SELECT Aluno.Nome, UC.Nome FROM Aluno
-    INNER JOIN UCAluno ON UCAluno.Aluno_Numero = Aluno.Numero
-    INNER JOIN UC ON UC.Codigo = UCAluno.UC_Codigo
-    INNER JOIN DocenteUC ON DocenteUC.UC_Codigo = UC.Codigo
-    WHERE DocenteUC.Docente_Numero = id_docente;
-END
-$$
-DELIMITER ;
-
-CALL lista_alunos(79194);
-
 
 -- ----------------------------------------------------------------------
 /*
@@ -104,7 +84,7 @@ SELECT COUNT(Codigo) AS numero_ucs FROM UC;
 -- ----------------------------------------------------------------------    
  /*
  O diretor de curso deve conseguir saber o total de Alunos
- que o curso tem atualmente
+ que o curso tem atualmente.
 */   
 SELECT COUNT(Numero) AS numero_alunos FROM Aluno;
 
