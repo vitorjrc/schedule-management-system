@@ -103,3 +103,64 @@ SELECT UC.Nome, COUNT(*), Docente.Nome FROM UC
     LIMIT 3;
 
 -- -----------------------------------------------------------------------
+								-- TRANSAÇÕES
+                                
+/*
+ Adicionar um novo aluno.
+*/  
+DROP PROCEDURE IF EXISTS inserir_aluno;
+DELIMITER $$
+CREATE PROCEDURE inserir_aluno(IN numero INT, 
+							  IN nome VARCHAR(45), 
+							  IN curso VARCHAR(10))
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro=1;
+	START TRANSACTION;
+
+	INSERT INTO Aluno VALUES (numero, nome, curso);
+
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
+
+-- -----------------------------------------------------------------------
+/*
+ Adicionar uma nova UC.
+*/ 	
+
+
+
+-- -----------------------------------------------------------------------
+/*
+ Adicionar um novo docente.
+*/ 
+
+
+
+-- -----------------------------------------------------------------------
+/*
+ Modificar o curso de um aluno.
+*/ 
+
+
+
+-- -----------------------------------------------------------------------
+
+/*
+ Modificar o nome de uma UC.
+*/ 
+
+
+
+-- -----------------------------------------------------------------------
+/*
+ Modificar o turno de um aluno a uma UC.
+*/ 
+
+
+-- -----------------------------------------------------------------------
