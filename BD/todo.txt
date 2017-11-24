@@ -1,7 +1,0 @@
-TODO:
--escrever pré-requisitos
--fazer diagrama lógico
--exportar físico
-
-DONE:
--conceptual

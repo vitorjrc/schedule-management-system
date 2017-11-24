@@ -68,7 +68,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`Aluno` (
   `Numero` INT NOT NULL,
   `Nome` VARCHAR(45) NULL,
-  `Curso_Nome` VARCHAR(45) NOT NULL,
+  `Curso_Nome` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Numero`),
   INDEX `fk_Aluno_Curso1_idx` (`Curso_Nome` ASC),
   CONSTRAINT `fk_Aluno_Curso1`
