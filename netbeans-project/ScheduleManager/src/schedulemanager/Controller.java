@@ -1,9 +1,8 @@
 package schedulemanager;
 
 import java.util.*;
-import schedulemanager.model.Model;
-import schedulemanager.model.Student;
-import schedulemanager.view.View;
+import schedulemanager.model.*;
+import schedulemanager.view.*;
 
 /**
  * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
@@ -31,7 +30,7 @@ public class Controller {
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
     	view.onRegister(this::onRegister);
-        view.getRegistrationArea().RegisterButton(this::RegisterButton);
+        //view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
         view.checkedCourse(this::checkedCourse);
     }
@@ -41,6 +40,7 @@ public class Controller {
         view.getRegistrationArea().showCourses(model.getUCsList());
     }
     
+    /*
     private void RegisterButton(ArrayList<String> data) {
         String new_ID = data.get(0);
         
@@ -72,6 +72,7 @@ public class Controller {
         }
         
     }
+    */
     
     private void loginButton(ArrayList<String> data) {
         String userId = data.get(0);
@@ -92,10 +93,10 @@ public class Controller {
     }
     
     private void showInterfaceThings(String userID) {
-        view.setCoursesList(model.getStudents().get(userID).getShifts());
+        // view.setCoursesList(model.getStudents().get(userID).getShifts()); Tem-se de converter isto para lista de strings
         view.setLoggedAs(model.getStudents().get(userID).getName());
         view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getStatus());
-        view.showUserUCs(model.getStudents().get(userID).getShifts());
+        // view.showUserUCs(model.getStudents().get(userID).getShifts()); Isto tambem se tem de converter para lista de strings
         view.showThingsAfterLogin();
     }
     
