@@ -14,23 +14,23 @@ public class Student implements Serializable {
     private String id;                  
     private String password;                  
     private String status;                       
-    private ArrayList<String> shifts; // ID of shifts where this student is enrolled
+    private ArrayList<Shift> shifts; // Shifts this user is enrolled in
    
     public Student() {
         this.name = "Alberto Caeiro";
         this.id = "A00000";
         this.password = "heterocromatico";
         this.status = "";
-        this.shifts = new ArrayList<String>();
+        this.shifts = new ArrayList<Shift>();
     }
     
-    public Student(String name, String id, String pass, String stat, ArrayList<String> shifts) {
+    public Student(String name, String id, String pass, String stat, ArrayList<Shift> shifts) {
         this.name = name;
         this.id = id;
         this.password = pass;
         this.status = stat;
-        this.shifts = new ArrayList<String>();
-        for (String s: shifts)
+        this.shifts = new ArrayList<Shift>();
+        for (Shift s: shifts)
            this.shifts.add(s);
     }
     
@@ -40,8 +40,8 @@ public class Student implements Serializable {
         this.password = s.getPassword();
         this.status = s.getStatus();
         this.shifts = new ArrayList<>();
-        for (String st: s.getShifts()) {
-            shifts.add(st); // Strings are immutable, no need to clone()
+        for (Shift st: s.getShifts()) {
+            this.shifts.add(st); // Strings are immutable, no need to clone()
         }
     }
 
@@ -53,9 +53,9 @@ public class Student implements Serializable {
     
     public String getStatus() { return this.status; }
     
-    public void setStatus(String stat){ this.status = stat; }
+    public void setStatus(String status) { this.status = status; }
     
-    public ArrayList<String> getShifts() { return this.shifts; }
+    public ArrayList<Shift> getShifts() { return new ArrayList<Shift>(this.shifts); }
     
     public boolean equals(Object o){
         if (this == o) return true;
@@ -77,8 +77,8 @@ public class Student implements Serializable {
         s.append("PASSWORD: " + this.password + "\n");
         s.append("REGIME: " + this.status + "\n");
         s.append("Enrolled in the following shifts: \n");
-        for(String st : this.shifts)
-            s.append(st + "\n");
+        for(Shift st : this.shifts)
+            s.append(st.toString() + "\n");
         s.append("-------------------------\n");
     
         return s.toString();

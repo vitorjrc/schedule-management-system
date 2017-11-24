@@ -97,7 +97,7 @@ public class Model {
         return testCourses(coursesList);
     }
     
-    public Student registerStudent(String name, String id, String pass, String stat, ArrayList<String> courses){
+    public Student registerStudent(String name, String id, String pass, String stat, ArrayList<Shift> courses){
         Student newStudent = new Student(name, id, pass, stat, courses);
         studentsList.put(id, newStudent);
         
