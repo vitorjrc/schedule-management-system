@@ -115,7 +115,7 @@ CREATE PROCEDURE inserir_aluno(IN numero INT,
 							  IN curso VARCHAR(10))
 BEGIN
 	DECLARE erro BOOL DEFAULT 0;
-	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro=1;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
 	START TRANSACTION;
 
 	INSERT INTO Aluno VALUES (numero, nome, curso);
@@ -132,35 +132,121 @@ DELIMITER ;
 /*
  Adicionar uma nova UC.
 */ 	
+DROP PROCEDURE IF EXISTS inserir_uc;
+DELIMITER $$
+CREATE PROCEDURE inserir_uc(IN codigo INT, 
+							IN nome VARCHAR(45), 
+							IN ano INT,
+							IN ects INT)
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
+	START TRANSACTION;
 
+	INSERT INTO UC VALUES (codigo, nome, ano, ects);
 
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- -----------------------------------------------------------------------
 /*
  Adicionar um novo docente.
 */ 
+DROP PROCEDURE IF EXISTS inserir_docente;
+DELIMITER $$
+CREATE PROCEDURE inserir_uc(IN numero INT, 
+							IN nome VARCHAR(45), 
+							IN escola VARCHAR(45))
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
+	START TRANSACTION;
 
+	INSERT INTO UC VALUES (numero, nome, escola);
 
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- -----------------------------------------------------------------------
 /*
  Modificar o curso de um aluno.
 */ 
+DROP PROCEDURE IF EXISTS modificar_curso_aluno;
+DELIMITER $$
+CREATE PROCEDURE modificar_curso_aluno(IN curso_aluno VARCHAR(10),
+									   IN numero_aluno INT)
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
+	START TRANSACTION;
 
+	UPDATE Aluno SET Curso = curso_aluno WHERE Aluno.Numero = numero_aluno;
 
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- -----------------------------------------------------------------------
 
 /*
  Modificar o nome de uma UC.
 */ 
+DROP PROCEDURE IF EXISTS modificar_uc_nome;
+DELIMITER $$
+CREATE PROCEDURE modificar_uc_nome(IN nome_uc VARCHAR(10),
+								   IN codigo_uc INT)
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
+	START TRANSACTION;
 
+	UPDATE UC SET Nome = nome_uc WHERE UC.Codigo = codigo_uc;
 
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- -----------------------------------------------------------------------
 /*
  Modificar o turno de um aluno a uma UC.
 */ 
+DROP PROCEDURE IF EXISTS modificar_turno_aluno_uc;
+DELIMITER $$
+CREATE PROCEDURE modificar_turno_aluno_uc(IN turno_new VARCHAR(3),
+										  IN codigo_uc INT,
+                                          IN numero_aluno INT)
+BEGIN
+	DECLARE erro BOOL DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
+	START TRANSACTION;
 
+	UPDATE UCAluno SET Turno = turno_new WHERE UCAluno.UC_Codigo = codigo_uc
+											AND UCAluno.Aluno_Numero = numero_aluno;
+
+	IF erro 
+		THEN ROLLBACK;
+		ELSE COMMIT;
+	END IF;
+END
+$$
+DELIMITER ;
 
 -- -----------------------------------------------------------------------
