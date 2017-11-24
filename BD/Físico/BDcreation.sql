@@ -15,13 +15,28 @@ CREATE SCHEMA IF NOT EXISTS `TrocaTurnos` DEFAULT CHARACTER SET utf8 ;
 USE `TrocaTurnos` ;
 
 -- -----------------------------------------------------
+-- Table `TrocaTurnos`.`Escola`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`Escola` (
+  `Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Nome`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `TrocaTurnos`.`Docente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`Docente` (
   `Numero` INT NOT NULL,
   `Nome` VARCHAR(45) NULL,
-  `Escola` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Numero`))
+  `Escola_Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Numero`),
+  INDEX `fk_Docente_Escola1_idx` (`Escola_Nome` ASC),
+  CONSTRAINT `fk_Docente_Escola1`
+    FOREIGN KEY (`Escola_Nome`)
+    REFERENCES `TrocaTurnos`.`Escola` (`Nome`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -39,13 +54,28 @@ DEFAULT CHARACTER SET = cp1250;
 
 
 -- -----------------------------------------------------
+-- Table `TrocaTurnos`.`Curso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`Curso` (
+  `Nome` VARCHAR(10) NOT NULL,
+  PRIMARY KEY (`Nome`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `TrocaTurnos`.`Aluno`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`Aluno` (
   `Numero` INT NOT NULL,
   `Nome` VARCHAR(45) NULL,
-  `Curso` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Numero`))
+  `Curso_Nome` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Numero`),
+  INDEX `fk_Aluno_Curso1_idx` (`Curso_Nome` ASC),
+  CONSTRAINT `fk_Aluno_Curso1`
+    FOREIGN KEY (`Curso_Nome`)
+    REFERENCES `TrocaTurnos`.`Curso` (`Nome`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -76,7 +106,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `TrocaTurnos`.`UCAluno` (
   `AnoLetivo` INT NOT NULL,
-  `Turno` VARCHAR(45) NOT NULL,
+  `Turno` VARCHAR(3) NOT NULL,
   `UC_Codigo` INT NOT NULL,
   `Aluno_Numero` INT NOT NULL,
   PRIMARY KEY (`AnoLetivo`, `Turno`, `UC_Codigo`, `Aluno_Numero`),

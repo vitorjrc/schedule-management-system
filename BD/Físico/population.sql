@@ -12,18 +12,32 @@ USE `trocaturnos` ;
 -- Permissão para fazer operações de remoção de dados.
 SET SQL_SAFE_UPDATES = 0;
 
-ALTER TABLE trocaturnos.aluno CONVERT TO CHARACTER SET utf8;
-ALTER TABLE trocaturnos.docente CONVERT TO CHARACTER SET utf8;
-ALTER TABLE trocaturnos.docenteuc CONVERT TO CHARACTER SET utf8;
-ALTER TABLE trocaturnos.uc CONVERT TO CHARACTER SET utf8;
-ALTER TABLE trocaturnos.ucaluno CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.Aluno CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.Docente CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.DocenteUC CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.UC CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.UCAluno CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.Escola CONVERT TO CHARACTER SET utf8;
+ALTER TABLE trocaturnos.Curso CONVERT TO CHARACTER SET utf8;
 
 
--- DELETE FROM Aluno;
--- DELETE FROM Docente;
--- DELETE FROM UC;
--- DELETE FROM DocenteUC;
--- DELETE FROM UCAluno;
+DELETE FROM Aluno;
+DELETE FROM Docente;
+DELETE FROM UC;
+DELETE FROM DocenteUC;
+DELETE FROM UCAluno;
+DELETE FROM Escola;
+DELETE FROM Curso;
+
+--
+-- Povoamento da tabela "Escola"
+INSERT INTO Escola
+	(Nome)
+	VALUES
+		('Escola de Ciências'),
+		('Escola de Engenharia')
+
+	;
 
 --
 -- Povoamento da tabela "Curso"
@@ -83,7 +97,6 @@ INSERT INTO Aluno
 
 	;
 
-
 -- CONSIDERAR Q SAO TUDO CADEIRAS DE 1 SO SEMESTRE-------------------------------------------------
 -- Povoamento da tabela "UC"
 INSERT INTO UC
@@ -122,7 +135,7 @@ INSERT INTO UC
 --
 -- Povoamento da tabela "Docente"
 INSERT INTO Docente
-	(Numero, Nome, Escola)
+	(Numero, Nome, Escola_Nome)
 	VALUES
 
 		(18054, 'Amélia Campos' ,'Escola de Ciências'),
