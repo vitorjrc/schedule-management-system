@@ -159,7 +159,7 @@ DELIMITER ;
 */ 
 DROP PROCEDURE IF EXISTS inserir_docente;
 DELIMITER $$
-CREATE PROCEDURE inserir_uc(IN numero INT, 
+CREATE PROCEDURE inserir_docente(IN numero INT, 
 							IN nome VARCHAR(45), 
 							IN escola VARCHAR(45))
 BEGIN
@@ -167,7 +167,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET erro = 1;
 	START TRANSACTION;
 
-	INSERT INTO UC VALUES (numero, nome, escola);
+	INSERT INTO Docente VALUES (numero, nome, escola);
 
 	IF erro 
 		THEN ROLLBACK;
