@@ -8,34 +8,30 @@ import java.util.*;
 import java.io.Serializable;
 
 public class Student implements Serializable {
-    
-    //VARIAVEIS DE INSTANCIA
+
     private static final long serialVersionUID = 7526472295622776147L;
     private String name;             
     private String id;                  
     private String password;                  
     private String status;                       
-    
-    //Lista com as ucs onde o student está inscrito
-    private ArrayList<String> courses;      
+    private ArrayList<String> shifts; // ID of shifts where this student is enrolled
    
-    //CONSTRUTORES
-    public Student(){
-        this.name = "";
-        this.id = "";
-        this.password = "";
+    public Student() {
+        this.name = "Alberto Caeiro";
+        this.id = "A00000";
+        this.password = "heterocromatico";
         this.status = "";
-        this.courses = new ArrayList<>();
+        this.shifts = new ArrayList<String>();
     }
     
-    public Student(String name, String id, String pass, String stat, ArrayList<String> cours){
+    public Student(String name, String id, String pass, String stat, ArrayList<String> shifts) {
         this.name = name;
         this.id = id;
         this.password = pass;
         this.status = stat;
-        this.courses = new ArrayList<String>();
-        for(String s: cours)
-           courses.add(s);  // enquanto a classe de disciplinas n é criada, vou usando Strings e são imutáveis logo n é preciso fazer s.clone()
+        this.shifts = new ArrayList<String>();
+        for (String s: shifts)
+           this.shifts.add(s);
     }
     
     public Student(Student s){
@@ -43,39 +39,23 @@ public class Student implements Serializable {
         this.id = s.getID();
         this.password = s.getPassword();
         this.status = s.getStatus();
-        this.courses = new ArrayList<>();
-        for(String st: s.getCourses()) {
-            courses.add(st); // não é preciso usar clone para string
+        this.shifts = new ArrayList<>();
+        for (String st: s.getShifts()) {
+            shifts.add(st); // Strings are immutable, no need to clone()
         }
     }
 
-    //METODOS DE INSTANCIA
-    //GETTERS
-    public String getName(){ return this.name; }
+    public String getName() { return this.name; }
     
-    public String getID(){ return this.id; }
+    public String getID() { return this.id; }
     
-    public String getPassword(){ return this.password; }
+    public String getPassword() { return this.password; }
     
-    public String getStatus(){ return this.status; }
-    
-    //devolve todas as disciplinas do student
-    public ArrayList<String> getCourses(){
-        ArrayList<String> ret = new ArrayList<String>();
-        for(String s : this.courses) {
-            ret.add(s); // não é preciso usar clone para string 
-        }
-        return ret;
-    }
-    
-    //SETTERS
-    public void setName(String name){ this.name = name; }
-    
-    public void setID(String id){ this.id = id; }
-    
-    public void setPassword(String pass){ this.password = pass; }
+    public String getStatus() { return this.status; }
     
     public void setStatus(String stat){ this.status = stat; }
+    
+    public ArrayList<String> getShifts() { return this.shifts; }
     
     public boolean equals(Object o){
         if (this == o) return true;
@@ -85,19 +65,19 @@ public class Student implements Serializable {
                  this.id.equals(s.getID()) &&
                  this.password.equals(s.getPassword()) &&
                  this.status.equals(s.getStatus()) &&
-                 this.courses.equals(s.getCourses())
-               );
+                 this.shifts.equals(s.getShifts())
+        );
     }
     
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("----------ALUNO----------\n");
-        s.append("NOME: " +this.name+ "\n");
-        s.append("ID: " +this.id+ "\n");
-        s.append("PASSWORD: " +this.password+ "\n");
-        s.append("REGIME: " +this.status+ "\n");
-        s.append("UCS Inscrito: \n");
-        for(String st : this.courses)
+        s.append("NOME: " + this.name + "\n");
+        s.append("ID: " + this.id + "\n");
+        s.append("PASSWORD: " + this.password + "\n");
+        s.append("REGIME: " + this.status + "\n");
+        s.append("Enrolled in the following shifts: \n");
+        for(String st : this.shifts)
             s.append(st + "\n");
         s.append("-------------------------\n");
     

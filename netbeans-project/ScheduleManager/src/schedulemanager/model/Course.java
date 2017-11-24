@@ -1,30 +1,28 @@
 package schedulemanager.model;
 
 /**
- * Class that represents a student
+ * Class that represents a Course
  */
 
 import java.util.*;
 import java.io.Serializable;
 
 public class Course implements Serializable {
-    
-    //VARIAVEIS DE INSTANCIA
+
     private static final long serialVersionUID = 7526472295622776147L;
-    private String name;                                              
+    private String id;
+    private String name;
     
-    // map com <PLX, Turno>
-    private HashMap<String, Shift> shifts;      
-   
-    //CONSTRUTORES
+    private HashMap<String, Shift> shifts; // Shift ID -> Shift
     
-    public Course(String name){
+    // Constructors
+    
+    public Course(String name) {
         this.name = name;
         this.shifts = new HashMap<String, Shift>();
-        
     }
     
-    public Course(Course s){
+    public Course(Course s) {
         this.name = s.getName();
         this.shifts = new HashMap<String, Shift>();
         for (Map.Entry<String, Shift> entry : getShifts().entrySet()){
@@ -32,14 +30,12 @@ public class Course implements Serializable {
         }
     }
     
-    public void createShift(String ID) {
-        
-        shifts.put(ID, new Shift(ID, 45, "Orlando", "A4"));
+    // Getters
+    
+    public String getId() { 
+        return this.id; 
     }
     
-
-    //METODOS DE INSTANCIA
-    //GETTERS
     public String getName() { 
         return this.name; 
     }
@@ -48,14 +44,22 @@ public class Course implements Serializable {
         return this.shifts; 
     }
     
-    public String toString(){
+    // Attaches a previously created shift to this course
+    public void addShift(String id, Shift shift) {
+    	
+    	shift.setCourseId(this.id);
+
+        shifts.put(id, shift);
+    }
+    
+    public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(this.getName());
         return s.toString();
     }
     
     @Override
-    public Course clone(){
+    public Course clone() {
         return new Course(this);
     }
 }

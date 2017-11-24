@@ -8,56 +8,60 @@ package schedulemanager.model;
 
 import java.util.*;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Swap implements Serializable {
     
-    //VARIAVEIS DE INSTANCIA
     private static final long serialVersionUID = 7526472295622776147L;
-    private Student student1;             
-    private Student student2;                  
+    private Student bidder; // Student that submitted the exchange offer
+    private Student taker;  // Student that takes the offer           
     private Course course;
     private Shift shift;
-    private Date date; 
-   
-    //CONSTRUTORES
+    private Instant dateCreated; // Instant when the offer was created
+    private Instant dateTaken;   // Instant when the offer was taken
     
     public Swap(Student student1, Course course, Shift shift, Date date){
-        this.student1 = student1;
-        this.student2 = null;
+        this.bidder = student1;
+        this.taker = null;
         this.course = course;
         this.shift = shift;
-        this.date = date;
+        this.dateCreated = Instant.now();
+        this.dateTaken = null;
     }
     
     public Swap(Swap s){
-        this.student1 = s.getStudent1();
-        this.student2 = s.getStudent2();
+        this.bidder = s.getBidder();
+        this.taker = s.getTaker();
         this.course = s.getCourse();
         this.shift = s.getShift();
-        this.date = s.getDate();
+        this.dateCreated = s.getDateCreated();
+        this.dateTaken = s.getDateTaken();
     }
-
-    //METODOS DE INSTANCIA
-    //GETTERS
-    public Student getStudent1(){ return this.student1.clone(); }
     
-    public Student getStudent2(){ return this.student2.clone(); }
+    public Student getBidder() { return this.bidder.clone(); }
     
-    public Course getCourse(){ return this.course.clone(); }
+    public Student getTaker() { return this.taker.clone(); }
     
-    public Shift getShift(){ return this.shift.clone(); }
+    public Course getCourse() { return this.course.clone(); }
     
-    public Date getDate(){ return this.date; } //supostamente datas no Java 8 são imutaveis
+    public Shift getShift() { return this.shift.clone(); }
+    
+    public Instant getDateCreated() { return Instant.from(this.dateCreated); }
+    
+    public Instant getDateTaken() { return Instant.from(this.dateTaken); }
     
     public String toString(){
         StringBuilder s = new StringBuilder();
-        s.append("----------TROCA----------\n");
-        s.append("Estudante 1: " +this.student1+ "\n");
-        s.append("Estudante 2: " +this.student2+ "\n");
-        s.append("UC: " +this.course+ "\n");
-        s.append("Turno: " +this.shift+ "\n");
-        s.append("Data: " + this.date + "\n");
-        s.append("-------------------------\n");
+        s.append("---------- Exchange ----------\n");
+        s.append("Estudante 1: " + this.bidder + "\n");
+        s.append("Estudante 2: " + this.taker + "\n");
+        s.append("UC: " + this.course + "\n");
+        s.append("Turno: " + this.shift + "\n");
+        s.append("Date created: " + LocalDateTime.ofInstant(this.dateCreated, ZoneId.systemDefault()) + "\n");
+        s.append("Date taken: " + LocalDateTime.ofInstant(this.dateTaken, ZoneId.systemDefault()) + "\n");
+        s.append("------------------------------\n");
     
         return s.toString();
     }

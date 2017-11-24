@@ -9,7 +9,7 @@ import java.util.*;
 public class Model {
     
     private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>();
-    private HashMap<String, Student> studentsList = new HashMap<String, Student>(); //String -> ID do aluno
+    private HashMap<String, Student> studentsList = new HashMap<String, Student>(); // Student ID -> Student
     
     public HashMap<String, Student> getStudents() {
         return this.studentsList;
@@ -17,7 +17,7 @@ public class Model {
     
     private LinkedHashMap<String, Course> testCourses(LinkedHashMap<String, Course> ucs) {
         
-        ucs.put("Álgebra Linear EI", new Course("Álgebra Linear EI"));
+    	ucs.put("Álgebra Linear EI", new Course("Álgebra Linear EI"));
         ucs.put("Cálculo", new Course("Cálculo"));
         ucs.put("Tópicos de Matemática Discreta", new Course("Tópicos de Matemática Discreta"));
         ucs.put("Programação Funcional", new Course("Programação Funcional"));
@@ -52,17 +52,17 @@ public class Model {
         ucs.put("Comunicações por Computador", new Course("Comunicações por Computador"));
         ucs.put("Processamento de Linguagens", new Course("Processamento de Linguagens"));
         ucs.put("Laboratórios de Informática IV", new Course("Laboratórios de Informática IV"));
-        
+
         return ucs;
     }
     
     private void testShifts() {
         
-        coursesList.get("Cálculo").createShift("PL1");
-        coursesList.get("Cálculo").createShift("PL2");
-        coursesList.get("Cálculo").createShift("PL3");
-        coursesList.get("Cálculo").createShift("PL4");
-        coursesList.get("Cálculo").createShift("PL5");
+        //coursesList.get("CÃ¡lculo").createShift("PL1");
+        //coursesList.get("CÃ¡lculo").createShift("PL2");
+        //coursesList.get("CÃ¡lculo").createShift("PL3");
+        //coursesList.get("CÃ¡lculo").createShift("PL4");
+        //coursesList.get("CÃ¡lculo").createShift("PL5");
         
     }
     

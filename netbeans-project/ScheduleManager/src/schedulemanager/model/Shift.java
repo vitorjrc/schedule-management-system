@@ -9,49 +9,49 @@ import java.util.Iterator;
 public class Shift {
 
     private String id;           // The ID of this shift. Example: "PL1"
-    // private String courseId;     // The ID of the course this shift belongs to. Example: "DSS"
+    private String courseId;     // The ID of the course this shift belongs to. Example: "DSS"
     private int occupationLimit; // The maximum number of students allowed in this shift  
     private String teacher;
     private String classroom;
-    
     private HashSet<Student> occupants; // The students that frequent this shift
-
-       
-    //CONSTRUTORES
     
-     public Shift(String id, int occupationLimit, String teacher, String classroom){
+     public Shift(String id, String courseId, int occupationLimit, String teacher, String classroom) {
         this.id = id;
+        this.courseId = courseId;
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
         this.occupants = new HashSet<Student>();
     }
     
-    public Shift(Shift s){
+    public Shift(Shift s) {
         this.id = s.getId();
+        this.courseId = s.getCourseId();
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
         this.classroom = s.getClassroom();
         this.occupants = new HashSet<Student>();
+        
         Iterator<Student> iterator = occupants.iterator();
         while(iterator.hasNext()){
-            occupants.add(iterator.next().clone());
+            this.occupants.add(iterator.next().clone());
         }
     }
+    
     public String getId() {
         return id;
     }
-
-    public void setId(String id) {
-        this.id = id;
+    
+    public String getCourseId() {
+        return this.courseId;
+    }
+    
+    public void setCourseId(String id) {
+        this.courseId = id;
     }
     
     public int getOccupationLimit() {
         return occupationLimit;
-    }
-
-    public void setOccupationLimit(int occupationLimit) {
-        this.occupationLimit = occupationLimit;
     }
     
     public String getTeacher() {
@@ -66,10 +66,6 @@ public class Shift {
         return occupants;
     }
 
-    public void setOccupants(HashSet<Student> occupants) {
-        this.occupants = occupants;
-    }
-    
     @Override
     public Shift clone(){
         return new Shift(this);
