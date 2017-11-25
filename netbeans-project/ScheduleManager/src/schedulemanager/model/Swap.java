@@ -4,7 +4,6 @@ package schedulemanager.model;
  * Class that represents a swap
 */
 
-import java.util.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -19,6 +18,7 @@ public class Swap implements Serializable {
     private Shift shiftWanted;
     private Instant dateCreated; // Instant when the offer was created
     private Instant dateTaken;   // Instant when the offer was taken
+    private boolean isClosed;
     
     public Swap(Student bidder, Shift shiftOffered, Shift shiftWanted) {
         this.bidder = bidder;
@@ -27,6 +27,7 @@ public class Swap implements Serializable {
         this.shiftWanted = shiftWanted;
         this.dateCreated = Instant.now();
         this.dateTaken = null;
+        this.isClosed = false;
     }
     
     public Swap(Swap s){
@@ -36,6 +37,7 @@ public class Swap implements Serializable {
         this.shiftWanted = s.getShiftWanted();
         this.dateCreated = s.getDateCreated();
         this.dateTaken = s.getDateTaken();
+        this.isClosed = s.isClosed();
     }
     
     public Student getBidder() { return this.bidder.clone(); }
@@ -50,15 +52,18 @@ public class Swap implements Serializable {
     
     public Instant getDateTaken() { return Instant.from(this.dateTaken); }
     
+    public boolean isClosed() { return this.isClosed; }
+    
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("---------- Exchange ----------\n");
-        s.append("Estudante 1: " + this.bidder + "\n");
-        s.append("Estudante 2: " + this.taker + "\n");
+        s.append("Proposta por: " + this.bidder + "\n");
+        s.append("Aceite por: " + this.taker + "\n");
         s.append("Turno oferecido: " + this.shiftOffered.getCourseId() + " " + this.shiftOffered.getId() + "\n");
         s.append("Turno pretendido: " + this.shiftWanted.getCourseId() + " " + this.shiftWanted.getId() + "\n");
         s.append("Date created: " + LocalDateTime.ofInstant(this.dateCreated, ZoneId.systemDefault()) + "\n");
         s.append("Date taken: " + LocalDateTime.ofInstant(this.dateTaken, ZoneId.systemDefault()) + "\n");
+        s.append("Proposta aberta: " + !this.isClosed + "\n");
         s.append("------------------------------\n");
     
         return s.toString();

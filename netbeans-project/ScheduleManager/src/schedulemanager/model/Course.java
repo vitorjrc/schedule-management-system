@@ -1,12 +1,11 @@
 package schedulemanager.model;
 
-/**
- * Class that represents a Course
- */
-
 import java.util.*;
 import java.io.Serializable;
 
+/**
+ * Represents a course, which has shifts, which in turn have enrolled students.
+ */
 public class Course implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;
