@@ -95,7 +95,7 @@ public class Controller {
     private void showInterfaceThings(String userID) {
         // view.setCoursesList(model.getStudents().get(userID).getShifts()); Tem-se de converter isto para lista de strings
         view.setLoggedAs(model.getStudents().get(userID).getName());
-        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getStatus());
+        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
         // view.showUserUCs(model.getStudents().get(userID).getShifts()); Isto tambem se tem de converter para lista de strings
         view.showThingsAfterLogin();
     }
