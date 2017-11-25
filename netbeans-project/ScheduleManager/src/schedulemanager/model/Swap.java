@@ -14,32 +14,35 @@ public class Swap implements Serializable {
     private static final long serialVersionUID = 7526472295622776147L;
     
     private String id;
-    private Student bidder; // Student that submitted the exchange offer
-    private Student taker;  // Student that takes the offer           
-    private Shift shiftOffered;
-    private Shift shiftWanted;
+    private String bidderID; // Student that submitted the exchange offer
+    private String takerID;  // Student that takes the offer       
+    private String courseID; // ID of course exchanged shifts belong to
+    private String shiftOfferedID;
+    private String shiftWantedID;
     private Instant dateCreated; // Instant when the offer was created
     private Instant dateTaken;   // Instant when the offer was taken
     private boolean isClosed;
     
-    public Swap(Student bidder, Shift shiftOffered, Shift shiftWanted) {
-        this.bidder = bidder;
-        this.taker = null;
-        this.shiftOffered = shiftOffered;
-        this.shiftWanted = shiftWanted;
+    public Swap(String bidderID, String courseID, String shiftOfferedID, String shiftWantedID) {
+    	
+        this.bidderID = bidderID;
+        this.takerID = null;
+        this.shiftOfferedID = shiftOfferedID;
+        this.shiftWantedID = shiftWantedID;
         this.dateCreated = Instant.now();
         this.dateTaken = null;
         this.isClosed = false;
         
-        this.id = bidder.getID() + shiftOffered.getCourseId() + shiftOffered.getId() + shiftWanted.getId();
+        this.id = bidderID + courseID + shiftOfferedID + shiftWantedID;
     }
     
     public Swap(Swap s){
     	this.id = s.getID();
-        this.bidder = s.getBidder();
-        this.taker = s.getTaker();
-        this.shiftOffered = s.getShiftOffered();
-        this.shiftWanted = s.getShiftWanted();
+        this.bidderID = s.getBidderID();
+        this.takerID = s.getTakerID();
+        this.courseID = s.getCourseID();
+        this.shiftOfferedID = s.getShiftOfferedID();
+        this.shiftWantedID = s.getShiftWantedID();
         this.dateCreated = s.getDateCreated();
         this.dateTaken = s.getDateTaken();
         this.isClosed = s.isClosed();
@@ -47,13 +50,15 @@ public class Swap implements Serializable {
     
     public String getID() { return this.id; }
     
-    public Student getBidder() { return this.bidder.clone(); }
+    public String getBidderID() { return this.bidderID; }
     
-    public Student getTaker() { return this.taker.clone(); }
+    public String getTakerID() { return this.takerID; }
     
-    public Shift getShiftOffered() { return this.shiftOffered.clone(); }
+    public String getCourseID() { return this.courseID; }
     
-    public Shift getShiftWanted() { return this.shiftWanted.clone(); }
+    public String getShiftOfferedID() { return this.shiftOfferedID; }
+    
+    public String getShiftWantedID() { return this.shiftWantedID; }
     
     public Instant getDateCreated() { return Instant.from(this.dateCreated); }
     
@@ -61,14 +66,21 @@ public class Swap implements Serializable {
     
     public boolean isClosed() { return this.isClosed; }
     
+    public void markTaken(String takerID) {
+    	
+    	this.isClosed = true;
+    	this.dateTaken = Instant.now();
+    	this.takerID = takerID;
+    }
+    
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("---------- Detalhes de troca ----------\n");
         s.append("ID: " + this.id + "\n");
-        s.append("Proposta por: " + this.bidder + "\n");
-        s.append("Aceite por: " + this.taker + "\n");
-        s.append("Turno oferecido: " + this.shiftOffered.getCourseId() + " " + this.shiftOffered.getId() + "\n");
-        s.append("Turno pretendido: " + this.shiftWanted.getCourseId() + " " + this.shiftWanted.getId() + "\n");
+        s.append("Proposta por: " + this.bidderID + "\n");
+        s.append("Aceite por: " + this.takerID + "\n");
+        s.append("Turno oferecido: " + this.courseID + " " + this.shiftOfferedID + "\n");
+        s.append("Turno pretendido: " + this.courseID + " " + this.shiftWantedID + "\n");
         s.append("Date created: " + LocalDateTime.ofInstant(this.dateCreated, ZoneId.systemDefault()) + "\n");
         s.append("Date taken: " + LocalDateTime.ofInstant(this.dateTaken, ZoneId.systemDefault()) + "\n");
         s.append("Proposta aberta: " + !this.isClosed + "\n");
