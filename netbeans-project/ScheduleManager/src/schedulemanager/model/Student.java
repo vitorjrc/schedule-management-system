@@ -13,22 +13,34 @@ public class Student implements Serializable {
     private String name;             
     private String id;                  
     private String password;                  
-    private String status;                       
+    private StudentRegimen regimen;                       
     private ArrayList<Shift> shifts; // Shifts this user is enrolled in
    
     public Student() {
         this.name = "Alberto Caeiro";
         this.id = "A00000";
         this.password = "heterocromatico";
-        this.status = "";
+        this.regimen = StudentRegimen.STUDENT;
         this.shifts = new ArrayList<Shift>();
     }
     
-    public Student(String name, String id, String pass, String stat, ArrayList<Shift> shifts) {
+    public Student(String name, String id, String pass, String regimen, ArrayList<Shift> shifts) {
         this.name = name;
         this.id = id;
         this.password = pass;
-        this.status = stat;
+        
+        if (regimen.toLowerCase() == "student") {
+        	
+        	this.regimen = StudentRegimen.STUDENT;
+        	
+        } else if (regimen.toLowerCase() == "workerstudent") {
+        	
+        	this.regimen = StudentRegimen.WORKERSTUDENT;
+        
+        } else {
+        	throw new java.lang.RuntimeException("Tried to create student with unknown regimen");
+        }
+        
         this.shifts = new ArrayList<Shift>();
         for (Shift s: shifts)
            this.shifts.add(s);
@@ -38,7 +50,7 @@ public class Student implements Serializable {
         this.name = s.getName();
         this.id = s.getID();
         this.password = s.getPassword();
-        this.status = s.getStatus();
+        this.regimen = StudentRegimen.valueOf(s.getRegimen());
         this.shifts = new ArrayList<>();
         for (Shift st: s.getShifts()) {
             this.shifts.add(st); // Strings are immutable, no need to clone()
@@ -51,9 +63,7 @@ public class Student implements Serializable {
     
     public String getPassword() { return this.password; }
     
-    public String getStatus() { return this.status; }
-    
-    public void setStatus(String status) { this.status = status; }
+    public String getRegimen() { return this.regimen.toString(); }
     
     public ArrayList<Shift> getShifts() { return new ArrayList<Shift>(this.shifts); }
     
@@ -64,7 +74,7 @@ public class Student implements Serializable {
         return ( this.name.equals(s.getName()) &&
                  this.id.equals(s.getID()) &&
                  this.password.equals(s.getPassword()) &&
-                 this.status.equals(s.getStatus()) &&
+                 this.regimen.toString().equals(s.getRegimen()) &&
                  this.shifts.equals(s.getShifts())
         );
     }
@@ -75,7 +85,7 @@ public class Student implements Serializable {
         s.append("NOME: " + this.name + "\n");
         s.append("ID: " + this.id + "\n");
         s.append("PASSWORD: " + this.password + "\n");
-        s.append("REGIME: " + this.status + "\n");
+        s.append("REGIME: " + this.regimen.toString() + "\n");
         s.append("Enrolled in the following shifts: \n");
         for(Shift st : this.shifts)
             s.append(st.toString() + "\n");

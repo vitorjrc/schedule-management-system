@@ -49,7 +49,11 @@ public class Course implements Serializable {
     	
     	shift.setCourseId(this.id);
 
-        shifts.put(id, shift);
+        this.shifts.put(id, shift);
+    }
+    
+    public void removeShift(String id) {
+    	this.shifts.remove(id);
     }
     
     public String toString() {
