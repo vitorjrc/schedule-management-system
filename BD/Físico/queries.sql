@@ -248,5 +248,189 @@ BEGIN
 END
 $$
 DELIMITER ;
+-- -----------------------------------------------------------------------
+								-- RESTRIÇÕES (triggers)
+/*
+ Duas UC's diferentes não podem ter o mesmo nome
+*/ 
+DROP TRIGGER IF EXISTS nomeUC;
+DELIMITER $$
+CREATE TRIGGER nomeUC -- nome trigger
+BEFORE INSERT ON UC -- tabela e ação (insert)
+FOR EACH ROW
+BEGIN
+
+DECLARE message VARCHAR(75);
+
+IF (new.nome IN
+	(SELECT nome FROM uc WHERE
+			uc.nome = new.nome))
+THEN 
+	SET message = 'Já existe uma UC com o mesmo nome!';
+	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = message;
+END IF;
+END 
+$$
+DELIMITER ;
+
+-- TESTE DO TRIGGER
+-- já existe a cadeira 'Álgebra Linear', vai dar erro
+ INSERT INTO UC VALUES (841, 'Álgebra Linear', 3, 5);
 
 -- -----------------------------------------------------------------------
+								-- VISTAS DOS UTILIZADORES
+								--  		&
+								--   REGRAS DE ACESSO
+/*
+ Criação de um administrador.
+*/ 
+CREATE USER 'admin'@'localhost';
+	SET PASSWORD FOR 'admin'@'localhost' = 'admin1';
+
+-- -----------------------------------------------------------------------
+/*
+ Criação do utilizador do tipo 'docente'.
+ (só criei 3 para ser representativo)
+*/
+CREATE USER 'doc1'@'localhost';
+	SET PASSWORD FOR 'doc1'@'localhost' = 'doc1';
+
+CREATE USER 'doc2'@'localhost';
+	SET PASSWORD FOR 'doc2'@'localhost' = 'doc2';
+
+CREATE USER 'doc3'@'localhost';
+	SET PASSWORD FOR 'doc3'@'localhost' = 'doc3';
+
+-- -----------------------------------------------------------------------
+/*
+ Criação do utilizador do tipo 'aluno'.
+ (só criei 3 para ser representativo)
+*/
+CREATE USER 'stud1'@'localhost';
+	SET PASSWORD FOR 'stud1'@'localhost' = 'stud1';
+
+CREATE USER 'stud2'@'localhost';
+	SET PASSWORD FOR 'stud2'@'localhost' = 'stud2';
+
+CREATE USER 'stud3'@'localhost';
+	SET PASSWORD FOR 'stud3'@'localhost' = 'stud3';
+
+-- -----------------------------------------------------------------------
+/*
+ Permissões do administrador.
+
+ Pode "fazer o que quiser".
+*/
+GRANT SELECT, INSERT, UPDATE, DELETE ON trocaturnos.* TO 'admin'@'localhost';
+
+-- -----------------------------------------------------------------------
+/*
+ Permissões dos docentes.
+ 
+ Pode consultar TODAS as tabelas, mas apenas inserir, remover
+ e atualizar os dados da tabela UCAluno (por causa dos turnos, 
+ fazer mais um turno, por exemplo)
+*/
+
+-- Permissão dos docentes em UCAluno
+GRANT SELECT, INSERT, DELETE, UPDATE ON trocaturnos.UCAluno TO 'doc1'@'localhost',
+									   						   'doc2'@'localhost',
+									   						   'doc3'@'localhost';
+
+-- Permissão dos docentes em Docente
+GRANT SELECT ON trocaturnos.Docente TO 'doc1'@'localhost',
+									   'doc2'@'localhost',
+									   'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Docente FROM 'doc1'@'localhost',
+														'doc2'@'localhost',
+														'doc3'@'localhost';
+
+-- Permissão dos docentes em UC
+GRANT SELECT ON trocaturnos.UC TO 'doc1'@'localhost',
+								  'doc2'@'localhost',
+								  'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UC FROM 'doc1'@'localhost',
+												   'doc2'@'localhost',
+												   'doc3'@'localhost';  
+
+-- Permissão dos docentes em DocenteUC
+GRANT SELECT ON trocaturnos.DocenteUC TO 'doc1'@'localhost',
+									     'doc2'@'localhost',
+									     'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.DocenteUC FROM 'doc1'@'localhost',
+														  'doc2'@'localhost',
+														  'doc3'@'localhost';
+
+-- Permissão dos docentes em Aluno
+GRANT SELECT ON trocaturnos.Aluno TO 'doc1'@'localhost',
+									 'doc2'@'localhost',
+									 'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Aluno FROM 'doc1'@'localhost',
+													  'doc2'@'localhost',
+													  'doc3'@'localhost';
+
+-- Permissão dos docentes em Escola
+GRANT SELECT ON trocaturnos.Escola TO 'doc1'@'localhost',
+									  'doc2'@'localhost',
+									  'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'doc1'@'localhost',
+													  'doc2'@'localhost',
+													  'doc3'@'localhost';
+
+-- Permissão dos docentes em Curso
+GRANT SELECT ON trocaturnos.Curso TO 'doc1'@'localhost',
+									 'doc2'@'localhost',
+									 'doc3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'doc1'@'localhost',
+													  'doc2'@'localhost',
+													  'doc3'@'localhost';
+
+-- -----------------------------------------------------------------------
+/*
+ Permissões dos alunos.
+ Podem apenas consultar as tabelas UCAluno, UC e Aluno.
+*/
+
+-- Permissão dos alunos em UC
+GRANT SELECT ON trocaturnos.UC TO 'stud1'@'localhost',
+								  'stud2'@'localhost',
+								  'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UC FROM 'stud1'@'localhost',
+												   'stud2'@'localhost',
+												   'stud3'@'localhost';
+-- Permissão dos alunos em UCAluno
+GRANT SELECT ON trocaturnos.UCAluno TO 'stud1'@'localhost',
+								       'stud2'@'localhost',
+								       'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UCAluno FROM 'stud1'@'localhost',
+												        'stud2'@'localhost',
+												        'stud3'@'localhost';
+
+-- Permissão dos alunos nas restantes tabelas (revoke de tudo)
+REVOKE SELECT, INSERT, DELETE, UPDATE ON trocaturnos.DocenteUC FROM 'stud1'@'localhost',
+												                  'stud2'@'localhost',
+												                  'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Docente FROM 'stud1'@'localhost',
+												        'stud2'@'localhost',
+												        'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Escola FROM 'stud1'@'localhost',
+												       'stud2'@'localhost',
+												       'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Aluno FROM 'stud1'@'localhost',
+												      'stud2'@'localhost',
+												      'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'stud1'@'localhost',
+												      'stud2'@'localhost',
+												      'stud3'@'localhost';
