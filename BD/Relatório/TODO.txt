@@ -3,3 +3,6 @@ Vitor:
 -Remover "lista de docentes do curso"
 (...)
 atualizar requisitos de acordo com as interrogações da diana, em 3.10
+
+-ADICIONAR ENTREVISTA
+-ADICIONAR ALGEBRA RELACIONAL

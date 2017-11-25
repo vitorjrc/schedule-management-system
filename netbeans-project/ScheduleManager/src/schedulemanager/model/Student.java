@@ -13,40 +13,35 @@ public class Student implements Serializable {
     private String name;             
     private String id;                  
     private String password;                  
-    private StudentRegimen regimen;                       
+    private StudentRegimen regimen;
     private ArrayList<Shift> shifts; // Shifts this user is enrolled in
-   
-    public Student() {
-        this.name = "Alberto Caeiro";
-        this.id = "A00000";
-        this.password = "heterocromatico";
-        this.regimen = StudentRegimen.STUDENT;
-        this.shifts = new ArrayList<Shift>();
-    }
     
-    public Student(String name, String id, String pass, String regimen) {
+    // IDs of courses user is enrolled in
+    // Doesn't necessarily mean they're enrolled in a shift of that course
+    private ArrayList<String> courseIDs; 
+    
+    public Student(String name, String id, String pass, String regimen, ArrayList<String> courseIDs) {
         this.name = name;
         this.id = id;
         this.password = pass;
-        this.regimen = StudentRegimen.convert(regimen);
         
-        /*
-        if (regimen.toLowerCase() == "Regime Normal") {
+        if (regimen.toLowerCase() == "student") {
         	
         	this.regimen = StudentRegimen.STUDENT;
         	
-        } else if (regimen.toLowerCase() == "Trabalhador-Estudante") {
+        } else if (regimen.toLowerCase() == "workerstudent") {
         	
         	this.regimen = StudentRegimen.WORKERSTUDENT;
         
         } else {
         	throw new java.lang.RuntimeException("Tried to create student with unknown regimen");
         }
-        */
         
-        this.shifts = new ArrayList<Shift>();
-        for (Shift s: shifts)
-           this.shifts.add(s);
+        this.shifts = new ArrayList<Shift>(); // Starts out empty
+        
+        this.courseIDs = new ArrayList<String>();
+        for (String s: courseIDs)
+           this.courseIDs.add(s);
     }
     
     public Student(Student s){
@@ -54,14 +49,16 @@ public class Student implements Serializable {
         this.id = s.getID();
         this.password = s.getPassword();
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
-        this.shifts = new ArrayList<>();
+        
+        this.shifts = new ArrayList<Shift>();
         for (Shift st: s.getShifts()) {
-            this.shifts.add(st); // Strings are immutable, no need to clone()
+            this.shifts.add(st.clone());
         }
-    }
-    
-    public void setShifts(ArrayList<Shift> shifts) {
-        this.shifts = shifts;
+        
+        this.courseIDs = new ArrayList<String>();
+        for (String courseID: s.getCourseIDs()) {
+            this.courseIDs.add(courseID);
+        }
     }
 
     public String getName() { return this.name; }
@@ -70,11 +67,11 @@ public class Student implements Serializable {
     
     public String getPassword() { return this.password; }
     
-    public String getRegimen() { return this.regimen.toString(); }
+    public String getRegimen() { return this.regimen.name(); }
     
     public ArrayList<Shift> getShifts() { return new ArrayList<Shift>(this.shifts); }
     
-        public ArrayList<String> getShiftsString() {
+    public ArrayList<String> getShiftsString() {
         
         ArrayList<String> strings = new ArrayList<String>();
         for(Shift s: shifts) {
@@ -84,6 +81,12 @@ public class Student implements Serializable {
         return strings;
     }
     
+    public void setShifts(ArrayList<Shift> shifts) {
+        this.shifts = shifts;
+    }
+    
+    public ArrayList<String> getCourseIDs() { return new ArrayList<String>(this.courseIDs); }
+    
     public ArrayList<String> getUCsString() {
         ArrayList<String> strings = new ArrayList<String>();
         
@@ -92,8 +95,17 @@ public class Student implements Serializable {
         }
         
         return strings;
-        
     }
+    
+    // === Methods
+    
+    // Enrolls this student in a shift
+    public void assignShift(Shift shift) {
+
+    	this.shifts.add(shift.clone());
+    }
+    
+    // === /Methods
     
     public boolean equals(Object o){
         if (this == o) return true;
