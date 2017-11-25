@@ -14,11 +14,7 @@ public class Student implements Serializable {
     private String id;                  
     private String password;                  
     private StudentRegimen regimen;
-    private ArrayList<Shift> shifts; // Shifts this user is enrolled in
-    
-    // IDs of courses user is enrolled in
-    // Doesn't necessarily mean they're enrolled in a shift of that course
-    private ArrayList<String> courseIDs; 
+    private HashMap<String, HashMap<String, Shift>> shifts; // Shifts this user is enrolled in (CourseID -> (ShiftID -> Shift))
     
     public Student(String id, String name, String pass, String regimen, ArrayList<String> courseIDs) {
         this.name = name;
@@ -37,11 +33,10 @@ public class Student implements Serializable {
         	throw new java.lang.RuntimeException("Tried to create student with unknown regimen");
         }
         
-        this.shifts = new ArrayList<Shift>(); // Starts out empty
-        
-        this.courseIDs = new ArrayList<String>();
-        for (String s: courseIDs)
-           this.courseIDs.add(s);
+        this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Starts out empty
+
+        for (String courseID: courseIDs)
+           this.shifts.put(courseID, new HashMap<String, Shift>());
     }
     
     public Student(Student s){
@@ -49,16 +44,7 @@ public class Student implements Serializable {
         this.id = s.getID();
         this.password = s.getPassword();
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
-        
-        this.shifts = new ArrayList<Shift>();
-        for (Shift st: s.getShifts()) {
-            this.shifts.add(st.clone());
-        }
-        
-        this.courseIDs = new ArrayList<String>();
-        for (String courseID: s.getCourseIDs()) {
-            this.courseIDs.add(courseID);
-        }
+        this.shifts = new HashMap<String, HashMap<String, Shift>>(s.shifts); // Shallow clone - good enough
     }
 
     public String getName() { return this.name; }
@@ -69,8 +55,11 @@ public class Student implements Serializable {
     
     public String getRegimen() { return this.regimen.name(); }
     
-    public ArrayList<Shift> getShifts() { return new ArrayList<Shift>(this.shifts); }
+    public HashMap<String, HashMap<String, Shift>> getShifts() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
     
+    /* Retired - if this is needed tell me Sérgio
+     * - marcosBo$$
+
     public ArrayList<String> getShiftsString() {
         
         ArrayList<String> strings = new ArrayList<String>();
@@ -80,13 +69,7 @@ public class Student implements Serializable {
         
         return strings;
     }
-    
-    public void setShifts(ArrayList<Shift> shifts) {
-        this.shifts = shifts;
-    }
-    
-    public ArrayList<String> getCourseIDs() { return new ArrayList<String>(this.courseIDs); }
-    
+
     public ArrayList<String> getUCsString() {
         ArrayList<String> strings = new ArrayList<String>();
         
@@ -96,13 +79,25 @@ public class Student implements Serializable {
         
         return strings;
     }
+    */
     
     // === Methods
     
     // Enrolls this student in a shift
     public void assignShift(Shift shift) {
 
-    	this.shifts.add(shift.clone());
+    	// Check if HashMap of this course's shifts exists
+        if (!this.shifts.containsKey(shift.getCourseId())) {
+            this.shifts.put(shift.getCourseId(), new HashMap<String, Shift>());
+    	}
+        
+        // Add this shift to the right course on the shifts HashMap
+        this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
+    }
+    
+    public boolean hasShift(String courseID, String shiftID) {
+    	
+    	return this.shifts.containsKey(courseID) && this.shifts.get(courseID).containsKey(shiftID);
     }
     
     // === /Methods
@@ -119,7 +114,8 @@ public class Student implements Serializable {
         );
     }
     
-    public String toString(){
+    public String toString() {
+    	
         StringBuilder s = new StringBuilder();
         s.append("----------ALUNO----------\n");
         s.append("NOME: " + this.name + "\n");
@@ -127,8 +123,17 @@ public class Student implements Serializable {
         s.append("PASSWORD: " + this.password + "\n");
         s.append("REGIME: " + this.regimen.toString() + "\n");
         s.append("Enrolled in the following shifts: \n");
-        for(Shift st : this.shifts)
-            s.append(st.toString() + "\n");
+        
+        for (String course: this.shifts.keySet()) {
+            
+        	s.append("  " + course + ":\n");
+            
+            for (String shift: this.shifts.get(course).keySet()) {
+
+            	s.append("  " + shift + "\n");
+            }
+        }
+        
         s.append("-------------------------\n");
     
         return s.toString();
