@@ -20,7 +20,7 @@ public class Student implements Serializable {
     // Doesn't necessarily mean they're enrolled in a shift of that course
     private ArrayList<String> courseIDs; 
     
-    public Student(String name, String id, String pass, String regimen, ArrayList<String> courseIDs) {
+    public Student(String id, String name, String pass, String regimen, ArrayList<String> courseIDs) {
         this.name = name;
         this.id = id;
         this.password = pass;

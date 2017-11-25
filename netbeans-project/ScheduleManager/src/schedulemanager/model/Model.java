@@ -98,6 +98,4 @@ public class Model {
         studentsList.get(alunoID).setShifts(shifts);
     }
     
-    
-    
 }

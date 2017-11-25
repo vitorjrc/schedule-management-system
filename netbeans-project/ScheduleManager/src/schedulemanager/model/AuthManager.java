@@ -17,7 +17,7 @@ public class AuthManager {
 	private static final String adminPassword = "SECURITYHOLE";
 	
 	public AuthManager() {
-		// Nothing to do here
+		// Nothing to construct here, go home Bob
 	}
 	
 	public void registerStudent(String id, String name, String password, String regimen, ArrayList<String> courseIDs) {
