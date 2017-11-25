@@ -1,6 +1,7 @@
 package schedulemanager.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Manages authentication stuff
@@ -10,7 +11,7 @@ public class AuthManager {
 	private boolean isStudentLoggedIn = false;
 	private boolean isAdminLoggedIn = false;
 	private Student loggedInStudent = null;
-	private ArrayList<Student> registeredStudents;
+	private HashMap<String, Student> registeredStudents; // StudentID -> Student
 	
 	// Admin login credentials. Not safe in current form.
 	private static final String adminID = "admin";
@@ -18,14 +19,19 @@ public class AuthManager {
 	
 	public AuthManager() {
 		
-		this.registeredStudents = new ArrayList<Student>();
+		this.registeredStudents = new HashMap<String, Student>();
 	}
 	
 	public void registerStudent(String id, String name, String password, String regimen, ArrayList<String> courseIDs) {
 		
 		Student newStudent = new Student(id, name, password, regimen, courseIDs);
 		
-		registeredStudents.add(newStudent);
+		registeredStudents.put(id, newStudent);
+	}
+	
+	public Student getStudentByID(String id) {
+		
+		return this.registeredStudents.get(id);
 	}
 	
 	// Returns true if login was successful, false otherwise
@@ -48,30 +54,30 @@ public class AuthManager {
 		}
 		
 		// Check if a student exists with the given ID
-		for (Student student: this.registeredStudents) {
-
-			if (student.getID() == id) {
+		if (this.registeredStudents.containsKey(id)) {
+			
+			Student student = this.registeredStudents.get(id);
 				
-				// Check password
-				if (student.getPassword() == password) {
-					
-					this.isStudentLoggedIn = true;
-					this.isAdminLoggedIn = false; // Just to make sure
-					
-					this.loggedInStudent = student;
-					
-					return true;
-					
-				} else {
-					
-					// Here we can add extra wrong password logic,
-					// such as counting failed attempts
-					return false;
-				}
+			// Check password
+			if (student.getPassword() == password) {
+				
+				this.isStudentLoggedIn = true;
+				this.isAdminLoggedIn = false; // Just to make sure
+				this.loggedInStudent = student;
+				
+				return true;
+				
+			} else {
+				
+				// Here we can add extra wrong password logic,
+				// such as counting failed attempts
+				return false;
 			}
-		}
+			
+		} else {
 		
-		return false; // Didn't find student with received ID
+			return false; // Didn't find student with received ID
+		}
 	}
 	
 	public void logout() {
