@@ -16,8 +16,15 @@ public class SwapManager {
 	 */
 	private HashMap<String, HashMap<String, Swap>> swapsByStudentID; // studentID -> (swapID -> Swap)
 	
+	private boolean swapsAllowed = true; // Keeps track of whether Swaps are still allowed.
+	
 	public SwapManager() {
 		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
+	}
+	
+	public SwapManager(boolean swapsAllowed) {
+		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
+		this.swapsAllowed = swapsAllowed;
 	}
 
 	// Creates a swap offer without checking if the student has the shift
@@ -50,6 +57,26 @@ public class SwapManager {
 		}
 	}
 	
+	// Cancels a swap offer. Returns true if successful.
+	public boolean cancelSwapOffer(String studentID, String swapID) {
+		
+		if (!this.swapsByStudentID.containsKey(studentID)) {
+			return false;
+		}
+		
+		HashMap<String, Swap> swaps = this.swapsByStudentID.get(studentID);
+		
+		if (!swaps.containsKey(swapID)) {
+			return false;
+		}
+		
+		swaps.remove(swapID);
+		return true;
+	}
+	
+	// Registers a swap offer as taken by a student.
+	// Doesn't deal with actually registering and
+	// unregistering the students from the shifts.
 	public void takeSwapOffer(String takerID, String swapID) {
 		
 		
