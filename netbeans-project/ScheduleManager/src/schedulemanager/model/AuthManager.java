@@ -17,7 +17,8 @@ public class AuthManager {
 	private static final String adminPassword = "SECURITYHOLE";
 	
 	public AuthManager() {
-		// Nothing to construct here, go home Bob
+		
+		this.registeredStudents = new ArrayList<Student>();
 	}
 	
 	public void registerStudent(String id, String name, String password, String regimen, ArrayList<String> courseIDs) {
@@ -31,8 +32,8 @@ public class AuthManager {
 	public boolean login(String id, String password) {
 		
 		// Check if this is an admin login attempt
-		if (id == this.adminID) {
-			if (password == this.adminPassword) {
+		if (id == AuthManager.adminID) {
+			if (password == AuthManager.adminPassword) {
 				
 				this.isAdminLoggedIn = true;
 				this.isStudentLoggedIn = false;
