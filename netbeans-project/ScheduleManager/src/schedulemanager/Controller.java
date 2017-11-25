@@ -26,21 +26,31 @@ public class Controller {
     // ID of currently logged in user
     private String loggedUserID;
     
+    private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>();
+    
     
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
     	view.onRegister(this::onRegister);
-        //view.getRegistrationArea().RegisterButton(this::RegisterButton);
+        view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
         view.checkedCourse(this::checkedCourse);
     }
     
     // Called when the view sends an onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.getRegistrationArea().showCourses(model.getUCsList());
+        view.getRegistrationArea().showCourses(ucsName());
     }
     
-    /*
+    public LinkedHashMap<String, String> ucsName() {
+        for(Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
+            ucs.put(entry.getKey(), entry.getValue().getName());
+        }
+        
+        return ucs;
+    }
+    
+    
     private void RegisterButton(ArrayList<String> data) {
         String new_ID = data.get(0);
         
@@ -53,26 +63,30 @@ public class Controller {
         String new_Password = data.get(1);
         String new_Name = data.get(2);
         String new_Status = data.get(3);
-                
-        ArrayList<String> new_Courses = new ArrayList<String>();
         
-        int found = 0;
-        for(int i = 4; i < data.size(); i++) {   
-            new_Courses.add(data.get(i));
-            if (!(data.get(i).equals("")))
-                found = 1;
-        }
-        
-        if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("") || found == 0) {
+        if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("")) {
             view.showRegisterError2();
         }
+        
         else { 
+            Student student = model.registerStudent(new_Name, new_ID, new_Password, new_Status);
             view.showRegisterSuccess();
-            model.registerStudent(new_Name, new_ID, new_Password, new_Status, new_Courses);
+            
+                
+        ArrayList<Shift> new_Courses = new ArrayList<Shift>();
+        
+        for (int i = 4; i < data.size(); i++) {
+            Shift s = model.getUCsList().get(data.get(i)).Shift0();
+            // testing Shift 1 for Calculo
+            model.createShiftCalculo();
+            new_Courses.add(s);
+        }
+        
+        model.getShiftOfUser(new_ID, new_Courses);
         }
         
     }
-    */
+    
     
     private void loginButton(ArrayList<String> data) {
         String userId = data.get(0);
@@ -93,10 +107,10 @@ public class Controller {
     }
     
     private void showInterfaceThings(String userID) {
-        // view.setCoursesList(model.getStudents().get(userID).getShifts()); Tem-se de converter isto para lista de strings
+        view.setCoursesList(model.getStudents().get(userID).getUCsString());
         view.setLoggedAs(model.getStudents().get(userID).getName());
-        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getStatus());
-        // view.showUserUCs(model.getStudents().get(userID).getShifts()); Isto tambem se tem de converter para lista de strings
+        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
+        view.showUserUCs(model.getStudents().get(userID).getShiftsString());
         view.showThingsAfterLogin();
     }
     

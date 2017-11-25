@@ -17,7 +17,8 @@ public class Course implements Serializable {
     
     // Constructors
     
-    public Course(String name) {
+    public Course(String id, String name) {
+        this.id = id;
         this.name = name;
         this.shifts = new HashMap<String, Shift>();
     }
@@ -49,7 +50,18 @@ public class Course implements Serializable {
     	
     	shift.setCourseId(this.id);
 
-        shifts.put(id, shift);
+        this.shifts.put(id, shift);
+    }
+    
+    public void removeShift(String id) {
+    	this.shifts.remove(id);
+    }
+    
+    public Shift Shift0() {
+
+        Shift newt = new Shift("PL0", this.id);
+        this.shifts.put("PL0", newt);
+        return newt;
     }
     
     public String toString() {

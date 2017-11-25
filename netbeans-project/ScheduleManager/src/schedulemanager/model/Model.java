@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Model {
     
-    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>();
+    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>(); // Course ID -> Course
     private HashMap<String, Student> studentsList = new HashMap<String, Student>(); // Student ID -> Student
     
     public HashMap<String, Student> getStudents() {
@@ -17,88 +17,59 @@ public class Model {
     
     private LinkedHashMap<String, Course> testCourses(LinkedHashMap<String, Course> ucs) {
         
-    	ucs.put("Álgebra Linear EI", new Course("Álgebra Linear EI"));
-        ucs.put("Cálculo", new Course("Cálculo"));
-        ucs.put("Tópicos de Matemática Discreta", new Course("Tópicos de Matemática Discreta"));
-        ucs.put("Programação Funcional", new Course("Programação Funcional"));
-        ucs.put("Elementos de Engenharia de Sistemas", new Course("Elementos de Engenharia de Sistemas"));
-        ucs.put("Laboratórios de Informática I", new Course("Laboratórios de Informática I"));
-        ucs.put("Sistemas de Computação", new Course("Sistemas de Computação"));
-        ucs.put("Análise", new Course("Análise"));
-        ucs.put("Tópicos de Física Moderna", new Course("Tópicos de Física Moderna"));
-        ucs.put("Lógica EI", new Course("Lógica EI"));
-        ucs.put("Programação Imperativa", new Course("Programação Imperativa"));
-        ucs.put("Laboratórios de Informática II", new Course("Laboratórios de Informática II"));
-        ucs.put("Introdução aos Sistemas Dinâmicos", new Course("Introdução aos Sistemas Dinâmicos"));
-        ucs.put("Estatística Aplicada", new Course("Estatística Aplicada"));
-        ucs.put("Engenharia Económica", new Course("Engenharia Económica"));
-        ucs.put("Arquitetura de Computadores", new Course("Arquitetura de Computadores"));
-        ucs.put("Comunicação de Dados", new Course("Comunicação de Dados"));
-        ucs.put("Algoritmos e Complexidade", new Course("Algoritmos e Complexidade"));
-        ucs.put("Sistemas Operativos", new Course("Sistemas Operativos"));
-        ucs.put("Programação Orientada aos Objetos", new Course("Programação Orientada aos Objetos"));
-        ucs.put("Eletromagnetismo EE", new Course("Eletromagnetismo EE"));
-        ucs.put("Cálculo de Programas", new Course("Cálculo de Programas"));
-        ucs.put("Laboratórios de Informática III", new Course("Laboratórios de Informática III"));
-        ucs.put("Bases de Dados", new Course("Bases de Dados"));
-        ucs.put("Desenvolvimento de Sistemas de Software", new Course("Desenvolvimento de Sistemas de Software"));
-        ucs.put("Modelos Determinísticos de Investigação Operacional", new Course("Modelos Determinísticos de Investigação Operacional"));
-        ucs.put("Sistemas Distribuídos", new Course("Sistemas Distribuídos"));
-        ucs.put("Redes de Computadores", new Course("Redes de Computadores"));
-        ucs.put("Métodos Numéricos e Otimização não Linear", new Course("Métodos Numéricos e Otimização não Linear"));
-        ucs.put("Sistemas de Representação de Conhecimento e Raciocínio", new Course("Sistemas de Representação de Conhecimento e Raciocínio"));
-        ucs.put("Computação Gráfica", new Course("Computação Gráfica"));
-        ucs.put("Modelos Estocásticos de Investigação Operacional", new Course("Modelos Estocásticos de Investigação Operacional"));
-        ucs.put("Comunicações por Computador", new Course("Comunicações por Computador"));
-        ucs.put("Processamento de Linguagens", new Course("Processamento de Linguagens"));
-        ucs.put("Laboratórios de Informática IV", new Course("Laboratórios de Informática IV"));
+    	ucs.put("1", new Course("1", "Álgebra Linear EI"));
+        ucs.put("2", new Course("2", "Cálculo"));
+        ucs.put("3", new Course("3", "Tópicos de Matemática Discreta"));
+        ucs.put("4", new Course("4", "Programação Funcional"));
+        ucs.put("5", new Course("5", "Elementos de Engenharia de Sistemas"));
+        ucs.put("6", new Course("6", "Laboratórios de Informática I"));
+        ucs.put("7", new Course("7", "Sistemas de Computação"));
+        ucs.put("8", new Course("8", "Análise"));
+        ucs.put("9", new Course("9", "Tópicos de Física Moderna"));
+        ucs.put("10", new Course("10", "Lógica EI"));
+        ucs.put("11", new Course("11", "Programação Imperativa"));
+        ucs.put("12", new Course("12", "Laboratórios de Informática II"));
+        ucs.put("13", new Course("13", "Introdução aos Sistemas Dinâmicos"));
+        ucs.put("14", new Course("14", "Estatística Aplicada"));
+        ucs.put("15", new Course("15", "Engenharia Económica"));
+        ucs.put("16", new Course("16", "Arquitetura de Computadores"));
+        ucs.put("17", new Course("17", "Comunicação de Dados"));
+        ucs.put("18", new Course("18", "Algoritmos e Complexidade"));
+        ucs.put("19", new Course("19", "Sistemas Operativos"));
+        ucs.put("20", new Course("20", "Programação Orientada aos Objetos"));
+        ucs.put("21", new Course("21", "Eletromagnetismo EE"));
+        ucs.put("22", new Course("22", "Cálculo de Programas"));
+        ucs.put("23", new Course("23", "Laboratórios de Informática III"));
+        ucs.put("24", new Course("24", "Bases de Dados"));
+        ucs.put("25", new Course("25", "Desenvolvimento de Sistemas de Software"));
+        ucs.put("26", new Course("26", "Modelos Determinísticos de Investigação Operacional"));
+        ucs.put("27", new Course("27", "Sistemas Distribuídos"));
+        ucs.put("28", new Course("28", "Redes de Computadores"));
+        ucs.put("29", new Course("29", "Métodos Numéricos e Otimização não Linear"));
+        ucs.put("30", new Course("30", "Sistemas de Representação de Conhecimento e Raciocínio"));
+        ucs.put("31", new Course("31", "Computação Gráfica"));
+        ucs.put("32", new Course("32", "Modelos Estocásticos de Investigação Operacional"));
+        ucs.put("33", new Course("33", "Comunicações por Computador"));
+        ucs.put("34", new Course("34", "Processamento de Linguagens"));
+        ucs.put("35", new Course("35", "Laboratórios de Informática IV"));
 
         return ucs;
-    }
-    
-    private void testShifts() {
-        
-        //coursesList.get("CÃ¡lculo").createShift("PL1");
-        //coursesList.get("CÃ¡lculo").createShift("PL2");
-        //coursesList.get("CÃ¡lculo").createShift("PL3");
-        //coursesList.get("CÃ¡lculo").createShift("PL4");
-        //coursesList.get("CÃ¡lculo").createShift("PL5");
-        
     }
     
     public LinkedHashMap<String, Course> getUCsList() {
         
         LinkedHashMap<String, Course> newCoursesList = new LinkedHashMap<String, Course>(testCourses(coursesList));
-        this.testShifts();
-        
         return newCoursesList;
     }
-    
-    /*
-    public ArrayList<String> hashtoList() {
-        
-        this.testCourses(coursesList);
-        this.testShifts();
-        
-        ArrayList<String> testtoList = new ArrayList<String>();
-        
-        for (String courses: coursesList.keySet() ) { 
-            testtoList.add(courses);
-        }
-        
-        return testtoList;
-        
-    }
 
-   */
     
     public LinkedHashMap<String, Course> getCourses() {
         
         return testCourses(coursesList);
     }
     
-    public Student registerStudent(String name, String id, String pass, String stat, ArrayList<Shift> courses){
-        Student newStudent = new Student(name, id, pass, stat, courses);
+    public Student registerStudent(String name, String id, String pass, String stat){
+        Student newStudent = new Student(name, id, pass, stat);
         studentsList.put(id, newStudent);
         
         return newStudent;
@@ -111,9 +82,20 @@ public class Model {
                 
         for (Map.Entry<String, Shift> entry : this.coursesList.get(course).getShifts().entrySet()) {
             courseShifts_list.add(entry.getKey());
+             System.out.println(entry.getKey());
         }
         
         return courseShifts_list;
+    }
+    
+    public void createShiftCalculo() {
+        Shift turnonovo = new Shift("PL1", "Cálculo", 10, "caiado", "A5");
+        coursesList.get("2").addShift("PL1", turnonovo);
+        
+    }
+    
+    public void getShiftOfUser(String alunoID, ArrayList<Shift> shifts) {
+        studentsList.get(alunoID).setShifts(shifts);
     }
     
     

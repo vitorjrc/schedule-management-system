@@ -23,6 +23,11 @@ public class Shift {
         this.classroom = classroom;
         this.occupants = new HashSet<Student>();
     }
+     
+     public Shift(String id, String courseId) {
+        this.id = id;
+        this.courseId = courseId;
+    }
     
     public Shift(Shift s) {
         this.id = s.getId();
@@ -65,9 +70,15 @@ public class Shift {
     public HashSet<Student> getOccupants() {
         return occupants;
     }
-
+   
+    
+    public String toString() {
+        
+        return ("UC: " + this.courseId + " Turno: " + this.id);
+    }
+    
     @Override
-    public Shift clone(){
+    public Shift clone() {
         return new Shift(this);
     }
 }

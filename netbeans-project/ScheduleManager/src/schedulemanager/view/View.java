@@ -498,7 +498,7 @@ public class View extends javax.swing.JFrame {
     }
     
     public void showUserUCs(ArrayList<String> userCourses){
-    
+        
         jPanel4.setLayout(new GridLayout(15, 2));
         jPanel4.setBackground(Color.white);
          for(String c: userCourses ) {
