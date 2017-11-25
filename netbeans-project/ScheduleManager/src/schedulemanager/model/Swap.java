@@ -13,7 +13,7 @@ public class Swap implements Serializable {
     
     private static final long serialVersionUID = 7526472295622776147L;
     
-    private String id;
+    private String id;       // Swap ID - this is defined by the bidder, taker, course, and shifts. Dates don't matter, so comparisons work.
     private String bidderID; // Student that submitted the exchange offer
     private String takerID;  // Student that takes the offer       
     private String courseID; // ID of course exchanged shifts belong to
@@ -71,6 +71,9 @@ public class Swap implements Serializable {
     	this.isClosed = true;
     	this.dateTaken = Instant.now();
     	this.takerID = takerID;
+    	
+    	// Update id to avoid future (unlikely) repetitions
+    	this.id = bidderID + courseID + shiftOfferedID + shiftWantedID + takerID;
     }
     
     public String toString(){
