@@ -343,8 +343,8 @@ GRANT SELECT ON trocaturnos.Docente TO 'doc1'@'localhost',
 									   'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Docente FROM 'doc1'@'localhost',
-														'doc2'@'localhost',
-														'doc3'@'localhost';
+														  'doc2'@'localhost',
+														  'doc3'@'localhost';
 
 -- Permissão dos docentes em UC
 GRANT SELECT ON trocaturnos.UC TO 'doc1'@'localhost',
@@ -352,8 +352,8 @@ GRANT SELECT ON trocaturnos.UC TO 'doc1'@'localhost',
 								  'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UC FROM 'doc1'@'localhost',
-												   'doc2'@'localhost',
-												   'doc3'@'localhost';  
+												     'doc2'@'localhost',
+												     'doc3'@'localhost';  
 
 -- Permissão dos docentes em DocenteUC
 GRANT SELECT ON trocaturnos.DocenteUC TO 'doc1'@'localhost',
@@ -361,8 +361,8 @@ GRANT SELECT ON trocaturnos.DocenteUC TO 'doc1'@'localhost',
 									     'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.DocenteUC FROM 'doc1'@'localhost',
-														  'doc2'@'localhost',
-														  'doc3'@'localhost';
+														    'doc2'@'localhost',
+														    'doc3'@'localhost';
 
 -- Permissão dos docentes em Aluno
 GRANT SELECT ON trocaturnos.Aluno TO 'doc1'@'localhost',
@@ -370,8 +370,8 @@ GRANT SELECT ON trocaturnos.Aluno TO 'doc1'@'localhost',
 									 'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Aluno FROM 'doc1'@'localhost',
-													  'doc2'@'localhost',
-													  'doc3'@'localhost';
+													    'doc2'@'localhost',
+													    'doc3'@'localhost';
 
 -- Permissão dos docentes em Escola
 GRANT SELECT ON trocaturnos.Escola TO 'doc1'@'localhost',
@@ -379,8 +379,8 @@ GRANT SELECT ON trocaturnos.Escola TO 'doc1'@'localhost',
 									  'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'doc1'@'localhost',
-													  'doc2'@'localhost',
-													  'doc3'@'localhost';
+													    'doc2'@'localhost',
+													    'doc3'@'localhost';
 
 -- Permissão dos docentes em Curso
 GRANT SELECT ON trocaturnos.Curso TO 'doc1'@'localhost',
@@ -388,13 +388,13 @@ GRANT SELECT ON trocaturnos.Curso TO 'doc1'@'localhost',
 									 'doc3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'doc1'@'localhost',
-													  'doc2'@'localhost',
-													  'doc3'@'localhost';
+													    'doc2'@'localhost',
+													    'doc3'@'localhost';
 
 -- -----------------------------------------------------------------------
 /*
  Permissões dos alunos.
- Podem apenas consultar as tabelas UCAluno, UC e Aluno.
+ Podem apenas consultar as tabelas UCAluno e UC.
 */
 
 -- Permissão dos alunos em UC
@@ -403,34 +403,53 @@ GRANT SELECT ON trocaturnos.UC TO 'stud1'@'localhost',
 								  'stud3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UC FROM 'stud1'@'localhost',
-												   'stud2'@'localhost',
-												   'stud3'@'localhost';
+												     'stud2'@'localhost',
+												     'stud3'@'localhost';
 -- Permissão dos alunos em UCAluno
 GRANT SELECT ON trocaturnos.UCAluno TO 'stud1'@'localhost',
 								       'stud2'@'localhost',
 								       'stud3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.UCAluno FROM 'stud1'@'localhost',
-												        'stud2'@'localhost',
-												        'stud3'@'localhost';
+												          'stud2'@'localhost',
+												          'stud3'@'localhost';
 
 -- Permissão dos alunos nas restantes tabelas (revoke de tudo)
 REVOKE SELECT, INSERT, DELETE, UPDATE ON trocaturnos.DocenteUC FROM 'stud1'@'localhost',
-												                  'stud2'@'localhost',
-												                  'stud3'@'localhost';
+												                    'stud2'@'localhost',
+												                    'stud3'@'localhost';
 
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Docente FROM 'stud1'@'localhost',
+												          'stud2'@'localhost',
+												          'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Escola FROM 'stud1'@'localhost',
+												         'stud2'@'localhost',
+												         'stud3'@'localhost';
+
+REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Aluno FROM 'stud1'@'localhost',
 												        'stud2'@'localhost',
 												        'stud3'@'localhost';
 
-REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Escola FROM 'stud1'@'localhost',
-												       'stud2'@'localhost',
-												       'stud3'@'localhost';
-
-REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Aluno FROM 'stud1'@'localhost',
-												      'stud2'@'localhost',
-												      'stud3'@'localhost';
-
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'stud1'@'localhost',
-												      'stud2'@'localhost',
-												      'stud3'@'localhost';
+												        'stud2'@'localhost',
+												        'stud3'@'localhost';
+
+-- -----------------------------------------------------------------------
+								-- VIEWS PARA UTILIZADORES
+/*
+ View correspondente à informação que um aluno pode ver.
+*/ 
+DROP VIEW IF EXISTS viewAluno;
+DELIMITER $$
+CREATE VIEW viewAluno AS
+	SELECT DISTINCT u.nome, u.codigo, u.ano, u.ects, a.turno
+	FROM UC u, UCAluno a
+	WHERE u.codigo = a.UC_Codigo;
+
+$$
+DELIMITER ;
+SELECT * FROM trocaturnos.viewAluno;
+
+-- -----------------------------------------------------------------------
+
