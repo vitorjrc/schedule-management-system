@@ -16,6 +16,10 @@ Only the controller has a reference to both the model and the view. Neither the 
 
 ![Our flavor of MVC](https://i.imgur.com/zDl3HeP.png)
 
+## Miscellaneous
+
+* Information about class diagrams can be hard to parse when checking through various sources. IBM has created a nice summary on the topic [here](https://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/index.html).
+
 ## Authors
 
 * @diisnc
