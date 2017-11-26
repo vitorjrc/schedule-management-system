@@ -47,30 +47,5 @@ public class Model {
     	this.coursesList.put(courseID, newCourse);
     	
     	return newCourse;
-    }
-    
-    // metodo que devolve os turnos de uma cadeira
-    public ArrayList<String> courseShifts(String course) {
-    
-        ArrayList<String> courseShifts_list = new ArrayList<String>();
-                
-        for (Map.Entry<String, Shift> entry : this.coursesList.get(course).getShifts().entrySet()) {
-            courseShifts_list.add(entry.getKey());
-        }
-        
-        return courseShifts_list;
-    }
-    
-    public Shift createShiftCalculo() {
-        Shift turnonovo = new Shift("PL1", "Cálculo", 10, "caiado", "A5");
-        coursesList.get("2").addShift("PL1", turnonovo);
-        return turnonovo;
-        
-    }
-    /*
-    public void getShiftOfUser(String alunoID, ArrayList<Shift> shifts) {
-        studentsList.get(alunoID).setShifts(shifts);
-    }
-*/
-    
+    } 
 }
