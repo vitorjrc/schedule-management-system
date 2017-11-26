@@ -87,9 +87,12 @@ public class Controller {
                 // Shift s = model.getUCsList().get(ucs.get(data.get(i))).Shift0();
                 // testing Shift 1 for Calculo
                 //Shift novo = model.createShiftCalculo();
-                Shift turnonovo = new Shift("PL0", "Cálculo", 10, "caiado", "A5");
+                System.out.println("passou");
                 String st = ucs.get(data.get(i));
-                model.getCourses().get(st).addShift("PL0", turnonovo);
+                Shift turnonovo = model.getCourses().get(st).Shift0();
+                System.out.println(turnonovo);
+                
+                model.getCourses().get(st).addShift(st, turnonovo);
                 new_Courses.add(st);
                 model.getStudents().get(new_ID).assignShift(turnonovo);
             }

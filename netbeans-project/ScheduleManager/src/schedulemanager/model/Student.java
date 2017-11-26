@@ -63,9 +63,22 @@ public class Student implements Serializable {
         
         // UC e turno
         HashMap<String, String> shiftsList = new HashMap<String, String>();
+        /*
         for(Map.Entry<String, HashMap<String, Shift>> entry: shifts.entrySet()) {
-            for(String s: entry.getValue().keySet())
-                shiftsList.put(entry.getKey(), s);
+            for(Map.Entry<String, Shift> entry1: entry.getValue().entrySet()) {
+                shiftsList.put(entry.getKey(), entry1.getKey());
+                System.out.println(entry1.getKey());
+                System.out.println(shiftsList.size());
+                
+                */
+        for (int i = 0; i < shifts.size(); i++) {
+            
+            // String s1 = shifts.get(shifts.keySet().toArray()[i]);ss
+            String s2 = shifts.keySet().toArray()[i].toString();
+            System.out.println(s2);
+            System.out.println("TAMANHO DO MAP " + shifts.get(s2).size());
+            // String s3 = shifts.get(s2).keySet().toArray()[0].toString();
+            // shiftsList.put(s2, s3);
         }
         return shiftsList;
     }
@@ -88,12 +101,13 @@ public class Student implements Serializable {
 
     	// Check if HashMap of this course's shifts exists
         if (!this.shifts.containsKey(shift.getCourseId())) {
+            System.out.println("course id " + shift.getCourseId());
             this.shifts.put(shift.getCourseId(), new HashMap<String, Shift>());
     	}
         
         // Add this shift to the right course on the shifts HashMap
+        System.out.println("shift id " + shift.getId());
         this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
-        
     }
     
     public void removeFromShift(Shift shift) {
