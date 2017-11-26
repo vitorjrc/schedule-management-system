@@ -30,6 +30,32 @@ public class SwapManager {
 		this.swapsAllowed = swapsAllowed;
 	}
 	
+	// Checks whether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
+	private boolean swapOfferAllowed(String bidderID, String courseID, String offeredShiftID) {
+		
+		if (!this.authManager.isStudentLoggedIn()) {
+			return false;
+		}
+		
+		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
+		
+		// Check that bidder is the student that is logged in
+		if (loggedInStudent.getID() != bidderID) { return false; }
+		
+		// Check that bidder has this shift to offer
+		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) { return false; }
+		
+		return true;
+	}
+	
+	// Creates a given student's HashMap of swaps if it doesn't exist
+	private void createStudentSwapsMapIfNotExists(String studentID) {
+		
+		if (!this.swapsByStudentID.containsKey(studentID)) {
+			
+			this.swapsByStudentID.put(studentID, new HashMap<String, Swap>());
+		}
+	}
     
     // Auxiliary function
     // Returns all open swaps if parameter is true,
@@ -108,33 +134,6 @@ public class SwapManager {
     	
     	return new HashMap<String, Swap>(this.getSwapsOfStudent(studentID, false));
     }
-	
-	// Checks whether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
-	private boolean swapOfferAllowed(String bidderID, String courseID, String offeredShiftID) {
-		
-		if (!this.authManager.isStudentLoggedIn()) {
-			return false;
-		}
-		
-		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
-		
-		// Check that bidder is the student that is logged in
-		if (loggedInStudent.getID() != bidderID) { return false; }
-		
-		// Check that bidder has this shift to offer
-		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) { return false; }
-		
-		return true;
-	}
-	
-	// Creates a given student's HashMap of swaps if it doesn't exist
-	private void createStudentSwapsMapIfNotExists(String studentID) {
-		
-        if (!this.swapsByStudentID.containsKey(studentID)) {
-			
-			this.swapsByStudentID.put(studentID, new HashMap<String, Swap>());
-		}
-	}
 	
 	public void lockSwaps() {
 		if (this.authManager.isAdminLoggedIn()) {
