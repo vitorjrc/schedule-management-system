@@ -25,20 +25,24 @@ public class AuthManager {
 		this.registeredTeachers = new HashMap<String, Teacher>();
 	}
 	
-	public void registerStudent(String id, String name, String password, String regimen) {
+	public Student registerStudent(String id, String name, String password, String regimen) {
 		
 		Student newStudent = new Student(id, name, password, regimen);
 		
 		registeredStudents.put(id, newStudent);
+		
+		return newStudent;
 	}
 	
 	// Register a Teacher.
 	// courseManagedID is the ID of the course the teacher manages.
-	public void registerTeacher(String id, String name, String password, String courseManagedID) {
+	public Teacher registerTeacher(String id, String name, String password, String managedCourseID) {
 		
-		Teacher newTeacher = new Teacher(id, name, password, courseManagedID);
+		Teacher newTeacher = new Teacher(id, name, password, managedCourseID);
 		
 		registeredTeachers.put(id, newTeacher);
+		
+		return newTeacher;
 	}
 	
 	public Student getStudentByID(String id) {
@@ -83,7 +87,7 @@ public class AuthManager {
 		
 		} else {
 			
-			return "Não existe nenhum aluno/docente com a ID recebida";
+			return "NÃ£o existe nenhum aluno/docente com a ID recebida";
 		}
 		
 		// Check password
