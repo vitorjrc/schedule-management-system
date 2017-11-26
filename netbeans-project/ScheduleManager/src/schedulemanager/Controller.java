@@ -26,7 +26,7 @@ public class Controller {
     // ID of currently logged in user
     private String loggedUserID;
     
-    private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>();
+    private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
     
     
     // Tell view what methods from this class to call when certain events happen
@@ -44,7 +44,7 @@ public class Controller {
     
     public LinkedHashMap<String, String> ucsName() {
         for(Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
-            ucs.put(entry.getKey(), entry.getValue().getName());
+            ucs.put(entry.getValue().getName(), entry.getKey());
         }
         
         return ucs;
@@ -64,25 +64,38 @@ public class Controller {
         String new_Name = data.get(2);
         String new_Status = data.get(3);
         
+        String te = "Trabalhador-Estudante";
+        String rn = "Regime Normal";
+        
+        if (new_Status.equals(te)) {
+            new_Status = "workerstudent";
+        }
+        else {
+            new_Status = "student";
+        }
+        
         if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("")) {
             view.showRegisterError2();
         }
         
         else { 
-            Student student = model.registerStudent(new_Name, new_ID, new_Password, new_Status);
-            view.showRegisterSuccess();
             
-                
-        ArrayList<Shift> new_Courses = new ArrayList<Shift>();
-        
-        for (int i = 4; i < data.size(); i++) {
-            Shift s = model.getUCsList().get(data.get(i)).Shift0();
-            // testing Shift 1 for Calculo
-            model.createShiftCalculo();
-            new_Courses.add(s);
-        }
-        
-        model.getShiftOfUser(new_ID, new_Courses);
+            ArrayList<String> new_Courses = new ArrayList<String>();
+            Student student = model.registerStudent(new_Name, new_ID, new_Password, new_Status);
+            
+            for (int i = 4; i < data.size(); i++) {
+                // Shift s = model.getUCsList().get(ucs.get(data.get(i))).Shift0();
+                // testing Shift 1 for Calculo
+                //Shift novo = model.createShiftCalculo();
+                Shift turnonovo = new Shift("PL0", "Cálculo", 10, "caiado", "A5");
+                String st = ucs.get(data.get(i));
+                model.getCourses().get(st).addShift("PL0", turnonovo);
+                new_Courses.add(st);
+                model.getStudents().get(new_ID).assignShift(turnonovo);
+            }
+            
+            model.getStudents().get(new_ID).setShifts(new_Courses);
+            view.showRegisterSuccess();
         }
         
     }
@@ -107,10 +120,46 @@ public class Controller {
     }
     
     private void showInterfaceThings(String userID) {
-        view.setCoursesList(model.getStudents().get(userID).getUCsString());
+        ArrayList<String> courses = new ArrayList<String>();
+        // Get UCs name of user
+        for(String s: model.getStudents().get(userID).getUCsString() ) {
+            courses.add(model.getCourses().get(s).getName());
+        }
+        
+        view.setCoursesList(courses);
         view.setLoggedAs(model.getStudents().get(userID).getName());
         view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
-        view.showUserUCs(model.getStudents().get(userID).getShiftsString());
+        
+        /*
+        ArrayList<String> shifts = new ArrayList<String>();
+        // Get shifts of user
+        String str1 = null;
+        for (Shift s: model.getStudents().get(userID).getShiftsString()) {
+            for(Map.Entry<String, String> entry: ucs.entrySet()) {
+                if (s.getCourseId().equals(entry.getValue()))
+                    str1 = entry.getKey();
+            }
+            String str2 = " Turno: ";
+            String str3 = s.getId();
+            String str4 = new StringBuilder(str1).append(str2).append(str3).toString();
+            shifts.add(str4);
+        }
+*/
+
+        
+        //view.showUserUCs(shifts);
+        ArrayList<String> shifts = new ArrayList<String>();
+        
+        for (Map.Entry<String, String> entry: model.getStudents().get(userID).getShiftsString().entrySet()) {
+            String str1 = model.getCourses().get(entry.getKey()).getName();
+            String str2 = " Turno: ";
+            String str3 = entry.getValue();
+            String str4 = new StringBuilder(str1).append(str2).append(str3).toString();
+            shifts.add(str4);
+        }
+        
+        view.showUserUCs(shifts);
+        
         view.showThingsAfterLogin();
     }
     
@@ -118,7 +167,7 @@ public class Controller {
     private void checkedCourse(ArrayList<String> data) {
         String course = data.get(0);
         
-        view.setShiftsList(model.courseShifts(course));
+        view.setShiftsList(model.courseShifts(ucs.get(course)));
         
         // posteriormente, vamos usar a variavel loggedUserID para ir ver o turno do aluno e
         // tirar esse turno desta lista pq ele nao pode querer trocar para o turno onde ja esta

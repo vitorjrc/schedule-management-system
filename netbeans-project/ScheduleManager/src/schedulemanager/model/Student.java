@@ -16,7 +16,7 @@ public class Student implements Serializable {
     private StudentRegimen regimen;
     private HashMap<String, HashMap<String, Shift>> shifts; // Shifts this user is enrolled in (CourseID -> (ShiftID -> Shift))
     
-    public Student(String id, String name, String pass, String regimen, ArrayList<String> courseIDs) {
+    public Student(String id, String name, String pass, String regimen) {
         this.name = name;
         this.id = id;
         this.password = pass;
@@ -34,11 +34,12 @@ public class Student implements Serializable {
         }
         
         this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Starts out empty
-
+/*
         for (String courseID: courseIDs)
            this.shifts.put(courseID, new HashMap<String, Shift>());
     }
-    
+*/
+    }  
     public Student(Student s){
         this.name = s.getName();
         this.id = s.getID();
@@ -57,29 +58,23 @@ public class Student implements Serializable {
     
     public HashMap<String, HashMap<String, Shift>> getShifts() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
     
-    /* Retired - if this is needed tell me Sérgio
-     * - marcosBo$$
 
-    public ArrayList<String> getShiftsString() {
+    public HashMap<String, String> getShiftsString() {
         
-        ArrayList<String> strings = new ArrayList<String>();
-        for(Shift s: shifts) {
-            strings.add(s.toString());
+        // UC e turno
+        HashMap<String, String> shiftsList = new HashMap<String, String>();
+        for(Map.Entry<String, HashMap<String, Shift>> entry: shifts.entrySet()) {
+            for(String s: entry.getValue().keySet())
+                shiftsList.put(entry.getKey(), s);
         }
-        
-        return strings;
+        return shiftsList;
     }
 
     public ArrayList<String> getUCsString() {
-        ArrayList<String> strings = new ArrayList<String>();
         
-        for(Shift s: shifts) {
-            strings.add(s.getCourseId());
-        }
-        
+        ArrayList<String> strings = new ArrayList<String>(shifts.keySet());
         return strings;
     }
-    */
     
     // === Methods
     
@@ -98,6 +93,7 @@ public class Student implements Serializable {
         
         // Add this shift to the right course on the shifts HashMap
         this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
+        
     }
     
     public void removeFromShift(Shift shift) {
@@ -112,6 +108,12 @@ public class Student implements Serializable {
     public boolean hasShift(String courseID, String shiftID) {
     	
     	return this.shifts.containsKey(courseID) && this.shifts.get(courseID).containsKey(shiftID);
+    }
+    
+    public void setShifts(ArrayList<String> novo) {
+        for(String s: novo) {
+            this.shifts.put(s, new HashMap<String, Shift>());
+        }
     }
     
     // === /Methods

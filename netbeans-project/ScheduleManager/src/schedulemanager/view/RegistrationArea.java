@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 
 public class RegistrationArea extends javax.swing.JDialog {
     
-    
-    private LinkedHashMap<String, String> localCoursesList = new LinkedHashMap<String, String>();
     private ArrayList<JCheckBox> checkboxList = new ArrayList<JCheckBox>();
     private ArrayList<Consumer<ArrayList<String>>> registListeners = new ArrayList<Consumer<ArrayList<String>>>();
 
@@ -220,8 +218,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         
         for(Map.Entry<String, String> entry : coursesList.entrySet()) {
 
-            localCoursesList.put(entry.getKey(), entry.getValue());
-            JCheckBox cb = new JCheckBox(entry.getValue());
+            JCheckBox cb = new JCheckBox(entry.getKey());
             cb.setBackground(Color.WHITE);
             
             jPanel1.add(cb);
@@ -244,11 +241,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         
         for(JCheckBox cb: checkboxList) {
             if (cb.isSelected()) {
-                for(Map.Entry<String, String> entry: localCoursesList.entrySet()) { 
-                    if (cb.getText().equals(entry.getValue())) {
-                        registeredCourses.add(entry.getKey());
-                    }
-                }
+                        registeredCourses.add(cb.getText());
             }
         }
         

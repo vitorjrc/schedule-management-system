@@ -82,20 +82,21 @@ public class Model {
                 
         for (Map.Entry<String, Shift> entry : this.coursesList.get(course).getShifts().entrySet()) {
             courseShifts_list.add(entry.getKey());
-             System.out.println(entry.getKey());
         }
         
         return courseShifts_list;
     }
     
-    public void createShiftCalculo() {
+    public Shift createShiftCalculo() {
         Shift turnonovo = new Shift("PL1", "Cálculo", 10, "caiado", "A5");
         coursesList.get("2").addShift("PL1", turnonovo);
+        return turnonovo;
         
     }
-    
+    /*
     public void getShiftOfUser(String alunoID, ArrayList<Shift> shifts) {
         studentsList.get(alunoID).setShifts(shifts);
     }
+*/
     
 }
