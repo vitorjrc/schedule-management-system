@@ -43,7 +43,8 @@ public class Student extends User implements Serializable {
     
     public String getRegimen() { return this.regimen.name(); }
     
-    public HashMap<String, HashMap<String, Shift>> getShifts() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
+    // Returns de student's shifts in the format CourseID -> (ShiftID -> Shift)
+    public HashMap<String, HashMap<String, Shift>> getShiftsByCourse() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
     
     public ArrayList<String> getCourses() {
         
@@ -99,7 +100,7 @@ public class Student extends User implements Serializable {
                  this.id.equals(s.getID()) &&
                  this.password.equals(s.getPassword()) &&
                  this.regimen.toString().equals(s.getRegimen()) &&
-                 this.shifts.equals(s.getShifts())
+                 this.shifts.equals(s.getShiftsByCourse())
         );
     }
     
