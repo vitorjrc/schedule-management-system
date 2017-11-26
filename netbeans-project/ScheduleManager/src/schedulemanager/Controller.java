@@ -81,23 +81,18 @@ public class Controller {
         else { 
             
             ArrayList<String> new_Courses = new ArrayList<String>();
-            Student student = model.registerStudent(new_Name, new_ID, new_Password, new_Status);
+            model.registerStudent(new_Name, new_ID, new_Password, new_Status);
             
             for (int i = 4; i < data.size(); i++) {
-                // Shift s = model.getUCsList().get(ucs.get(data.get(i))).Shift0();
-                // testing Shift 1 for Calculo
-                //Shift novo = model.createShiftCalculo();
-                System.out.println("passou");
+                
                 String st = ucs.get(data.get(i));
-                Shift turnonovo = model.getCourses().get(st).Shift0();
-                System.out.println(turnonovo);
+                Shift turnonovo = model.getCourses().get(st).createShift0();
                 
                 model.getCourses().get(st).addShift(st, turnonovo);
                 new_Courses.add(st);
                 model.getStudents().get(new_ID).assignShift(turnonovo);
             }
             
-            model.getStudents().get(new_ID).setShifts(new_Courses);
             view.showRegisterSuccess();
         }
         
@@ -125,7 +120,7 @@ public class Controller {
     private void showInterfaceThings(String userID) {
         ArrayList<String> courses = new ArrayList<String>();
         // Get UCs name of user
-        for(String s: model.getStudents().get(userID).getUCsString() ) {
+        for (String s: model.getStudents().get(userID).getUCsofUser() ) {
             courses.add(model.getCourses().get(s).getName());
         }
         
@@ -133,27 +128,9 @@ public class Controller {
         view.setLoggedAs(model.getStudents().get(userID).getName());
         view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
         
-        /*
-        ArrayList<String> shifts = new ArrayList<String>();
-        // Get shifts of user
-        String str1 = null;
-        for (Shift s: model.getStudents().get(userID).getShiftsString()) {
-            for(Map.Entry<String, String> entry: ucs.entrySet()) {
-                if (s.getCourseId().equals(entry.getValue()))
-                    str1 = entry.getKey();
-            }
-            String str2 = " Turno: ";
-            String str3 = s.getId();
-            String str4 = new StringBuilder(str1).append(str2).append(str3).toString();
-            shifts.add(str4);
-        }
-*/
-
-        
-        //view.showUserUCs(shifts);
         ArrayList<String> shifts = new ArrayList<String>();
         
-        for (Map.Entry<String, String> entry: model.getStudents().get(userID).getShiftsString().entrySet()) {
+        for (Map.Entry<String, String> entry: model.getStudents().get(userID).getShiftsofUser().entrySet()) {
             String str1 = model.getCourses().get(entry.getKey()).getName();
             String str2 = " Turno: ";
             String str3 = entry.getValue();

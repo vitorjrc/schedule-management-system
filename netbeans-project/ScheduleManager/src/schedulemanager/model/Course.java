@@ -61,11 +61,11 @@ public class Course implements Serializable {
     	this.shifts.remove(id);
     }
     
-    public Shift Shift0() {
+    public Shift createShift0() {
 
-        Shift newt = new Shift("PL0", this.id);
-        this.shifts.put("PL0", newt);
-        return newt;
+        Shift shift = new Shift("PL0", this.id);
+        this.shifts.put("PL0", shift);
+        return shift;
     }
     
     public String toString() {

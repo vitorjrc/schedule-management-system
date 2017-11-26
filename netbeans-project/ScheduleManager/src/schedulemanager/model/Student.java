@@ -58,36 +58,25 @@ public class Student implements Serializable {
     
     public HashMap<String, HashMap<String, Shift>> getShifts() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
     
-
-    public HashMap<String, String> getShiftsString() {
-        
-        // UC e turno
-        HashMap<String, String> shiftsList = new HashMap<String, String>();
-        /*
-        for(Map.Entry<String, HashMap<String, Shift>> entry: shifts.entrySet()) {
-            for(Map.Entry<String, Shift> entry1: entry.getValue().entrySet()) {
-                shiftsList.put(entry.getKey(), entry1.getKey());
-                System.out.println(entry1.getKey());
-                System.out.println(shiftsList.size());
-                
-                */
-        for (int i = 0; i < shifts.size(); i++) {
-            
-            // String s1 = shifts.get(shifts.keySet().toArray()[i]);ss
-            String s2 = shifts.keySet().toArray()[i].toString();
-            System.out.println(s2);
-            System.out.println("TAMANHO DO MAP " + shifts.get(s2).size());
-            // String s3 = shifts.get(s2).keySet().toArray()[0].toString();
-            // shiftsList.put(s2, s3);
-        }
-        return shiftsList;
-    }
-
-    public ArrayList<String> getUCsString() {
+    public ArrayList<String> getUCsofUser() {
         
         ArrayList<String> strings = new ArrayList<String>(shifts.keySet());
         return strings;
     }
+    
+    public HashMap<String, String> getShiftsofUser() {
+        // UC e turno
+        HashMap<String, String> shiftsList = new HashMap<String, String>();
+            
+            for (int i = 0; i < shifts.size(); i++) {
+                String s1 = shifts.keySet().toArray()[i].toString();
+                String s2 = shifts.get(s1).keySet().toArray()[0].toString();
+                shiftsList.put(s1, s2);
+            }
+        return shiftsList;
+    }
+
+
     
     // === Methods
     
@@ -101,12 +90,10 @@ public class Student implements Serializable {
 
     	// Check if HashMap of this course's shifts exists
         if (!this.shifts.containsKey(shift.getCourseId())) {
-            System.out.println("course id " + shift.getCourseId());
             this.shifts.put(shift.getCourseId(), new HashMap<String, Shift>());
     	}
         
         // Add this shift to the right course on the shifts HashMap
-        System.out.println("shift id " + shift.getId());
         this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
     }
     
