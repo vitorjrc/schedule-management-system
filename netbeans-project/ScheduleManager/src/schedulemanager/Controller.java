@@ -23,9 +23,6 @@ public class Controller {
         this.view = view;
     }
     
-    // ID of currently logged in user
-    private String loggedUserID;
-    
     private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
     
     
@@ -70,8 +67,10 @@ public class Controller {
         if (new_Status.equals(te)) {
             new_Status = "workerstudent";
         }
-        else {
+        else if (new_Status.equals(rn)) {
             new_Status = "student";
+        } else {
+            throw new RuntimeException("Invalid student regimen in Controller");
         }
         
         if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("")) {
@@ -112,7 +111,6 @@ public class Controller {
                 view.showLoginSuccess();    //msg login efetuado com sucesso
                 // show interface things because user is logged
                 showInterfaceThings(userId);
-                loggedUserID = userId;
         }
                 
     }
@@ -123,7 +121,7 @@ public class Controller {
         ArrayList<String> shiftsList = new ArrayList<String>();
         Set<String> shift = new LinkedHashSet<>();
 
-        for (Map.Entry<String, HashMap<String, Shift>> entry: model.getStudents().get(userID).getShifts().entrySet()) {
+        for (Map.Entry<String, HashMap<String, Shift>> entry: model.getStudents().get(userID).getShiftsByCourse().entrySet()) {
             
             String s1 = model.getCourses().get(entry.getKey()).getName();
             shift = entry.getValue().keySet();
@@ -144,7 +142,7 @@ public class Controller {
         
         // Get UCs name of user
         
-        coursesSet = model.getStudents().get(userID).getShifts().keySet();
+        coursesSet = model.getStudents().get(userID).getShiftsByCourse().keySet();
         
         for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
