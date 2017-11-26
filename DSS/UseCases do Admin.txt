@@ -1,0 +1,9 @@
+atribuir docente a turno
+atibuir turno a aluno
+atribuir uc a turno
+registar docente
+criar turnos
+criar uc
+remover aluno de turno
+nº maximo de alunos por turno
+inscrever aluno em turno
