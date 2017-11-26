@@ -117,28 +117,44 @@ public class Controller {
                 
     }
     
+    public ArrayList<String> getShiftsofUser(String userID) {
+            
+        // UC e turno
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        Set<String> shift = new LinkedHashSet<>();
+
+        for (Map.Entry<String, HashMap<String, Shift>> entry: model.getStudents().get(userID).getShifts().entrySet()) {
+            
+            String s1 = model.getCourses().get(entry.getKey()).getName();
+            shift = entry.getValue().keySet();
+            String joinShifts = String.join("-", shift);
+            
+            shiftsList.add(s1 + " Turno: " + joinShifts);
+            
+        }   
+        
+        return shiftsList;
+    }
+             
+    
     private void showInterfaceThings(String userID) {
+        
         ArrayList<String> courses = new ArrayList<String>();
+        Set<String> coursesSet = new LinkedHashSet<>();
+        
         // Get UCs name of user
-        for (String s: model.getStudents().get(userID).getUCsofUser() ) {
+        
+        coursesSet = model.getStudents().get(userID).getShifts().keySet();
+        
+        for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
         
         view.setCoursesList(courses);
         view.setLoggedAs(model.getStudents().get(userID).getName());
         view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
-        
-        ArrayList<String> shifts = new ArrayList<String>();
-        
-        for (Map.Entry<String, String> entry: model.getStudents().get(userID).getShiftsofUser().entrySet()) {
-            String str1 = model.getCourses().get(entry.getKey()).getName();
-            String str2 = " Turno: ";
-            String str3 = entry.getValue();
-            String str4 = new StringBuilder(str1).append(str2).append(str3).toString();
-            shifts.add(str4);
-        }
-        
-        view.showUserUCs(shifts);
+       
+        view.showUserUCs(getShiftsofUser(userID));
         
         view.showThingsAfterLogin();
     }
