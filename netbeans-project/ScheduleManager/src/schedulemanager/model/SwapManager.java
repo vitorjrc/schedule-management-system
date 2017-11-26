@@ -33,17 +33,17 @@ public class SwapManager {
 	// Checks wether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
 	private boolean swapOfferAllowed(String bidderID, String courseID, String offeredShiftID) {
 		
-		// Check that bidder is the student that is logged in
-		if (this.authManager.getLoggedInStudent().getID() != bidderID) {
-			
+		if (!this.authManager.isStudentLoggedIn()) {
 			return false;
 		}
 		
+		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
+		
+		// Check that bidder is the student that is logged in
+		if (loggedInStudent.getID() != bidderID) { return false; }
+		
 		// Check that bidder has this shift to offer
-		if (!this.authManager.getLoggedInStudent().hasShift(courseID, offeredShiftID)) {
-			
-			return false;
-		}
+		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) { return false; }
 		
 		return true;
 	}
@@ -101,9 +101,11 @@ public class SwapManager {
 	// Cancels a swap offer. Returns true if successful.
 	public boolean cancelSwapOffer(String studentID, String swapID) {
 		
-		if (studentID != this.authManager.getLoggedInStudent().getID()) {
+		if (!this.authManager.isStudentLoggedIn()) {
 			return false;
 		}
+		
+		
 		
 		HashMap<String, Swap> swaps = this.swapsByStudentID.get(studentID);
 		
@@ -115,13 +117,19 @@ public class SwapManager {
 		return true;
 	}
 	
-	// Registers a swap offer as taken,
-	// and deals with assigning the shifts to the students
+	// Registers a swap offer as taken, and deals with assigning the shifts to the students
 	// courses parameter is needed to get Shift from shiftID in a Swap
-	public void takeSwapOffer(String takerID, String swapID, HashMap<String, Course> courses) {
+	// Returns true if successful, false otherwise
+	public boolean takeSwapOffer(String takerID, String swapID, HashMap<String, Course> courses) {
 		
-		if (this.authManager.getLoggedInStudent().getID() != takerID) {
-			return; // User taking the swap is not the one that is logged in
+		if (!this.authManager.isStudentLoggedIn()) {
+			return false;
+		}
+		
+		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
+		
+		if (loggedInStudent.getID() != takerID) {
+			return false; // User taking the swap is not the one that is logged in
 		}
 		
 		// Loop through each student's swaps
@@ -135,7 +143,7 @@ public class SwapManager {
 				
 				swap.markTaken(takerID);
 				
-				Student taker = this.authManager.getStudentByID(takerID);
+				Student taker = loggedInStudent;
 				Student bidder = this.authManager.getStudentByID(swap.getBidderID());
 				
 				String courseID = swap.getCourseID();
@@ -148,30 +156,37 @@ public class SwapManager {
 
 				bidder.assignShift(wanted); // Assign bidder to taker's shift
 				bidder.removeFromShift(offered);
+				
+				return true;
 			}
 		}
+		
+		return false; // Reached the end, means swap with given ID wasn't found
 	}
 	
 	// Direct swap, without a taker. Only possible for worker students.
 	// courses parameter is needed to get Shift from courseID and shiftID
-	public void directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, HashMap<String, Course> courses) {
+	// Returns true if successful, false otherwise
+	public boolean directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, HashMap<String, Course> courses) {
 		
-		Student student = this.authManager.getLoggedInStudent();
-		
-		// Check that student is logged in
-		if (!studentID.equals(student.getID())) {
-			return;
+		if (!this.authManager.isStudentLoggedIn()) {
+			return false;
 		}
+		
+		Student student = (Student) this.authManager.getLoggedInUser();
+		
+		// Check that swapper student is the one who is logged in
+		if (!studentID.equals(student.getID())) { return false; }
 		
 		// Check that student can direct swap
-		if (!student.canDirectSwap()) {
-			return;
-		}
+		if (!student.canDirectSwap()) { return false; }
 		
 		Shift from = courses.get(courseID).getShift(fromShiftID);
 		Shift to = courses.get(courseID).getShift(toShiftID);
 		
 		student.assignShift(to);
 		student.removeFromShift(from);
+		
+		return true;
 	}
 }
