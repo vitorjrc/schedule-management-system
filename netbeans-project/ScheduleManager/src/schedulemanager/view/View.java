@@ -546,12 +546,8 @@ public class View extends javax.swing.JFrame {
         return loginDialog;
     }
     
-    public void showLoginError1(){
-         JOptionPane.showMessageDialog(null, "Utilizador não existente!");
-    }
-    
-    public void showLoginError2(){
-         JOptionPane.showMessageDialog(null, "Utilizador e palavra-passe não correspondem!");
+    public void showLoginError(String message){
+         JOptionPane.showMessageDialog(null, message);
     }
     
     public void showRegisterError1(){

@@ -95,7 +95,7 @@ public class AuthManager {
 			
 			if (loginUser.getClass().equals(Student.class)) {
 			
-				this.isStudentLoggedIn = true;
+                            this.isStudentLoggedIn = true;
 			    this.isAdminLoggedIn = false;
 			    this.isTeacherLoggedIn = false;
 			
