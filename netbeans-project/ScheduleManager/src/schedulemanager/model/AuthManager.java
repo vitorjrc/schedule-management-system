@@ -51,8 +51,8 @@ public class AuthManager {
 		return this.registeredTeachers.get(id);
 	}
 	
-	// Returns true if login was successful, false otherwise
-	public boolean login(String id, String password) {
+	// Returns null if login was successful, error message otherwise
+	public String login(String id, String password) {
 		
 		// Check if this is an admin login attempt
 		if (id.equals(AuthManager.adminID)) {
@@ -62,11 +62,11 @@ public class AuthManager {
 				this.isStudentLoggedIn = false;
 				this.loggedInUser = null;
 				
-				return true;
+				return null;
 			
 			} else {
 				
-				return false; // Tried to login as admin but password is wrong
+				return "Password errada (Login de Administrador)";
 			}
 		}
 		
@@ -83,7 +83,7 @@ public class AuthManager {
 		
 		} else {
 			
-			return false; // Didn't find student with received ID
+			return "Não existe nenhum aluno/docente com a ID recebida";
 		}
 		
 		// Check password
@@ -104,13 +104,13 @@ public class AuthManager {
 			
 			this.loggedInUser = loginUser;
 			
-			return true;
+			return null;
 			
 		} else {
 			
 			// Here we can add extra wrong password logic,
 			// such as counting failed attempts
-			return false;
+			return "Password errada";
 		}
 	}
 	
