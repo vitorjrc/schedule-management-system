@@ -38,8 +38,8 @@ public class AuthManager {
 	public boolean login(String id, String password) {
 		
 		// Check if this is an admin login attempt
-		if (id == AuthManager.adminID) {
-			if (password == AuthManager.adminPassword) {
+		if (id.equals(AuthManager.adminID)) {
+			if (password.equals(AuthManager.adminPassword)) {
 				
 				this.isAdminLoggedIn = true;
 				this.isStudentLoggedIn = false;
@@ -59,7 +59,7 @@ public class AuthManager {
 			Student student = this.registeredStudents.get(id);
 				
 			// Check password
-			if (student.getPassword() == password) {
+			if (student.getPassword().equals(password)) {
 				
 				this.isStudentLoggedIn = true;
 				this.isAdminLoggedIn = false; // Just to make sure

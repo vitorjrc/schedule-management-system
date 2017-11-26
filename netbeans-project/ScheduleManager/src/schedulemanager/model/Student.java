@@ -21,11 +21,11 @@ public class Student implements Serializable {
         this.id = id;
         this.password = pass;
         
-        if (regimen.toLowerCase() == "student") {
+        if (regimen.toLowerCase().equals("student")) {
         	
         	this.regimen = StudentRegimen.STUDENT;
         	
-        } else if (regimen.toLowerCase() == "workerstudent") {
+        } else if (regimen.toLowerCase().equals("workerstudent")) {
         	
         	this.regimen = StudentRegimen.WORKERSTUDENT;
         
