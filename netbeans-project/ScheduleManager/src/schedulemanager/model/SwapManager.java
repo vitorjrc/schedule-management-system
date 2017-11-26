@@ -30,7 +30,86 @@ public class SwapManager {
 		this.swapsAllowed = swapsAllowed;
 	}
 	
-	// Checks wether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
+    
+    // Auxiliary function
+    // Returns all open swaps if parameter is true,
+    // all closed swaps if parameter is false
+    private HashMap<String, Swap> getSwapsWithCondition(boolean openSwaps) {
+    	
+        HashMap<String, Swap> swaps = new HashMap<String, Swap>();
+		
+		for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
+			
+			for (Swap swap: swapsOfAStudent.values()) {
+				
+				if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
+					
+					swaps.put(swap.getID(), swap.clone());
+				}
+			}
+		}
+		
+		return swaps;
+    }
+    
+    // Auxiliary function
+    // Returns open swaps of a student if parameter is true,
+    // closed swaps if parameter is false
+    private HashMap<String, Swap> getSwapsOfStudent(String studentID, boolean openSwaps) {
+        
+    	HashMap<String, Swap> swaps = new HashMap<String, Swap>();
+		
+		for (Swap swap: this.swapsByStudentID.get(studentID).values()) {
+			
+			if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
+				
+				swaps.put(swap.getID(), swap.clone());
+			}
+		}
+		
+		return swaps;
+    }
+	
+    public HashMap<String, Swap> getAllSwaps() {
+    	
+    	HashMap<String, Swap> allSwaps = new HashMap<String, Swap>();
+    	
+    	for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
+    		
+    		HashMap<String, Swap> clone = new HashMap<String, Swap>(swapsOfAStudent);
+    		
+    		allSwaps.putAll(clone);
+    	}
+    	
+    	return allSwaps;
+    }
+    
+    public HashMap<String, Swap> getAllSwapsOfStudent(String studentID) {
+    	
+    	return new HashMap<String, Swap>(this.swapsByStudentID.get(studentID));
+    }
+    
+    public HashMap<String, Swap> getOpenSwaps() {
+    	 
+    	return new HashMap<String, Swap>(this.getSwapsWithCondition(true));
+	}
+    
+    public HashMap<String, Swap> getClosedSwaps() {
+        
+    	return new HashMap<String, Swap>(this.getSwapsWithCondition(false));
+    }
+    
+    public HashMap<String, Swap> getOpenSwapsOfStudent(String studentID) {
+    	
+    	return new HashMap<String, Swap>(this.getSwapsOfStudent(studentID, true));
+	}
+    
+    public HashMap<String, Swap> getClosedSwapsOfStudent(String studentID) {
+    	
+    	return new HashMap<String, Swap>(this.getSwapsOfStudent(studentID, false));
+    }
+	
+	// Checks whether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
 	private boolean swapOfferAllowed(String bidderID, String courseID, String offeredShiftID) {
 		
 		if (!this.authManager.isStudentLoggedIn()) {
