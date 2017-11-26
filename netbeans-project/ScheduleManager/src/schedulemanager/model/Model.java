@@ -61,6 +61,11 @@ public class Model {
     	return this.authManager.login(id, password);
     }
     
+    public void logout() {
+    	
+    	this.authManager.logout();
+    }
+    
     public boolean isStudentLoggedIn() {
     	return this.authManager.isStudentLoggedIn();
     }
