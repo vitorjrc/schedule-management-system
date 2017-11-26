@@ -7,19 +7,16 @@ package schedulemanager.model;
 import java.util.*;
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class Student extends User implements Serializable {
 
-    private static final long serialVersionUID = 7526472295622776147L;
-    private String name;             
-    private String id;                  
-    private String password;                  
+    private static final long serialVersionUID = 7526472295622776147L;              
+    
     private StudentRegimen regimen;
     private HashMap<String, HashMap<String, Shift>> shifts; // Shifts this user is enrolled in (CourseID -> (ShiftID -> Shift))
     
-    public Student(String id, String name, String pass, String regimen) {
-        this.name = name;
-        this.id = id;
-        this.password = pass;
+    public Student(String id, String name, String password, String regimen) {
+    	
+    	super(id, name, password);
         
         if (regimen.toLowerCase().equals("student")) {
         	
@@ -34,50 +31,25 @@ public class Student implements Serializable {
         }
         
         this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Starts out empty
-/*
-        for (String courseID: courseIDs)
-           this.shifts.put(courseID, new HashMap<String, Shift>());
     }
-*/
-    }  
+    
     public Student(Student s){
-        this.name = s.getName();
-        this.id = s.getID();
-        this.password = s.getPassword();
+    	
+    	super(s);
+
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
         this.shifts = new HashMap<String, HashMap<String, Shift>>(s.shifts); // Shallow clone - good enough
     }
-
-    public String getName() { return this.name; }
-    
-    public String getID() { return this.id; }
-    
-    public String getPassword() { return this.password; }
     
     public String getRegimen() { return this.regimen.name(); }
     
     public HashMap<String, HashMap<String, Shift>> getShifts() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
     
-    public ArrayList<String> getUCsofUser() {
+    public ArrayList<String> getCourses() {
         
-        ArrayList<String> strings = new ArrayList<String>(shifts.keySet());
-        return strings;
+        return new ArrayList<String>(shifts.keySet());
     }
-    
-    public HashMap<String, String> getShiftsofUser() {
-        // UC e turno
-        HashMap<String, String> shiftsList = new HashMap<String, String>();
-            
-            for (int i = 0; i < shifts.size(); i++) {
-                String s1 = shifts.keySet().toArray()[i].toString();
-                String s2 = shifts.get(s1).keySet().toArray()[0].toString();
-                shiftsList.put(s1, s2);
-            }
-        return shiftsList;
-    }
-
-
-    
+ 
     // === Methods
     
     // Wether a student can swap directly, without a taker
