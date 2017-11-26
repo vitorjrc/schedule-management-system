@@ -83,6 +83,11 @@ public class Student implements Serializable {
     
     // === Methods
     
+    // Wether a student can swap directly, without a taker
+    public boolean canDirectSwap() {
+    	return this.regimen == StudentRegimen.WORKERSTUDENT;
+    }
+    
     // Enrolls this student in a shift
     public void assignShift(Shift shift) {
 
@@ -93,6 +98,15 @@ public class Student implements Serializable {
         
         // Add this shift to the right course on the shifts HashMap
         this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
+    }
+    
+    public void removeFromShift(Shift shift) {
+    	
+    	String courseID = shift.getCourseId();
+    	
+    	if (this.shifts.containsKey(courseID)) {
+    		this.shifts.get(courseID).remove(shift.getId());
+    	}
     }
     
     public boolean hasShift(String courseID, String shiftID) {

@@ -56,6 +56,18 @@ public class SwapManager {
 			this.swapsByStudentID.put(studentID, new HashMap<String, Swap>());
 		}
 	}
+	
+	public void lockSwaps() {
+		if (this.authManager.isAdminLoggedIn()) {
+			this.swapsAllowed = false;
+		}
+	}
+	
+	public void unlockSwaps() {
+		if (this.authManager.isAdminLoggedIn()) {
+			this.swapsAllowed = true;
+		}
+	}
 
 	// Creates a swap offer
 	// Returns true if swap offer is created successfully, false otherwise
@@ -103,11 +115,63 @@ public class SwapManager {
 		return true;
 	}
 	
-	// Registers a swap offer as taken by a student.
-	// Doesn't deal with actually registering and
-	// unregistering the students from the shifts.
-	public void takeSwapOffer(String takerID, String swapID) {
+	// Registers a swap offer as taken,
+	// and deals with assigning the shifts to the students
+	// courses parameter is needed to get Shift from shiftID in a Swap
+	public void takeSwapOffer(String takerID, String swapID, HashMap<String, Course> courses) {
 		
+		if (this.authManager.getLoggedInStudent().getID() != takerID) {
+			return; // User taking the swap is not the one that is logged in
+		}
 		
+		// Loop through each student's swaps
+		for (HashMap<String, Swap> swaps: this.swapsByStudentID.values()) {
+			
+			Swap swap = swaps.get(swapID);
+			
+			if (swap != null) {
+				
+				// Exchange shifts
+				
+				swap.markTaken(takerID);
+				
+				Student taker = this.authManager.getStudentByID(takerID);
+				Student bidder = this.authManager.getStudentByID(swap.getBidderID());
+				
+				String courseID = swap.getCourseID();
+
+				Shift offered = courses.get(courseID).getShift(swap.getShiftOfferedID());
+				Shift wanted = courses.get(courseID).getShift(swap.getShiftWantedID());
+
+				taker.assignShift(offered); // Assign taker to bidder's shift
+				taker.removeFromShift(wanted);
+
+				bidder.assignShift(wanted); // Assign bidder to taker's shift
+				bidder.removeFromShift(offered);
+			}
+		}
+	}
+	
+	// Direct swap, without a taker. Only possible for worker students.
+	// courses parameter is needed to get Shift from courseID and shiftID
+	public void directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, HashMap<String, Course> courses) {
+		
+		Student student = this.authManager.getLoggedInStudent();
+		
+		// Check that student is logged in
+		if (!studentID.equals(student.getID())) {
+			return;
+		}
+		
+		// Check that student can direct swap
+		if (!student.canDirectSwap()) {
+			return;
+		}
+		
+		Shift from = courses.get(courseID).getShift(fromShiftID);
+		Shift to = courses.get(courseID).getShift(toShiftID);
+		
+		student.assignShift(to);
+		student.removeFromShift(from);
 	}
 }
