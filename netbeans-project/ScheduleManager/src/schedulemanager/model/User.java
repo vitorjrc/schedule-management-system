@@ -23,5 +23,4 @@ public class User {
     public String getID() { return this.id; }
 	    
 	public String getPassword() { return this.password; }
-
 }

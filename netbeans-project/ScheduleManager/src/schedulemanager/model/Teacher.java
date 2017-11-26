@@ -7,14 +7,14 @@ public class Teacher extends User {
 	
 	private String courseManagedID; // ID of Course this teacher manages
 	
-	private Teacher(String id, String name, String password, String courseManagedID) {
+	public Teacher(String id, String name, String password, String courseManagedID) {
 		
 		super(id, name, password);
 		
 		this.courseManagedID = courseManagedID;
 	}
 	
-	private Teacher(Teacher t) {
+	public Teacher(Teacher t) {
 		
 		super(t);
 		
@@ -22,4 +22,9 @@ public class Teacher extends User {
 	}
 	
 	public String getCourseManagedID() { return this.courseManagedID; }
+	
+	@Override
+    public Teacher clone() {
+        return new Teacher(this);
+    }
 }

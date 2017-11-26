@@ -1,6 +1,5 @@
 package schedulemanager.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -10,8 +9,11 @@ public class AuthManager {
 	
 	private boolean isStudentLoggedIn = false;
 	private boolean isAdminLoggedIn = false;
-	private Student loggedInStudent = null;
+	private boolean isTeacherLoggedIn = false;
+	private User loggedInUser = null;
+	
 	private HashMap<String, Student> registeredStudents; // StudentID -> Student
+	private HashMap<String, Teacher> registeredTeachers; // TeacherID -> Teacher
 	
 	// Admin login credentials. Not safe in current form.
 	private static final String adminID = "admin";
@@ -20,18 +22,33 @@ public class AuthManager {
 	public AuthManager() {
 		
 		this.registeredStudents = new HashMap<String, Student>();
+		this.registeredTeachers = new HashMap<String, Teacher>();
 	}
 	
-	public void registerStudent(String id, String name, String password, String regimen, ArrayList<String> courseIDs) {
+	public void registerStudent(String id, String name, String password, String regimen) {
 		
-		Student newStudent = new Student(id, name, password, regimen, courseIDs);
+		Student newStudent = new Student(id, name, password, regimen);
 		
 		registeredStudents.put(id, newStudent);
+	}
+	
+	// Register a Teacher.
+	// courseManagedID is the ID of the course the teacher manages.
+	public void registerTeacher(String id, String name, String password, String courseManagedID) {
+		
+		Teacher newTeacher = new Teacher(id, name, password, courseManagedID);
+		
+		registeredTeachers.put(id, newTeacher);
 	}
 	
 	public Student getStudentByID(String id) {
 		
 		return this.registeredStudents.get(id);
+	}
+	
+	public Teacher getTeacherByID(String id) {
+		
+		return this.registeredTeachers.get(id);
 	}
 	
 	// Returns true if login was successful, false otherwise
@@ -43,7 +60,7 @@ public class AuthManager {
 				
 				this.isAdminLoggedIn = true;
 				this.isStudentLoggedIn = false;
-				this.loggedInStudent = null;
+				this.loggedInUser = null;
 				
 				return true;
 			
@@ -53,30 +70,47 @@ public class AuthManager {
 			}
 		}
 		
+		User loginUser;
+		
 		// Check if a student exists with the given ID
 		if (this.registeredStudents.containsKey(id)) {
 			
-			Student student = this.registeredStudents.get(id);
-				
-			// Check password
-			if (student.getPassword().equals(password)) {
-				
+			loginUser = this.registeredStudents.get(id);
+			
+		} else if (this.registeredTeachers.containsKey(id)) { // Check if a teacher exists with the given ID
+		
+			loginUser = this.registeredTeachers.get(id);
+		
+		} else {
+			
+			return false; // Didn't find student with received ID
+		}
+		
+		// Check password
+		if (loginUser.getPassword().equals(password)) {
+			
+			if (loginUser.getClass().equals(Student.class)) {
+			
 				this.isStudentLoggedIn = true;
-				this.isAdminLoggedIn = false; // Just to make sure
-				this.loggedInStudent = student;
-				
-				return true;
-				
-			} else {
-				
-				// Here we can add extra wrong password logic,
-				// such as counting failed attempts
-				return false;
+			    this.isAdminLoggedIn = false;
+			    this.isTeacherLoggedIn = false;
+			
+			} else if (loginUser.getClass().equals(Teacher.class)) {
+			
+				this.isTeacherLoggedIn = true;
+				this.isAdminLoggedIn = false;
+				this.isStudentLoggedIn = false;
 			}
 			
+			this.loggedInUser = loginUser;
+			
+			return true;
+			
 		} else {
-		
-			return false; // Didn't find student with received ID
+			
+			// Here we can add extra wrong password logic,
+			// such as counting failed attempts
+			return false;
 		}
 	}
 	
@@ -84,7 +118,8 @@ public class AuthManager {
 		
 		this.isAdminLoggedIn = false;
 		this.isStudentLoggedIn = false;
-		this.loggedInStudent = null;
+		this.isTeacherLoggedIn = false;
+		this.loggedInUser = null;
 	}
 	
 	public boolean isStudentLoggedIn() {
@@ -97,9 +132,24 @@ public class AuthManager {
 		return this.isAdminLoggedIn;
 	}
 	
-	public Student getLoggedInStudent() {
+	public boolean isTeacherLoggedIn() {
 		
-		return this.loggedInStudent.clone();
+		return this.isTeacherLoggedIn;
 	}
-
+	
+	public User getLoggedInUser() {
+		
+		if (this.loggedInUser.getClass().equals(Student.class)) {
+			
+			return (User) new Student((Student) this.loggedInUser);
+		
+		} else if (this.loggedInUser.getClass().equals(Teacher.class)) {
+		
+			return (User) new Teacher((Teacher) this.loggedInUser);
+		
+		} else {
+			
+			return null;
+		}
+	}
 }
