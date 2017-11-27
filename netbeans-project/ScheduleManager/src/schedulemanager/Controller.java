@@ -35,7 +35,6 @@ public class Controller {
         view.swapOffer(this::swapOffer);
         view.saveButton(this::saveButton);
         view.saveButton(this::loadButton);
-        view.getRegistrationArea().showCourses(ucsName());
     }
     
     // Called when the view sends an onRegister event
@@ -44,6 +43,7 @@ public class Controller {
     }
     
     public LinkedHashMap<String, String> ucsName() {
+        
         for(Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
             ucs.put(entry.getValue().getName(), entry.getKey());
         }
@@ -151,7 +151,6 @@ public class Controller {
         Set<String> coursesSet = new LinkedHashSet<>();
         
         // Get UCs name of user
-        System.out.println(s.toString());
         coursesSet = s.getShiftsByCourse().keySet();
         for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
@@ -169,12 +168,16 @@ public class Controller {
     
     // metodo que traz a disciplina que o user quer trocar
     private void checkedCourse(ArrayList<String> data) {
-        String course = data.get(0);
-        ArrayList<String> shiftsList = new ArrayList<String>();
-        Set<String> shift = new LinkedHashSet<>(model.getCourses().get(ucs.get(course)).getShifts().keySet());
+        String courseName = data.get(0);
+        ArrayList<String> shiftsList = new ArrayList<String>();        
         
-        for(String s: shift) {
+        String courseID = ucs.get(courseName);
+        Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
+        
+        for(String s: shiftIDs) {
+            
             shiftsList.add(s);
+            
         }
         
         view.setShiftsList(shiftsList);
@@ -192,6 +195,8 @@ public class Controller {
         
         // pode melhorar
         String offeredShiftID = s.getShiftsByCourse().get(courseID).keySet().stream().findFirst().get();
+        
+        System.out.println(bidderID + " " + courseID + " " + wantedShiftID + " " + offeredShiftID);
         
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
         this.showPendentOffers();

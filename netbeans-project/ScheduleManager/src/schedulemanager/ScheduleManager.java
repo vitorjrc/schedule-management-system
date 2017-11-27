@@ -57,6 +57,8 @@ public class ScheduleManager {
         model.createCourse("34", "Processamento de Linguagens");
         model.createCourse("35", "Laboratórios de Informática IV");
         
+        controller.ucsName();
+        
         // Show view
         view.setVisible(true);
  
