@@ -25,11 +25,6 @@ public class Shift implements Serializable {
         this.classroom = classroom;
         this.occupants = new HashSet<Student>();
     }
-     
-     public Shift(String id, String courseId) {
-        this.id = id;
-        this.courseId = courseId;
-    }
     
     public Shift(Shift s) {
         this.id = s.getId();
@@ -46,7 +41,7 @@ public class Shift implements Serializable {
     }
     
     public String getId() {
-        return id;
+        return this.id;
     }
     
     public String getCourseId() {
@@ -58,7 +53,7 @@ public class Shift implements Serializable {
     }
     
     public int getOccupationLimit() {
-        return occupationLimit;
+        return this.occupationLimit;
     }
     
     public String getTeacher() {
@@ -70,7 +65,7 @@ public class Shift implements Serializable {
     }
 
     public HashSet<Student> getOccupants() {
-        return occupants;
+        return this.occupants;
     }
    
     

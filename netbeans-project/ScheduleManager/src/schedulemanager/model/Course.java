@@ -20,12 +20,12 @@ public class Course implements Serializable {
         this.shifts = new HashMap<String, Shift>();
     }
     
-    public Course(Course s) {
-        this.id = s.getId();
-        this.name = s.getName();
+    public Course(Course c) {
+        this.id = c.getId();
+        this.name = c.getName();
         this.shifts = new HashMap<String, Shift>();
-            for (Map.Entry<String, Shift> entry : getShifts().entrySet()){
-                shifts.put(entry.getKey(),entry.getValue());
+        for (Shift s: c.getShifts().values()) {
+            shifts.put(s.getId(), s.clone());
         }
     }
     
@@ -42,7 +42,7 @@ public class Course implements Serializable {
     public HashMap<String, Shift> getShifts() { 
         HashMap<String, Shift> ret = new HashMap<String, Shift>();
         for(Shift s : this.shifts.values()){
-            ret.put(s.getId(),s.clone());
+            ret.put(s.getId(), s.clone());
         }
         
         return ret; 
@@ -71,6 +71,7 @@ public class Course implements Serializable {
         return s.toString();
     }
     
+    @Override
     public Course clone() {
         return new Course(this);
     }

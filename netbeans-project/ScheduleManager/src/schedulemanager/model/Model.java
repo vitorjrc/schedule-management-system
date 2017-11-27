@@ -8,8 +8,7 @@ import java.io.*;
  */
 public class Model {
     
-    private LinkedHashMap<String, Course> coursesList; // Course ID -> Course
-
+    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>(); // Course ID -> Course
     private AuthManager authManager;
     private SwapManager swapManager;
     private IO IO;
@@ -18,7 +17,7 @@ public class Model {
         this.authManager = new AuthManager();
         this.swapManager = new SwapManager(authManager);
         this.IO = new IO(this);
-        this.coursesList = new LinkedHashMap<String, Course>();
+        //this.coursesList = new LinkedHashMap<String, Course>();
     }
     
     public LinkedHashMap<String, Course> getCourses() {
@@ -56,12 +55,12 @@ public class Model {
     
     public Student registerStudent(String id, String name, String password, String regimen) {
         
-        return this.authManager.registerStudent(id, name, password, regimen).clone();
+        return this.authManager.registerStudent(id, name, password, regimen);
     }
     
     public Teacher registerTeacher(String id, String name, String password, String managedCourseID) {
     	
-    	return this.authManager.registerTeacher(id, name, password, managedCourseID).clone();
+    	return this.authManager.registerTeacher(id, name, password, managedCourseID);
     }
     
     public String login(String id, String password) {
@@ -167,10 +166,6 @@ public class Model {
     	
     	return this.swapManager.getClosedSwapsOfStudent(studentID);
     }
-    
-    public void replaceMapOfCourses(LinkedHashMap<String, Course> newMap) {
-        this.coursesList = newMap;
-    } 
     
     public void save() {
         this.IO.save();

@@ -38,7 +38,9 @@ public class Student extends User implements Serializable {
     	super(s);
 
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
-        this.shifts = new HashMap<String, HashMap<String, Shift>>(s.shifts); // Shallow clone - good enough
+        this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Shallow clone - good enough
+        shifts.putAll(s.getShiftsByCourse());
+        
     }
     
     public String getRegimen() { return this.regimen.name(); }

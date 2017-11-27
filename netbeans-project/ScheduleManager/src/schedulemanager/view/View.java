@@ -564,7 +564,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel24)
                     .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1104,6 +1104,30 @@ public class View extends javax.swing.JFrame {
         jLabel19.setVisible(true); //dados pessoais
         jLabel20.setVisible(true); //dados pessoais
         jPanel4.setVisible(true);  //minhas uc's
+        
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    ///////////// CRIAR TURNO/CRIAR UC
+    
+    public void showTeachers(ArrayList<String> teachers) {
+            
+        String[] teachersList = new String[teachers.size()];
+        for(int i = 0; i < teachers.size(); i++) {
+            teachersList[i] = teachers.get(i);
+        }
+        
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(teachersList));
+    }
+    
+    public void showCourses(ArrayList<String> courses) {
+        
+        String[] coursesList = new String[courses.size()];
+        for(int i = 0; i < courses.size(); i++) {
+            coursesList[i] = courses.get(i);
+        }
+        
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         
     }
             

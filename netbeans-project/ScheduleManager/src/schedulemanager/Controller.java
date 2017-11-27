@@ -88,10 +88,12 @@ public class Controller {
                 
                 String courseID = ucs.get(data.get(i));
                 Shift newShift0 = model.createShift("PL0", courseID, 30, "Elfrida", "A4");
-                Shift newShift1 = model.createShift("PL1", courseID, 30, "Caiado", "A5");
+                model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
                 newCourses.add(courseID);
                 s.assignShift(newShift0);
+                
+                Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
             }
             
             view.showRegisterSuccess();
@@ -111,8 +113,9 @@ public class Controller {
                 view.showLoginError(message);     //msg de erro password incorreta
         else {
                 view.showLoginSuccess();
-                s = model.getLoggedinStudent(userID);
+                this.s = model.getLoggedinStudent(userID);
                 // show interface things because user is logged
+
                 showInterfaceThings(userID);
         }
         
@@ -168,6 +171,9 @@ public class Controller {
         
         view.showThingsAfterLogin();
         
+        this.showTeachers();
+        this.showAllCourses();
+        
     }
     
     // metodo que traz a disciplina que o user quer trocar
@@ -192,14 +198,12 @@ public class Controller {
         String courseID = ucs.get(courseName);
         
         String offeredShift = data.get(1);
-        System.out.println(offeredShift);
         
         ArrayList<String> shiftsList = new ArrayList<String>();        
         
         Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
         
         for(String s: shiftIDs) {
-            
             if (!offeredShift.equals(s))
                 shiftsList.add(s);
         }
@@ -230,5 +234,32 @@ public class Controller {
         }
         
         view.showPendentOffers(pendingSwaps);
+    }
+    
+    //////////////////////// CRIAR TURNOS / CRIAR UCS
+    //////////////////////// ADMIN
+    
+    private void showTeachers() {
+        
+        model.registerTeacher("1", "JBB", "123", "18");
+        
+        ArrayList<String> teachers = new ArrayList<String>();
+        for (Teacher t: model.getTeachers().values())
+            teachers.add(t.getName());
+        
+        view.showTeachers(teachers);
+    }
+    
+    private void showAllCourses() {
+        
+        ArrayList<String> coursesList = new ArrayList<String>();
+        
+        Set<String> courses = this.ucs.keySet();
+        
+        for(String s: courses) {
+                coursesList.add(s);
+        
+        view.showCourses(coursesList);
+        }
     }
 }
