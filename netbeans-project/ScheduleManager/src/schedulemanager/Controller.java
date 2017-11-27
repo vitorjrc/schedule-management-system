@@ -24,7 +24,7 @@ public class Controller {
     }
     
     private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
-    
+    private Student s = null;
     
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
@@ -32,6 +32,10 @@ public class Controller {
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
         view.checkedCourse(this::checkedCourse);
+        view.swapOffer(this::swapOffer);
+        view.saveButton(this::saveButton);
+        view.saveButton(this::loadButton);
+        view.getRegistrationArea().showCourses(ucsName());
     }
     
     // Called when the view sends an onRegister event
@@ -49,38 +53,32 @@ public class Controller {
     
     
     private void RegisterButton(ArrayList<String> data) {
-        String new_ID = data.get(0);
         
-        HashMap<String, Student> students = model.getStudents();
-        if(students.containsKey(new_ID)) {
-            view.showRegisterError1();   
-            return;
-        }
-        
-        String new_Password = data.get(1);
-        String new_Name = data.get(2);
-        String new_Status = data.get(3);
+        String newID = data.get(0);
+        String newPassword = data.get(1);
+        String newName = data.get(2);
+        String newStatus = data.get(3);
         
         String te = "Trabalhador-Estudante";
         String rn = "Regime Normal";
         
-        if (new_Status.equals(te)) {
-            new_Status = "workerstudent";
+        if (newStatus.equals(te)) {
+            newStatus = "workerstudent";
         }
-        else if (new_Status.equals(rn)) {
-            new_Status = "student";
+        else if (newStatus.equals(rn)) {
+            newStatus = "student";
         } else {
             throw new RuntimeException("Invalid student regimen in Controller");
         }
         
-        if (new_ID.equals("") || new_Password.equals("") || new_Password.equals("")) {
+        if (newID.equals("") || newPassword.equals("") || newPassword.equals("")) {
             view.showRegisterError2();
         }
         
         else { 
             
-            ArrayList<String> new_Courses = new ArrayList<String>();
-            model.registerStudent(new_Name, new_ID, new_Password, new_Status);
+            ArrayList<String> newCourses = new ArrayList<String>();
+            s = model.registerStudent(newID, newName, newPassword, newStatus);
             
             for (int i = 4; i < data.size(); i++) {
                 
@@ -88,8 +86,8 @@ public class Controller {
                 Shift turnonovo = model.getCourses().get(st).createShift0();
                 
                 model.getCourses().get(st).addShift(st, turnonovo);
-                new_Courses.add(st);
-                model.getStudents().get(new_ID).assignShift(turnonovo);
+                newCourses.add(st);
+                s.assignShift(turnonovo);
             }
             
             view.showRegisterSuccess();
@@ -99,21 +97,33 @@ public class Controller {
     
     
     private void loginButton(ArrayList<String> data) {
-        String userId = data.get(0);
+        
+        String userID = data.get(0);
         String userPassword = data.get(1);
-        HashMap<String, Student> students = model.getStudents();
- 
-        if(!students.containsKey(userId))
-            view.showLoginError1();         //msg de erro user inexistente
-        else if(!students.get(userId).getPassword().equals(userPassword))
-                view.showLoginError2();     //msg de erro password incorreta
+        
+        String message = model.login(userID, userPassword);
+       
+        if (message != null)
+                view.showLoginError(message);     //msg de erro password incorreta
         else {
-                view.showLoginSuccess();    //msg login efetuado com sucesso
+                view.showLoginSuccess();
+                s = model.getLoggedinStudent(userID);
                 // show interface things because user is logged
-                showInterfaceThings(userId);
+                showInterfaceThings(userID);
         }
-                
+        
     }
+        
+    private void saveButton(ArrayList<String> data) {
+        
+        model.save();
+    }
+    
+    private void loadButton(ArrayList<String> data) {
+        
+        model.load();
+    }
+                
     
     public ArrayList<String> getShiftsofUser(String userID) {
             
@@ -121,7 +131,7 @@ public class Controller {
         ArrayList<String> shiftsList = new ArrayList<String>();
         Set<String> shift = new LinkedHashSet<>();
 
-        for (Map.Entry<String, HashMap<String, Shift>> entry: model.getStudents().get(userID).getShiftsByCourse().entrySet()) {
+        for (Map.Entry<String, HashMap<String, Shift>> entry: s.getShiftsByCourse().entrySet()) {
             
             String s1 = model.getCourses().get(entry.getKey()).getName();
             shift = entry.getValue().keySet();
@@ -141,30 +151,59 @@ public class Controller {
         Set<String> coursesSet = new LinkedHashSet<>();
         
         // Get UCs name of user
-        
-        coursesSet = model.getStudents().get(userID).getShiftsByCourse().keySet();
-        
+        System.out.println(s.toString());
+        coursesSet = s.getShiftsByCourse().keySet();
         for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
         
         view.setCoursesList(courses);
-        view.setLoggedAs(model.getStudents().get(userID).getName());
-        view.setUserData(model.getStudents().get(userID).getID(), model.getStudents().get(userID).getRegimen());
+        view.setLoggedAs(s.getName());
+        view.setUserData(s.getID(), s.getRegimen());
        
         view.showUserUCs(getShiftsofUser(userID));
         
         view.showThingsAfterLogin();
+        
     }
     
     // metodo que traz a disciplina que o user quer trocar
     private void checkedCourse(ArrayList<String> data) {
         String course = data.get(0);
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        Set<String> shift = new LinkedHashSet<>(model.getCourses().get(ucs.get(course)).getShifts().keySet());
         
-        view.setShiftsList(model.courseShifts(ucs.get(course)));
+        for(String s: shift) {
+            shiftsList.add(s);
+        }
+        
+        view.setShiftsList(shiftsList);
         
         // posteriormente, vamos usar a variavel loggedUserID para ir ver o turno do aluno e
         // tirar esse turno desta lista pq ele nao pode querer trocar para o turno onde ja esta
         
+    }
+    
+    private void swapOffer(ArrayList<String> data) {
+        
+        String bidderID = s.getID();
+        String courseID = ucs.get(data.get(0));
+        String wantedShiftID = data.get(1);
+        
+        // pode melhorar
+        String offeredShiftID = s.getShiftsByCourse().get(courseID).keySet().stream().findFirst().get();
+        
+        model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
+        this.showPendentOffers();
+    }
+    
+    private void showPendentOffers() {
+        
+        ArrayList<String> pendentSwaps = new ArrayList<String>();
+        for (Swap s: model.getOpenSwaps().values()) {
+            pendentSwaps.add(s.toString());
+        }
+        
+        view.showPendentOffers(pendentSwaps);
     }
 }

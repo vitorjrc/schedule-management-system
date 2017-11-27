@@ -59,6 +59,7 @@ public class ScheduleManager {
         
         // Show view
         view.setVisible(true);
+ 
     }
     
 }

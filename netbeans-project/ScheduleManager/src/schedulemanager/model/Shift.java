@@ -2,12 +2,14 @@ package schedulemanager.model;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.io.Serializable;
 
 /**
  * Represents a shift, which belongs to a course, which in turn belongs to a major.
  */
-public class Shift {
-
+public class Shift implements Serializable {
+    
+    private static final long serialVersionUID = 7526472295622776147L;
     private String id;           // The ID of this shift. Example: "PL1"
     private String courseId;     // The ID of the course this shift belongs to. Example: "DSS"
     private int occupationLimit; // The maximum number of students allowed in this shift  

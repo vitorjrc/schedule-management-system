@@ -95,7 +95,7 @@ public class AuthManager {
 			
 			if (loginUser.getClass().equals(Student.class)) {
 			
-				this.isStudentLoggedIn = true;
+                            this.isStudentLoggedIn = true;
 			    this.isAdminLoggedIn = false;
 			    this.isTeacherLoggedIn = false;
 			
@@ -140,6 +140,14 @@ public class AuthManager {
 		
 		return this.isTeacherLoggedIn;
 	}
+        
+        public HashMap<String, Student> getRegisteredStudents() {
+            return this.registeredStudents;
+        }
+        
+        public HashMap<String, Teacher> getRegisteredTeachers() {
+            return this.registeredTeachers;
+        }
 	
 	public User getLoggedInUser() {
 		
@@ -156,4 +164,12 @@ public class AuthManager {
 			return null;
 		}
 	}
+        
+        public void setStudents(HashMap<String, Student> newMap) {
+            this.registeredStudents = newMap;
+        } 
+        
+        public void setTeachers(HashMap<String, Teacher> newMap) {
+            this.registeredTeachers = newMap;
+        } 
 }

@@ -1,7 +1,9 @@
 package schedulemanager.model;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
 	
+        private static final long serialVersionUID = 7526472295622776147L;
 	protected String id;
 	protected String name;
 	protected String password;
