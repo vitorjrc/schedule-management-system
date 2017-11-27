@@ -270,8 +270,9 @@ public class SwapManager {
 		bidder.assignShift(wanted); // Assign bidder to taker's shift
 		bidder.removeFromShift(offered);
 		
-		// Remove any swap offers by the bidder that offer the shift that was just taken
+		// Remove any swap offers by the bidder/taker that offer the shift they just exchanged
 		this.removeSwapOffers(bidder, swap.getShiftOfferedID());
+		this.removeSwapOffers(taker, swap.getShiftWantedID());
 		
 		return true;
 	}
