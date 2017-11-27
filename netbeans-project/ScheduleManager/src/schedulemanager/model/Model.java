@@ -8,21 +8,26 @@ import java.io.*;
  */
 public class Model {
     
-    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>(); // Course ID -> Course
+    private LinkedHashMap<String, Course> coursesList; // Course ID -> Course
 
     private AuthManager authManager;
     private SwapManager swapManager;
     private IO IO;
 	
-	public Model() {
-		this.authManager = new AuthManager();
-		this.swapManager = new SwapManager(authManager);
-                this.IO = new IO(this);
-	}
+    public Model() {
+        this.authManager = new AuthManager();
+        this.swapManager = new SwapManager(authManager);
+        this.IO = new IO(this);
+        this.coursesList = new LinkedHashMap<String, Course>();
+    }
     
     public LinkedHashMap<String, Course> getCourses() {
         
-        return new LinkedHashMap<String, Course>(this.coursesList);
+        LinkedHashMap<String, Course> ret = new LinkedHashMap<String, Course>();
+        for(Course c : this.coursesList.values())
+            ret.put(c.getId(), c.clone());
+        
+        return ret;
     }
     
     public Course createCourse(String courseID, String courseName) {
@@ -51,12 +56,12 @@ public class Model {
     
     public Student registerStudent(String id, String name, String password, String regimen) {
         
-        return this.authManager.registerStudent(id, name, password, regimen);
+        return this.authManager.registerStudent(id, name, password, regimen).clone();
     }
     
     public Teacher registerTeacher(String id, String name, String password, String managedCourseID) {
     	
-    	return this.authManager.registerTeacher(id, name, password, managedCourseID);
+    	return this.authManager.registerTeacher(id, name, password, managedCourseID).clone();
     }
     
     public String login(String id, String password) {
@@ -112,7 +117,7 @@ public class Model {
     
     public boolean isSwapTakeable(String takerID, String swapID) {
     	
-    	Swap swap = this.swapManager.getOpenSwaps().get(swapID);
+    	Swap swap = this.swapManager.getOpenSwaps().get(swapID).clone();
     	
     	if (swap == null) {
     		

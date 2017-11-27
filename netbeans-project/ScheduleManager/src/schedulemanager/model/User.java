@@ -10,8 +10,8 @@ public class User implements Serializable {
 	
 	public User(String id, String name, String password) {
 		this.name = name;
-        this.id = id;
-        this.password = password;
+                this.id = id;
+                this.password = password;
 	}
 	
 	public User(User u) {
@@ -22,7 +22,7 @@ public class User implements Serializable {
 	
 	public String getName() { return this.name; }
 	    
-    public String getID() { return this.id; }
+        public String getID() { return this.id; }
 	    
-	public String getPassword() { return this.password; }
+        public String getPassword() { return this.password; }
 }

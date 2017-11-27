@@ -11,11 +11,9 @@ public class Course implements Serializable {
     private static final long serialVersionUID = 7526472295622776147L;
     private String id;
     private String name;
-    
     private HashMap<String, Shift> shifts; // Shift ID -> Shift
     
     // Constructors
-    
     public Course(String id, String name) {
         this.id = id;
         this.name = name;
@@ -23,10 +21,11 @@ public class Course implements Serializable {
     }
     
     public Course(Course s) {
+        this.id = s.getId();
         this.name = s.getName();
         this.shifts = new HashMap<String, Shift>();
-        for (Map.Entry<String, Shift> entry : getShifts().entrySet()){
-            shifts.put(entry.getKey(),entry.getValue());
+            for (Map.Entry<String, Shift> entry : getShifts().entrySet()){
+                shifts.put(entry.getKey(),entry.getValue());
         }
     }
     
@@ -41,11 +40,15 @@ public class Course implements Serializable {
     }
     
     public HashMap<String, Shift> getShifts() { 
-        return this.shifts; 
+        HashMap<String, Shift> ret = new HashMap<String, Shift>();
+        for(Shift s : this.shifts.values()){
+            ret.put(s.getId(),s.clone());
+        }
+        
+        return ret; 
     }
     
     public Shift getShift(String shiftID) {
-    	
     	return this.shifts.get(shiftID).clone();
     }
     
@@ -61,12 +64,6 @@ public class Course implements Serializable {
     	this.shifts.remove(id);
     }
     
-    public Shift createShift0() {
-
-        Shift shift = new Shift("PL0", this.id);
-        this.shifts.put("PL0", shift);
-        return shift;
-    }
     
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -74,7 +71,6 @@ public class Course implements Serializable {
         return s.toString();
     }
     
-    @Override
     public Course clone() {
         return new Course(this);
     }

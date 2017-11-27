@@ -142,11 +142,17 @@ public class AuthManager {
 	}
         
         public HashMap<String, Student> getRegisteredStudents() {
-            return this.registeredStudents;
+            HashMap<String, Student> ret = new HashMap<String, Student>();
+            for(Student s : this.registeredStudents.values())
+                ret.put(s.getID(), s.clone());
+            return ret;
         }
         
         public HashMap<String, Teacher> getRegisteredTeachers() {
-            return this.registeredTeachers;
+            HashMap<String, Teacher> ret = new HashMap<String, Teacher>();
+            for(Teacher s : this.registeredTeachers.values())
+                ret.put(s.getID(), s.clone());
+            return ret;
         }
 	
 	public User getLoggedInUser() {

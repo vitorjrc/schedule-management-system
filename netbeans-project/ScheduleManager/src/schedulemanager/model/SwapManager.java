@@ -15,16 +15,18 @@ public class SwapManager {
 	 * not be worth the increase in complexity.
 	 */
 	private HashMap<String, HashMap<String, Swap>> swapsByStudentID; // studentID -> (swapID -> Swap)
-	
-	private boolean swapsAllowed = true; // Keeps track of whether Swaps are still allowed.
+	private boolean swapsAllowed;        // Keeps track of whether Swaps are still allowed.
 	private AuthManager authManager;     // Keeps an instance of authManager to check student info
 	
-	public SwapManager(AuthManager authManager) {
+	
+        public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
 		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
+                this.swapsAllowed = true;
 	}
 	
-	public SwapManager(AuthManager authManager, boolean swapsAllowed) {
+	
+        public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
 		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
 		this.swapsAllowed = swapsAllowed;

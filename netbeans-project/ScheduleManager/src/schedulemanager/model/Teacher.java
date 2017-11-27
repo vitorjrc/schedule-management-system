@@ -23,8 +23,8 @@ public class Teacher extends User {
 	
 	public String getCourseManagedID() { return this.courseManagedID; }
 	
-	@Override
-    public Teacher clone() {
-        return new Teacher(this);
+
+        public Teacher clone() {
+            return new Teacher(this);
     }
 }
