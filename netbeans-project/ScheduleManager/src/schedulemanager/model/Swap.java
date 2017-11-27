@@ -97,7 +97,16 @@ public class Swap implements Serializable {
         s.append("Turno oferecido: " + this.courseID + " " + this.shiftOfferedID + "\n");
         s.append("Turno pretendido: " + this.courseID + " " + this.shiftWantedID + "\n");
         s.append("Date created: " + LocalDateTime.ofInstant(this.dateCreated, ZoneId.systemDefault()) + "\n");
-        s.append("Date taken: " + LocalDateTime.ofInstant(this.dateTaken, ZoneId.systemDefault()) + "\n");
+        
+        if (this.dateTaken == null) {
+        	
+        	s.append("Date taken: Not yet taken\n");
+        	
+        } else {
+        
+        	s.append("Date taken: " + LocalDateTime.ofInstant(this.dateTaken, ZoneId.systemDefault()) + "\n");
+        }
+
         s.append("Proposta aberta: " + !this.isClosed + "\n");
         s.append("---------------------------------------\n");
     
