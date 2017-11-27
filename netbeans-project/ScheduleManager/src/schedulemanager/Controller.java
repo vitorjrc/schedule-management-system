@@ -35,6 +35,7 @@ public class Controller {
         view.swapOffer(this::swapOffer);
         view.saveButton(this::saveButton);
         view.saveButton(this::loadButton);
+        view.getRegistrationArea().showCourses(ucsName());
     }
     
     // Called when the view sends an onRegister event
@@ -76,7 +77,7 @@ public class Controller {
         
         else { 
             
-            ArrayList<String> new_Courses = new ArrayList<String>();
+            ArrayList<String> newCourses = new ArrayList<String>();
             s = model.registerStudent(newID, newName, newPassword, newStatus);
             
             for (int i = 4; i < data.size(); i++) {
@@ -85,7 +86,7 @@ public class Controller {
                 Shift turnonovo = model.getCourses().get(st).createShift0();
                 
                 model.getCourses().get(st).addShift(st, turnonovo);
-                new_Courses.add(st);
+                newCourses.add(st);
                 s.assignShift(turnonovo);
             }
             
@@ -106,11 +107,11 @@ public class Controller {
                 view.showLoginError(message);     //msg de erro password incorreta
         else {
                 view.showLoginSuccess();
+                s = model.getLoggedinStudent(userID);
                 // show interface things because user is logged
                 showInterfaceThings(userID);
         }
         
-        s = model.getLoggedinStudent(userID);
     }
         
     private void saveButton(ArrayList<String> data) {
@@ -150,9 +151,8 @@ public class Controller {
         Set<String> coursesSet = new LinkedHashSet<>();
         
         // Get UCs name of user
-        
+        System.out.println(s.toString());
         coursesSet = s.getShiftsByCourse().keySet();
-        
         for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
@@ -201,7 +201,6 @@ public class Controller {
         
         ArrayList<String> pendentSwaps = new ArrayList<String>();
         for (Swap s: model.getOpenSwaps().values()) {
-            System.out.println(s);
             pendentSwaps.add(s.toString());
         }
         

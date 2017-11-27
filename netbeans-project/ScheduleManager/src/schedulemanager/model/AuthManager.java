@@ -165,11 +165,11 @@ public class AuthManager {
 		}
 	}
         
-        public void replaceMapOfStudents(HashMap<String, Student> newMap) {
+        public void setStudents(HashMap<String, Student> newMap) {
             this.registeredStudents = newMap;
         } 
         
-        public void replaceMapOfTeachers(HashMap<String, Teacher> newMap) {
+        public void setTeachers(HashMap<String, Teacher> newMap) {
             this.registeredTeachers = newMap;
         } 
 }

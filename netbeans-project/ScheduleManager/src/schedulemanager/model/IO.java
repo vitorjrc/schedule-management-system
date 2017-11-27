@@ -5,22 +5,14 @@
  */
 package schedulemanager.model;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.io.*;
+import java.util.*;
 
 public class IO {
     
-    private AuthManager authManager;
     private Model model;
     
-    public IO(AuthManager authManager, Model model) {
-        this.authManager = authManager;
+    public IO(Model model) {
         this.model = model;
     }
    
@@ -30,12 +22,15 @@ public class IO {
         FileOutputStream f = null;
 
         try {
-            f = new FileOutputStream("estado.txt");
+            f = new FileOutputStream("estado");
 
             oos = new ObjectOutputStream(f);
+            
             oos.writeObject(model.getCourses());
-            oos.writeObject(authManager.getRegisteredStudents());
-            oos.writeObject(authManager.getRegisteredTeachers());
+            oos.writeObject(model.getStudents());
+            oos.writeObject(model.getTeachers());
+            oos.writeObject(model.getAllSwaps());
+            
             oos.close();
         }
 
@@ -46,7 +41,7 @@ public class IO {
             ioex.printStackTrace();
         }
 
-        System.out.println("Things saved");
+        System.out.println("Saved!!!");
     }
 
 
@@ -58,7 +53,7 @@ public class IO {
         try {
 
             // reading data
-            fileinput = new FileInputStream("estado.txt");
+            fileinput = new FileInputStream("estado");
 
             // converting data to object
             ois = new ObjectInputStream(fileinput);
@@ -67,18 +62,22 @@ public class IO {
 
             LinkedHashMap<String, Course> newMapCourse = new LinkedHashMap<String, Course>();
             newMapCourse = (LinkedHashMap<String, Course>) ois.readObject();
-            model.replaceMapOfCourses(newMapCourse);
+            model.setCourses(newMapCourse);
 
             HashMap<String, Student> newMapStudent = new HashMap<String, Student>();
             newMapStudent = (HashMap<String, Student>) ois.readObject();
-            authManager.replaceMapOfStudents(newMapStudent);
+            model.setStudents(newMapStudent);
 
             HashMap<String, Teacher> newMapTeacher = new HashMap<String, Teacher>();
             newMapTeacher = (HashMap<String, Teacher>) ois.readObject();
-            authManager.replaceMapOfTeachers(newMapTeacher);
-
+            model.setTeachers(newMapTeacher);
+            
+            HashMap<String, HashMap<String, Swap>> newMapSwaps = new HashMap<String, HashMap<String, Swap>>();
+            newMapSwaps = (HashMap<String, HashMap<String, Swap>>) ois.readObject();
+            model.setSwaps(newMapSwaps);
 
             ois.close();
+        
         }
         catch (FileNotFoundException fnfex) {
             fnfex.printStackTrace();
@@ -89,5 +88,7 @@ public class IO {
         catch (ClassNotFoundException ccex) {
             ccex.printStackTrace();
         }
+        
+        System.out.println("Loaded!!!");
     }
 }

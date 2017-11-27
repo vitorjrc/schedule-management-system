@@ -267,4 +267,9 @@ public class SwapManager {
 		
 		return true;
 	}
+        
+        public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
+                
+                this.swapsByStudentID = newMap;
+        } 
 }

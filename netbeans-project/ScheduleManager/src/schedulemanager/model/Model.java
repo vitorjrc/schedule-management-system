@@ -17,7 +17,7 @@ public class Model {
 	public Model() {
 		this.authManager = new AuthManager();
 		this.swapManager = new SwapManager(authManager);
-                this.IO = new IO(authManager, this);
+                this.IO = new IO(this);
 	}
     
     public LinkedHashMap<String, Course> getCourses() {
@@ -158,7 +158,38 @@ public class Model {
     }
     
     public Student getLoggedinStudent(String id) {
+        
         return this.authManager.getStudentByID(id);
+    }
+    
+    public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
+        
+        this.swapManager.setSwaps(newMap);
+    }
+    
+    public void setStudents(HashMap<String, Student> newMap) {
+        
+        this.authManager.setStudents(newMap);
+    }
+        
+    public void setTeachers(HashMap<String, Teacher> newMap) {
+        
+        this.authManager.setTeachers(newMap);
+    }
+    
+    public void setCourses(LinkedHashMap<String, Course> newMap) {
+        
+        this.coursesList = newMap;
+    }
+    
+    public HashMap<String, Student> getStudents() {
+        
+        return this.authManager.getRegisteredStudents();
+    }
+    
+    public HashMap<String, Teacher> getTeachers() {
+        
+        return this.authManager.getRegisteredTeachers();
     }
     
 }
