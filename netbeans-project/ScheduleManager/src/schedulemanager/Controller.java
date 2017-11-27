@@ -1,5 +1,7 @@
 package schedulemanager;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import schedulemanager.model.*;
 import schedulemanager.view.*;
@@ -31,15 +33,17 @@ public class Controller {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
-        view.checkedCourse(this::checkedCourse);
-        view.swapOffer(this::swapOffer);
         view.saveButton(this::saveButton);
         view.saveButton(this::loadButton);
+        view.checkedCourse(this::checkedCourse);
+        view.checkedOfferedShift(this::checkedOfferedShift);
+        view.swapOffer(this::swapOffer);
+        
     }
     
     // Called when the view sends an onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.getRegistrationArea().showCourses(ucsName());
+        view.getRegistrationArea().showCourses(ucs);
     }
     
     public LinkedHashMap<String, String> ucsName() {
@@ -82,12 +86,12 @@ public class Controller {
             
             for (int i = 4; i < data.size(); i++) {
                 
-                String st = ucs.get(data.get(i));
-                Shift turnonovo = model.getCourses().get(st).createShift0();
+                String courseID = ucs.get(data.get(i));
+                Shift newShift0 = model.createShift("PL0", courseID, 30, "Elfrida", "A4");
+                Shift newShift1 = model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
-                model.getCourses().get(st).addShift(st, turnonovo);
-                newCourses.add(st);
-                s.assignShift(turnonovo);
+                newCourses.add(courseID);
+                s.assignShift(newShift0);
             }
             
             view.showRegisterSuccess();
@@ -129,7 +133,7 @@ public class Controller {
             
         // UC e turno
         ArrayList<String> shiftsList = new ArrayList<String>();
-        Set<String> shift = new LinkedHashSet<>();
+        Set<String> shift = new HashSet<>();
 
         for (Map.Entry<String, HashMap<String, Shift>> entry: s.getShiftsByCourse().entrySet()) {
             
@@ -168,47 +172,63 @@ public class Controller {
     
     // metodo que traz a disciplina que o user quer trocar
     private void checkedCourse(ArrayList<String> data) {
+        
         String courseName = data.get(0);
+        String courseID = ucs.get(courseName);
+        
+        Set<String> shift = shift = s.getShiftsByCourse().get(courseID).keySet();
+        
+        ArrayList<String> myShifts = new ArrayList<String>();  
+        for (String str : shift)  
+            myShifts.add(str);
+        
+        view.myShifts(myShifts);
+        
+    }
+    
+    private void checkedOfferedShift(ArrayList<String> data) {
+        
+        String courseName = data.get(0);
+        String courseID = ucs.get(courseName);
+        
+        String offeredShift = data.get(1);
+        System.out.println(offeredShift);
+        
         ArrayList<String> shiftsList = new ArrayList<String>();        
         
-        String courseID = ucs.get(courseName);
         Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
         
         for(String s: shiftIDs) {
             
-            shiftsList.add(s);
-            
+            if (!offeredShift.equals(s))
+                shiftsList.add(s);
         }
         
         view.setShiftsList(shiftsList);
-        
-        // posteriormente, vamos usar a variavel loggedUserID para ir ver o turno do aluno e
-        // tirar esse turno desta lista pq ele nao pode querer trocar para o turno onde ja esta
-        
     }
     
     private void swapOffer(ArrayList<String> data) {
         
         String bidderID = s.getID();
         String courseID = ucs.get(data.get(0));
-        String wantedShiftID = data.get(1);
+        String wantedShiftID = data.get(2);
+        String offeredShiftID = data.get(1);
         
-        // pode melhorar
-        String offeredShiftID = s.getShiftsByCourse().get(courseID).keySet().stream().findFirst().get();
-        
-        System.out.println(bidderID + " " + courseID + " " + wantedShiftID + " " + offeredShiftID);
+        System.out.println(bidderID + courseID + wantedShiftID + offeredShiftID);
         
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
-        this.showPendentOffers();
+        this.showPendingOffers();
     }
     
-    private void showPendentOffers() {
+    private void showPendingOffers() {
         
-        ArrayList<String> pendentSwaps = new ArrayList<String>();
+        ArrayList<String> pendingSwaps = new ArrayList<String>();
         for (Swap s: model.getOpenSwaps().values()) {
-            pendentSwaps.add(s.toString());
+            String UC = model.getCourses().get(s.getCourseID()).getName();
+            pendingSwaps.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
+                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
         }
         
-        view.showPendentOffers(pendentSwaps);
+        view.showPendentOffers(pendingSwaps);
     }
 }
