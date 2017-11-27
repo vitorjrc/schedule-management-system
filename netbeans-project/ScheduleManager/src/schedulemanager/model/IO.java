@@ -26,28 +26,28 @@ public class IO {
    
     public void save() {
 
-    ObjectOutputStream oos = null;
-    FileOutputStream f = null;
+        ObjectOutputStream oos = null;
+        FileOutputStream f = null;
 
-    try {
-        f = new FileOutputStream("estado.txt");
+        try {
+            f = new FileOutputStream("estado.txt");
 
-        oos = new ObjectOutputStream(f);
-        oos.writeObject(model.getCourses());
-        oos.writeObject(authManager.getRegisteredStudents());
-        oos.writeObject(authManager.getRegisteredTeachers());
-        oos.close();
+            oos = new ObjectOutputStream(f);
+            oos.writeObject(model.getCourses());
+            oos.writeObject(authManager.getRegisteredStudents());
+            oos.writeObject(authManager.getRegisteredTeachers());
+            oos.close();
+        }
+
+        catch (FileNotFoundException fnfex) {
+            fnfex.printStackTrace();
+        }
+        catch (IOException ioex) {
+            ioex.printStackTrace();
+        }
+
+        System.out.println("Things saved");
     }
-
-    catch (FileNotFoundException fnfex) {
-        fnfex.printStackTrace();
-    }
-    catch (IOException ioex) {
-        ioex.printStackTrace();
-    }
-
-    System.out.println("Things saved");
-}
 
 
     public void load() {
