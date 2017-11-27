@@ -105,6 +105,24 @@ public class Model {
     	return this.swapManager.takeSwapOffer(takerID, swapID, this.coursesList);
     }
     
+    public boolean isSwapTakeable(String takerID, Swap swap) {
+    	
+    	return this.swapManager.isSwapTakeable(takerID, swap);
+    }
+    
+    public boolean isSwapTakeable(String takerID, String swapID) {
+    	
+    	Swap swap = this.swapManager.getOpenSwaps().get(swapID);
+    	
+    	if (swap == null) {
+    		
+    		System.out.println("Swap not takeable: could not find open swap with ID " + swapID + "\n");
+    		return false;
+    	}
+    	
+    	return this.swapManager.isSwapTakeable(takerID, swap);
+    }
+    
     public void lockSwaps() {
     	
     	this.swapManager.lockSwaps();

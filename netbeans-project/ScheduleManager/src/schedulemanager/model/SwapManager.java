@@ -105,6 +105,20 @@ public class SwapManager {
 		
 		return swaps;
     }
+    
+    // Removes all shift offers of a student that offer a given shift
+    private void removeSwapOffers(Student student, String shiftID) {
+    	
+    	HashMap<String, Swap> studentSwaps = this.swapsByStudentID.get(student.getID());
+    	
+    	for(Swap s: studentSwaps.values()) {
+    	
+    		if (s.getShiftOfferedID().equals(shiftID)) {
+    			
+    			this.swapsByStudentID.remove(s.getID());
+    		}
+    	}
+    }
 	
     public HashMap<String, Swap> getAllSwaps() {
     	
@@ -217,46 +231,88 @@ public class SwapManager {
 	// Returns true if successful, false otherwise
 	public boolean takeSwapOffer(String takerID, String swapID, HashMap<String, Course> courses) {
 		
+		// Find the swap
+		Swap swap = null;
+		
+		for (HashMap<String, Swap> swaps: this.swapsByStudentID.values()) { // Loop through each student's swap offers
+			
+			swap = swaps.get(swapID);
+			
+			if (swap != null) {
+				break;
+			}
+		}
+		
+		if (swap == null) {
+			System.out.println("Tried to take a swap offer but couldn't find a swap with ID " + swapID + "\n");
+			return false;
+		}
+		
+		if (!this.isSwapTakeable(takerID, swap)) {
+			return false;
+		}
+		
+		// Exchange shifts
+
+		swap.markTaken(takerID);
+		
+		Student taker = (Student) this.authManager.getLoggedInUser(); // isSwapTakeable should have checked that bidder is logged in user already
+		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
+		
+		String courseID = swap.getCourseID();
+
+		Shift offered = courses.get(courseID).getShift(swap.getShiftOfferedID());
+		Shift wanted = courses.get(courseID).getShift(swap.getShiftWantedID());
+
+		taker.assignShift(offered); // Assign taker to bidder's shift
+		taker.removeFromShift(wanted);
+
+		bidder.assignShift(wanted); // Assign bidder to taker's shift
+		bidder.removeFromShift(offered);
+		
+		// Remove any swap offers by the bidder that offer the shift that was just taken
+		this.removeSwapOffers(bidder, swap.getShiftOfferedID());
+		
+		return true;
+	}
+	
+	// Used by the controller to know whether it should display a "Take" button
+	// on a given swap
+	public boolean isSwapTakeable(String takerID, Swap swap) {
+		
 		if (!this.authManager.isStudentLoggedIn()) {
+			
+			System.out.println("Swap not takeable: No student is logged in\n");
 			return false;
 		}
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
 		if (loggedInStudent.getID() != takerID) {
-			return false; // User taking the swap is not the one that is logged in
+			
+			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
+			return false;
 		}
 		
-		// Loop through each student's swaps
-		for (HashMap<String, Swap> swaps: this.swapsByStudentID.values()) {
-			
-			Swap swap = swaps.get(swapID);
-			
-			if (swap != null) {
-				
-				// Exchange shifts
-				
-				swap.markTaken(takerID);
-				
-				Student taker = loggedInStudent;
-				Student bidder = this.authManager.getStudentByID(swap.getBidderID());
-				
-				String courseID = swap.getCourseID();
-
-				Shift offered = courses.get(courseID).getShift(swap.getShiftOfferedID());
-				Shift wanted = courses.get(courseID).getShift(swap.getShiftWantedID());
-
-				taker.assignShift(offered); // Assign taker to bidder's shift
-				taker.removeFromShift(wanted);
-
-				bidder.assignShift(wanted); // Assign bidder to taker's shift
-				bidder.removeFromShift(offered);
-				
-				return true;
-			}
-		}
+		// Check that bidder and taker still have the shifts to trade
 		
-		return false; // Reached the end, means swap with given ID wasn't found
+		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
+		Student taker = this.authManager.getStudentByID(swap.getTakerID());
+		
+		if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
+			
+			System.out.println("Swap not takeable: Bidder doesn't have shift " + swap.getShiftOfferedID() + " in course " + swap.getCourseID() + "\n");
+			return false;
+		
+		} else if (!taker.hasShift(swap.getCourseID(), swap.getShiftWantedID())) {
+		
+			System.out.println("Swap not takeable: Taker doesn't have shift " + swap.getShiftWantedID() + " in course " + swap.getCourseID() + "\n");
+			return false;
+			
+		} else {
+
+			return true;
+		}
 	}
 	
 	// Direct swap, without a taker. Only possible for worker students.

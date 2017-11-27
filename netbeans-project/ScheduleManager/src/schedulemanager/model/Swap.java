@@ -89,7 +89,8 @@ public class Swap implements Serializable {
     	this.id = bidderID + courseID + shiftOfferedID + shiftWantedID + takerID;
     }
     
-    public String toString(){
+    public String toString() {
+    	
         StringBuilder s = new StringBuilder();
         s.append("---------- Detalhes de troca ----------\n");
         s.append("ID: " + this.id + "\n");
