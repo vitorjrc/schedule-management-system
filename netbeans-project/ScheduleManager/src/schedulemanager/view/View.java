@@ -1008,9 +1008,11 @@ public class View extends javax.swing.JFrame {
     }
     
     public void showLoginSuccess(){
-         JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
-         loginDialog.setVisible(false);
-         jButton1.setEnabled(true);
+        // Linha abaixo comentada - passo desnecessário
+        // A vida é muito curta para carregar em OK quando não aconteceu nada de mal
+        //JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
+        loginDialog.setVisible(false);
+        jButton1.setEnabled(true);
     }
     
     public void showPendentOffers(ArrayList<String> pendentOffers) {
