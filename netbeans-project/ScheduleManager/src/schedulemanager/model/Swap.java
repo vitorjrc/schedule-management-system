@@ -27,6 +27,7 @@ public class Swap implements Serializable {
     	
         this.bidderID = bidderID;
         this.takerID = null;
+        this.courseID = courseID;
         this.shiftOfferedID = shiftOfferedID;
         this.shiftWantedID = shiftWantedID;
         this.dateCreated = Instant.now();
