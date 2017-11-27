@@ -34,16 +34,26 @@ public class SwapManager {
 	private boolean swapOfferAllowed(String bidderID, String courseID, String offeredShiftID) {
 		
 		if (!this.authManager.isStudentLoggedIn()) {
+			
+			System.out.println("Swap offer not allowed: There is no logged in student.");
 			return false;
 		}
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
 		// Check that bidder is the student that is logged in
-		if (loggedInStudent.getID() != bidderID) { return false; }
+		if (loggedInStudent.getID() != bidderID) {
+			
+			System.out.println("Swap offer not allowed: Logged in student has ID " + loggedInStudent.getID() + ", but received bidderID " + bidderID + ".");
+			return false;
+		}
 		
 		// Check that bidder has this shift to offer
-		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) { return false; }
+		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) {
+			
+			System.out.println("Swap offer not allowed: Student does not have that shift to offer.");
+			return false;
+		}
 		
 		return true;
 	}
@@ -152,6 +162,7 @@ public class SwapManager {
 	public boolean createSwapOffer(String bidderID, String courseID, String offeredShiftID, String wantedShiftID) {
 		
 		if (!this.swapsAllowed || !this.swapOfferAllowed(bidderID, courseID, offeredShiftID)) {
+			System.out.println("Swaps are locked or attempted swap offer is not allowed.");
 			return false;
 		}
 		
@@ -161,12 +172,18 @@ public class SwapManager {
 		// Get bidder's swaps
 		HashMap<String, Swap> bidderSwaps = this.swapsByStudentID.get(bidderID);
 		
+		if (bidderSwaps == null) {
+			System.out.println("swapsByStudentID does not contain a student with ID " + bidderID);
+			return false;
+		}
+		
 		Swap newSwap = new Swap(bidderID, courseID, offeredShiftID, wantedShiftID);
 		
 		// Check that this offer doesn't already exist
 		if (bidderSwaps.containsKey(newSwap.getID())) {
 			
-			return false; // Swap already exists, abandon
+			System.out.println("Attempted to create a swap that already exists.");
+			return false;
 		
 		} else {
 		
@@ -180,14 +197,14 @@ public class SwapManager {
 	public boolean cancelSwapOffer(String studentID, String swapID) {
 		
 		if (!this.authManager.isStudentLoggedIn()) {
+			System.out.println("Tried to cancel a swap offer but there is no logged in student.");
 			return false;
 		}
-		
-		
 		
 		HashMap<String, Swap> swaps = this.swapsByStudentID.get(studentID);
 		
 		if (swaps == null || !swaps.containsKey(swapID)) {
+			System.out.println("Attempted to create a swap but either swapsByStudentID does not contain a student with ID " + studentID + ", or swap " + swapID + " does not exist there.");
 			return false;
 		}
 		
