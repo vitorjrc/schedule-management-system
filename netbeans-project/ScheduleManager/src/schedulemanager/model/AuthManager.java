@@ -140,6 +140,14 @@ public class AuthManager {
 		
 		return this.isTeacherLoggedIn;
 	}
+        
+        public HashMap<String, Student> getRegisteredStudents() {
+            return this.registeredStudents;
+        }
+        
+        public HashMap<String, Teacher> getRegisteredTeachers() {
+            return this.registeredTeachers;
+        }
 	
 	public User getLoggedInUser() {
 		
@@ -156,4 +164,12 @@ public class AuthManager {
 			return null;
 		}
 	}
+        
+        public void replaceMapOfStudents(HashMap<String, Student> newMap) {
+            this.registeredStudents = newMap;
+        } 
+        
+        public void replaceMapOfTeachers(HashMap<String, Teacher> newMap) {
+            this.registeredTeachers = newMap;
+        } 
 }

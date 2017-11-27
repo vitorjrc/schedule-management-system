@@ -32,6 +32,9 @@ public class Controller {
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
         view.checkedCourse(this::checkedCourse);
+        view.swapOffer(this::swapOffer);
+        view.saveButton(this::saveButton);
+        view.saveButton(this::loadButton);
     }
     
     // Called when the view sends an onRegister event
@@ -106,8 +109,20 @@ public class Controller {
                 // show interface things because user is logged
                 showInterfaceThings(userID);
         }
-                
+        
+        s = model.getLoggedinStudent(userID);
     }
+        
+    private void saveButton(ArrayList<String> data) {
+        
+        model.save();
+    }
+    
+    private void loadButton(ArrayList<String> data) {
+        
+        model.load();
+    }
+                
     
     public ArrayList<String> getShiftsofUser(String userID) {
             
@@ -149,6 +164,7 @@ public class Controller {
         view.showUserUCs(getShiftsofUser(userID));
         
         view.showThingsAfterLogin();
+        
     }
     
     // metodo que traz a disciplina que o user quer trocar
@@ -166,5 +182,29 @@ public class Controller {
         // posteriormente, vamos usar a variavel loggedUserID para ir ver o turno do aluno e
         // tirar esse turno desta lista pq ele nao pode querer trocar para o turno onde ja esta
         
+    }
+    
+    private void swapOffer(ArrayList<String> data) {
+        
+        String bidderID = s.getID();
+        String courseID = ucs.get(data.get(0));
+        String wantedShiftID = data.get(1);
+        
+        // pode melhorar
+        String offeredShiftID = s.getShiftsByCourse().get(courseID).keySet().stream().findFirst().get();
+        
+        model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
+        this.showPendentOffers();
+    }
+    
+    private void showPendentOffers() {
+        
+        ArrayList<String> pendentSwaps = new ArrayList<String>();
+        for (Swap s: model.getOpenSwaps().values()) {
+            System.out.println(s);
+            pendentSwaps.add(s.toString());
+        }
+        
+        view.showPendentOffers(pendentSwaps);
     }
 }

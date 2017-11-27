@@ -1,6 +1,7 @@
 package schedulemanager.model;
 
 import java.util.*;
+import java.io.*;
 
 /**
  * Model class - The only one that knows about the data source. It knows nothing about neither view nor controller.
@@ -11,10 +12,12 @@ public class Model {
 
     private AuthManager authManager;
     private SwapManager swapManager;
+    private IO IO;
 	
 	public Model() {
 		this.authManager = new AuthManager();
 		this.swapManager = new SwapManager(authManager);
+                this.IO = new IO(authManager, this);
 	}
     
     public LinkedHashMap<String, Course> getCourses() {
@@ -141,4 +144,21 @@ public class Model {
     	
     	return this.swapManager.getClosedSwapsOfStudent(studentID);
     }
+    
+    public void replaceMapOfCourses(LinkedHashMap<String, Course> newMap) {
+        this.coursesList = newMap;
+    } 
+    
+    public void save() {
+        this.IO.save();
+    }
+    
+    public void load() {
+        this.IO.load();
+    }
+    
+    public Student getLoggedinStudent(String id) {
+        return this.authManager.getStudentByID(id);
+    }
+    
 }
