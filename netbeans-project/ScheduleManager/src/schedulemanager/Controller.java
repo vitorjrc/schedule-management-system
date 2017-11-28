@@ -16,6 +16,8 @@ public class Controller {
     
     private Model model;
     private View view;
+    private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
+    private Student s = null;
     
     public void setModel(Model model) {
         this.model = model;
@@ -25,8 +27,7 @@ public class Controller {
         this.view = view;
     }
     
-    private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
-    private Student s = null;
+
     
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
@@ -38,6 +39,8 @@ public class Controller {
         view.checkedCourse(this::checkedCourse);
         view.checkedOfferedShift(this::checkedOfferedShift);
         view.swapOffer(this::swapOffer);
+        view.showCourseStudents(this::showCourseStudents);
+        view.enrollStudentShiftOrigin(this::enrollStudentShiftOrigin);
         
     }
     
@@ -258,8 +261,42 @@ public class Controller {
         
         for(String s: courses) {
                 coursesList.add(s);
-        
-        view.showCourses(coursesList);
         }
+        view.showCourses(coursesList);
+    }
+    
+    // retornar na view os turnos da uc
+    private void showCourseStudents(ArrayList<String> data) {
+        
+        String courseID = ucs.get(data.get(0));
+        
+        ArrayList<String> studentsList = new ArrayList<String>();
+
+        for (Shift s: model.getCourses().get(courseID).getShifts().values()) {
+            for (Student st: s.getOccupants()) {
+                studentsList.add(st.getID());
+            }
+                
+        }
+        
+        view.showCourseStudents(studentsList);
+    }
+    
+    // agr tenho de retornar os turnos da UC menos o que escolheu em cima
+    private void enrollStudentShiftOrigin(ArrayList<String> data) {
+        
+        String courseID = ucs.get(data.get(0));
+        String originShiftID = data.get(1);
+        
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        
+        Set<String> courses = model.getCourses().get(courseID).getShifts().keySet();
+        
+        for(String s: courses) {
+            shiftsList.add(s);
+        }
+        shiftsList.remove(originShiftID);
+        
+        view.destinationShift(shiftsList);
     }
 }

@@ -23,6 +23,7 @@ public class View extends javax.swing.JFrame {
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> swapOffer = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> IO = new ArrayList<Consumer<ArrayList<String>>>();
+    private ArrayList<Consumer<ArrayList<String>>> enrollStudent = new ArrayList<Consumer<ArrayList<String>>>();
     
     //construtor da view
     public View() {
@@ -62,23 +63,46 @@ public class View extends javax.swing.JFrame {
     
     public void checkedCourse(Consumer<ArrayList<String>> callback) {
         
-        swapOffer.add(callback);
+        swapOffer.add(0, callback);
     }
     
     public void checkedOfferedShift(Consumer<ArrayList<String>> callback) {
         
-        swapOffer.add(callback);
+        swapOffer.add(1, callback);
     }
     
     public void swapOffer(Consumer<ArrayList<String>> callback) {
         
-        swapOffer.add(callback);
+        swapOffer.add(2, callback);
     }
     
     public void saveButton(Consumer<ArrayList<String>> callback) {
         
-        IO.add(callback);
+        IO.add(0, callback);
     }
+    
+    public void showCourseStudents(Consumer<ArrayList<String>> callback) {
+        
+        enrollStudent.add(0, callback);
+    }
+    
+    public void enrollStudentShiftOrigin(Consumer<ArrayList<String>> callback) {
+        
+        enrollStudent.add(1, callback);
+    }
+    
+    public void enrollStudentShiftDestination(Consumer<ArrayList<String>> callback) {
+        
+        enrollStudent.add(2, callback);
+    }
+    
+    public void enrollButton(Consumer<ArrayList<String>> callback) {
+        
+        enrollStudent.add(3, callback);
+    }
+    
+    
+    
     
     // Method that sets an icon for the program
     private void seticon() {
@@ -605,6 +629,24 @@ public class View extends javax.swing.JFrame {
 
         jLabel32.setText("Aluno:");
 
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+
+        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox7ActionPerformed(evt);
+            }
+        });
+
+        jComboBox8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox8ActionPerformed(evt);
+            }
+        });
+
         jButton8.setText("Inscrever");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -661,17 +703,23 @@ public class View extends javax.swing.JFrame {
                             .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(94, 94, 94)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel30)
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel31)
-                            .addComponent(jLabel32))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel31)
+                                    .addComponent(jLabel32)
+                                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel29)
+                                        .addComponent(jLabel30)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel28))))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
@@ -699,19 +747,20 @@ public class View extends javax.swing.JFrame {
                         .addGap(215, 215, 215)
                         .addComponent(jButton9)))
                 .addContainerGap(93, Short.MAX_VALUE))
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(75, 75, 75)
-                    .addComponent(jLabel28)
-                    .addContainerGap(609, Short.MAX_VALUE)))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel28)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29)
                     .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30)
@@ -721,11 +770,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel31)
                     .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel32)
-                        .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41)
@@ -757,12 +802,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jButton9)
-                .addContainerGap(91, Short.MAX_VALUE))
-            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel9Layout.createSequentialGroup()
-                    .addGap(58, 58, 58)
-                    .addComponent(jLabel28)
-                    .addContainerGap(487, Short.MAX_VALUE)))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Gestão do Pessoal", jPanel9);
@@ -924,7 +964,7 @@ public class View extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         
         ArrayList<String> sc = new ArrayList<String>(); 
-        Consumer method = IO.get(0);
+        Consumer method = IO.get(1);
         method.accept(sc);
         
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -932,7 +972,7 @@ public class View extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         
         ArrayList<String> sc = new ArrayList<String>(); 
-        Consumer method = IO.get(1);
+        Consumer method = IO.get(0);
         method.accept(sc);
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -970,6 +1010,36 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
         
     }//GEN-LAST:event_jComboBox13ActionPerformed
+
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+    
+        String selectedCourse = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = enrollStudent.get(0);
+        
+        sc.add(selectedCourse);
+        
+        method.accept(sc);
+    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+        
+        String selectedCourse = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
+        String selectedOriginShift = jComboBox7.getItemAt(jComboBox7.getSelectedIndex());
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = enrollStudent.get(1);
+        
+        sc.add(selectedCourse);
+        sc.add(selectedOriginShift);
+        
+        method.accept(sc);
+    }//GEN-LAST:event_jComboBox7ActionPerformed
+
+    private void jComboBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox8ActionPerformed
 
     // method that fills fields where the list of user courses is required
     public void setCoursesList(ArrayList<String> userCourses) {
@@ -1128,8 +1198,46 @@ public class View extends javax.swing.JFrame {
         }
         
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         
     }
+    
+    public void showCourseStudents(ArrayList<String> students) {
+        
+        String[] studentsList = new String[students.size()];
+        for(int i = 0; i < students.size(); i++) {
+            studentsList[i] = students.get(i);
+        }
+        
+        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel(studentsList));
+        
+    }
+    
+    // turnos da cadeira selecionada
+    public void originShift(ArrayList<String> shifts) {
+        
+        String[] shiftsList = new String[shifts.size()];
+        for(int i = 0; i < shifts.size(); i++) {
+            shiftsList[i] = shifts.get(i);
+        }
+        
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel(shiftsList));
+        
+    }
+    
+    public void destinationShift(ArrayList<String> shifts) {
+        
+        String[] shiftsList = new String[shifts.size()];
+        for(int i = 0; i < shifts.size(); i++) {
+            shiftsList[i] = shifts.get(i);
+        }
+        
+        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel(shiftsList));
+        
+    }
+    
+    
             
    
     public static void start() {
