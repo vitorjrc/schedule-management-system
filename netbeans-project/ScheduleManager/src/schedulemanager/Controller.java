@@ -401,14 +401,14 @@ public class Controller {
         String selectedCourse = ucs.get(data.get(0));
         String selectedShift = data.get(1);
         
-        ArrayList<String> shiftsList = new ArrayList<String>();
-        Set<Student> ucShifts = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants();
+        ArrayList<String> shiftStudentsList = new ArrayList<String>();
+        Set<Student> shiftStudents = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants();
         
-        for (Student s: ucShifts){
-            shiftsList.add(s.getID());
+        for (Student s: shiftStudents){
+            shiftStudentsList.add(s.getID());
         }
         
-        view.showShiftsofCourse(shiftsList);
+        view.showStudentToRemove(shiftStudentsList);
     }
         
     private void removeButton(ArrayList<String> data) {
