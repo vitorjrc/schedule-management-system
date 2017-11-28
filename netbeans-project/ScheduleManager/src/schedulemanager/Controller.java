@@ -48,6 +48,14 @@ public class Controller {
         
         view.createTeacher(this::createTeacher);
         
+        view.shiftsOfStudent(this::shiftsOfStudent);
+        view.getStudentToRemove(this::getStudentToRemove);
+        view.removeButton(this::removeButton);
+        
+        view.createShift(this::createShift);
+        
+        view.createCourse(this::createCourse);
+        
     }
     
     // Called when the view sends an onRegister event
@@ -227,10 +235,10 @@ public class Controller {
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
         
-        System.out.println(bidderID + courseID + wantedShiftID + offeredShiftID);
-        
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
         this.showPendingOffers();
+        this.showActiveOffers();
+        this.showStudentOffersHistory();
     }
     
     private void showPendingOffers() {
@@ -242,7 +250,33 @@ public class Controller {
                     " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
         }
         
-        view.showPendentOffers(pendingSwaps);
+        view.showPendingOffers(pendingSwaps);
+    }
+    
+    private void showActiveOffers() {
+        ArrayList<String> activeOffers = new ArrayList<String>();
+        
+        for (Swap s: model.getOpenSwapsOfStudent(s.getID()).values()) {
+            String UC = model.getCourses().get(s.getCourseID()).getName();
+            activeOffers.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
+                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
+        }
+        
+        view.showActiveOffers(activeOffers);
+        
+    }
+    
+    private void showStudentOffersHistory() {
+        ArrayList<String> studentOffersHistory = new ArrayList<String>();
+
+        for (Swap s: model.getClosedSwapsOfStudent(s.getID()).values()) {
+            String UC = model.getCourses().get(s.getCourseID()).getName();
+            studentOffersHistory.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
+                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
+        }
+
+        view.showActiveOffers(studentOffersHistory);
+        
     }
     
     //////////////////////// CRIAR TURNOS / CRIAR UCS
@@ -327,7 +361,8 @@ public class Controller {
     }
     
     private void enrollButton(ArrayList<String> data) {
-        String selectedCourse = data.get(0);
+        
+        String selectedCourse = ucs.get(data.get(0));
         String selectedStudent = data.get(1);
         String originShift = data.get(2);
         String destinationShift = data.get(3);
@@ -340,11 +375,75 @@ public class Controller {
         String teacherName = data.get(0);
         String teacherID = data.get(0);
         String teacherPassword = data.get(0);
-        String teacherCourse = data.get(0);
+        String teacherCourse = ucs.get(data.get(0));
         
         model.registerTeacher(teacherID, teacherName, teacherPassword, teacherCourse);
         
     }
     
+    private void shiftsOfStudent(ArrayList<String> data) {
+        String selectedCourse = ucs.get(data.get(0));
+        
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        Set<String> ucShifts = model.getCourses().get(selectedCourse).getShifts().keySet();
+        
+        for (String s: ucShifts){
+            shiftsList.add(s);
+        }
+        
+        view.showShiftsofCourse(shiftsList);
+        
+    }
+    
+    private void getStudentToRemove(ArrayList<String> data) {
+        
+        String selectedCourse = ucs.get(data.get(0));
+        String selectedShift = data.get(1);
+        
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        Set<Student> ucShifts = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants();
+        
+        for (Student s: ucShifts){
+            shiftsList.add(s.getID());
+        }
+        
+        view.showShiftsofCourse(shiftsList);
+    }
+        
+    private void removeButton(ArrayList<String> data) {
+        
+        String selectedCourse = ucs.get(data.get(0));
+        String selectedShift = data.get(1);
+        String selectedStudent = data.get(2);
+        
+        Shift s = model.getCourses().get(selectedCourse).getShift(selectedShift);
+        model.getStudents().get(selectedStudent).removeFromShift(s);
+        
+    }
+    
+    private void createShift(ArrayList<String> data) {
+            
+        String selectedCourse = ucs.get(data.get(0));
+        String newID = data.get(1);
+        String newLimit = data.get(2);
+        String newTeacher = data.get(3);
+        String newClassroom = data.get(1);
+        
+        model.createShift(newID, selectedCourse, Integer.parseInt(newLimit), newTeacher, newClassroom);
+        
+        
+    }
+    
+    private void createCourse(ArrayList<String> data) {
+            
+        String newID = data.get(0);
+        String newName = data.get(1);
+        String newTeacher = data.get(2);
+        
+        // construtor de course vai ter de ter teacher
+        // model.createShift(newID, selectedCourse, Integer.parseInt(newLimit), newTeacher, newClassroom);
+        
+        
+    }
     
 }
