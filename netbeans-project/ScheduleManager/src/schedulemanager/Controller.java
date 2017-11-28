@@ -36,11 +36,17 @@ public class Controller {
         view.getLoginArea().loginButton(this::loginButton);
         view.saveButton(this::saveButton);
         view.saveButton(this::loadButton);
+        
         view.checkedCourse(this::checkedCourse);
         view.checkedOfferedShift(this::checkedOfferedShift);
         view.swapOffer(this::swapOffer);
+        
         view.showCourseStudents(this::showCourseStudents);
-        view.enrollStudentShiftOrigin(this::enrollStudentShiftOrigin);
+        view.StudentShifts(this::StudentShifts);
+        view.possibleStudentShifts(this::possibleStudentShifts);
+        view.enrollButton(this::enrollButton);
+        
+        view.createTeacher(this::createTeacher);
         
     }
     
@@ -283,20 +289,62 @@ public class Controller {
     }
     
     // agr tenho de retornar os turnos da UC menos o que escolheu em cima
-    private void enrollStudentShiftOrigin(ArrayList<String> data) {
+    private void StudentShifts(ArrayList<String> data) {
         
         String courseID = ucs.get(data.get(0));
-        String originShiftID = data.get(1);
+        String studentID = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<String>();
         
-        Set<String> courses = model.getCourses().get(courseID).getShifts().keySet();
+        Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
         
-        for(String s: courses) {
+        for(String s: shifts) {
             shiftsList.add(s);
         }
-        shiftsList.remove(originShiftID);
+        
+        view.originShift(shiftsList);
+    }
+    
+    private void possibleStudentShifts(ArrayList<String> data) {
+        
+        String courseID = ucs.get(data.get(0));
+        String studentID = data.get(1);
+        
+        ArrayList<String> shiftsList = new ArrayList<String>();
+        
+        Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
+        Set<String> ucShifts = model.getCourses().get(courseID).getShifts().keySet();
+        
+        for (String s: ucShifts){
+            shifts.remove(s);
+        }
+        
+        for(String s: shifts) {
+            shiftsList.add(s);
+        }
         
         view.destinationShift(shiftsList);
     }
+    
+    private void enrollButton(ArrayList<String> data) {
+        String selectedCourse = data.get(0);
+        String selectedStudent = data.get(1);
+        String originShift = data.get(2);
+        String destinationShift = data.get(3);
+        
+        model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
+    }
+    
+    private void createTeacher(ArrayList<String> data) {
+        
+        String teacherName = data.get(0);
+        String teacherID = data.get(0);
+        String teacherPassword = data.get(0);
+        String teacherCourse = data.get(0);
+        
+        model.registerTeacher(teacherID, teacherName, teacherPassword, teacherCourse);
+        
+    }
+    
+    
 }
