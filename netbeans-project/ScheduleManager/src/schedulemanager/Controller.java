@@ -373,11 +373,12 @@ public class Controller {
     private void createTeacher(ArrayList<String> data) {
         
         String teacherName = data.get(0);
-        String teacherID = data.get(0);
-        String teacherPassword = data.get(0);
-        String teacherCourse = ucs.get(data.get(0));
+        String teacherID = data.get(1);
+        String teacherPassword = data.get(2);
+        String teacherCourse = ucs.get("Programação Funcional");
         
         model.registerTeacher(teacherID, teacherName, teacherPassword, teacherCourse);
+        this.showTeachers();
         
     }
     

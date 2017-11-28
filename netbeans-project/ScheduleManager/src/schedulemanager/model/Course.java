@@ -49,7 +49,8 @@ public class Course implements Serializable {
     }
     
     public Shift getShift(String shiftID) {
-    	return this.shifts.get(shiftID).clone();
+    	// return this.shifts.get(shiftID).clone();
+        return this.shifts.get(shiftID);    
     }
     
     // Attaches a previously created shift to this course
