@@ -204,9 +204,11 @@ public class Controller {
         this.showTeachers();
         this.showAllCourses();
         
+        /*
         this.showPendingOffers();
         this.showActiveOffers();
         this.showStudentOffersHistory();
+*/
         
     }
     
@@ -253,6 +255,7 @@ public class Controller {
         String offeredShiftID = data.get(1);
         
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
+        
         this.showPendingOffers();
         this.showActiveOffers();
         this.showStudentOffersHistory();
@@ -274,7 +277,8 @@ public class Controller {
             
             swapList.add(4, date);      
             
-            String takeable = String.valueOf(model.isSwapTakeable(s.getID(), swap));
+            String takeable = String.valueOf(model.isSwapTakeable(s.getID(), swap.getID()));
+            System.out.println(takeable);
             swapList.add(5, takeable);
             
             pendingSwaps.add(swapList);

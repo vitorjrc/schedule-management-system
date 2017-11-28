@@ -295,7 +295,7 @@ public class SwapManager implements Serializable{
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
-		if (loggedInStudent.getID() != takerID) {
+		if (loggedInStudent.getID().equals(takerID)) {
 			
 			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
 			return false;

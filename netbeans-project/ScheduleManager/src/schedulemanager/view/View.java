@@ -1451,10 +1451,9 @@ public class View extends javax.swing.JFrame {
             data[2] = list.get(2);
             data[3] = list.get(3); 
             data[4] = list.get(4); 
-            data[5] = list.get(5);
-            Boolean takeable = Boolean.parseBoolean(list.get(6));
+            Boolean takeable = Boolean.parseBoolean(list.get(5));
         
-            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3], data[4], data[5], takeable});
+            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3], data[4], takeable});
         }
             
         tableModel.fireTableDataChanged();
