@@ -5,6 +5,8 @@ package schedulemanager.model;
  */
 public class Teacher extends User {
 	
+	private static final long serialVersionUID = 6095440121635306977L;
+	
 	private String courseManagedID; // ID of Course this teacher manages
 	
 	public Teacher(String id, String name, String password, String courseManagedID) {

@@ -1,7 +1,6 @@
 package schedulemanager.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.io.Serializable;
 
 /**
@@ -15,7 +14,7 @@ public class Shift implements Serializable {
     private int occupationLimit; // The maximum number of students allowed in this shift  
     private String teacher;
     private String classroom;
-    private HashSet<Student> occupants; // The students that frequent this shift
+    private HashMap<String, Student> occupants; // The students that frequent this shift - StudentID -> Student
     
      public Shift(String id, String courseId, int occupationLimit, String teacher, String classroom) {
         this.id = id;
@@ -23,7 +22,7 @@ public class Shift implements Serializable {
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
-        this.occupants = new HashSet<Student>();
+        this.occupants = new HashMap<String, Student>();
     }
     
     public Shift(Shift s) {
@@ -32,12 +31,7 @@ public class Shift implements Serializable {
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
         this.classroom = s.getClassroom();
-        this.occupants = new HashSet<Student>();
-        
-        Iterator<Student> iterator = occupants.iterator();
-        while(iterator.hasNext()){
-            this.occupants.add(iterator.next().clone());
-        }
+        this.occupants = new HashMap<String, Student>(s.getOccupants());
     }
     
     public String getId() {
@@ -64,13 +58,17 @@ public class Shift implements Serializable {
         return this.classroom;
     }
 
-    public HashSet<Student> getOccupants() {
-        return this.occupants;
+    public HashMap<String, Student> getOccupants() {
+        return new HashMap<String, Student>(this.occupants);
+    }
+    
+    public void addOccupant(Student s) {
+    	this.occupants.put(s.getID(), new Student(s));
     }
    
     
     public String toString() {
-        
+
         return ("UC: " + this.courseId + " Turno: " + this.id);
     }
     

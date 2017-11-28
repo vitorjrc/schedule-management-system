@@ -70,6 +70,9 @@ public class Student extends User implements Serializable {
         
         // Add this shift to the right course on the shifts HashMap
         this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
+        
+        // Add this student to the occupant list on the shift
+        shift.addOccupant(this);
     }
     
     public void removeFromShift(Shift shift) {

@@ -11,18 +11,21 @@ public class Course implements Serializable {
     private static final long serialVersionUID = 7526472295622776147L;
     private String id;
     private String name;
+    private String teacherID; // ID of teacher that runs this course
     private HashMap<String, Shift> shifts; // Shift ID -> Shift
     
     // Constructors
-    public Course(String id, String name) {
+    public Course(String id, String name, String teacherID) {
         this.id = id;
         this.name = name;
+        this.teacherID = teacherID;
         this.shifts = new HashMap<String, Shift>();
     }
     
     public Course(Course c) {
         this.id = c.getId();
         this.name = c.getName();
+        this.teacherID = c.getTeacherID();
         this.shifts = new HashMap<String, Shift>();
         for (Shift s: c.getShifts().values()) {
             shifts.put(s.getId(), s.clone());
@@ -37,6 +40,10 @@ public class Course implements Serializable {
     
     public String getName() { 
         return this.name; 
+    }
+    
+    public String getTeacherID() { 
+        return this.teacherID; 
     }
     
     public HashMap<String, Shift> getShifts() { 
@@ -67,9 +74,7 @@ public class Course implements Serializable {
     
     
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        s.append(this.getName());
-        return s.toString();
+        return this.getName();
     }
     
     @Override

@@ -1,7 +1,6 @@
 package schedulemanager.model;
 
 import java.util.*;
-import java.io.*;
 
 /**
  * Model class - The only one that knows about the data source. It knows nothing about neither view nor controller.
@@ -29,9 +28,9 @@ public class Model {
         return ret;
     }
     
-    public Course createCourse(String courseID, String courseName) {
+    public Course createCourse(String courseID, String courseName, String teacherID) {
     	
-    	Course newCourse = new Course(courseID, courseName);
+    	Course newCourse = new Course(courseID, courseName, teacherID);
     	
     	this.coursesList.put(courseID, newCourse);
     	
