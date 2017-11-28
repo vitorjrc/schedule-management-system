@@ -1,11 +1,12 @@
 package schedulemanager.model;
 
 import java.util.HashMap;
+import java.io.Serializable;
 
 /**
  * Runs shift exchange functionality and keeps track of swap history
  */
-public class SwapManager {
+public class SwapManager implements Serializable{
 	
 	/* We store swaps in a HashMap that links each student ID
 	 * to another HashMap, which in turn links swap IDs to Swaps.
@@ -14,6 +15,9 @@ public class SwapManager {
 	 * open swaps. The slight efficiency gain in separating them would
 	 * not be worth the increase in complexity.
 	 */
+         
+        private static final long serialVersionUID = 7526472295622776147L;
+         
 	private HashMap<String, HashMap<String, Swap>> swapsByStudentID; // studentID -> (swapID -> Swap)
 	private boolean swapsAllowed;        // Keeps track of whether Swaps are still allowed.
 	private AuthManager authManager;     // Keeps an instance of authManager to check student info

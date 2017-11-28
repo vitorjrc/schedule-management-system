@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.*;
 import schedulemanager.model.*;
 import schedulemanager.view.*;
+import java.time.format.*;
 
 /**
  * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
@@ -150,23 +151,34 @@ public class Controller {
     }
                 
     
-    public ArrayList<String> getShiftsofUser(String userID) {
+    public HashMap<String, ArrayList<String>> getShiftsofUser(String userID) {
             
         // UC e turno
-        ArrayList<String> shiftsList = new ArrayList<String>();
-        Set<String> shift = new HashSet<>();
+        HashMap<String, ArrayList<String>> userInfo = new HashMap<String, ArrayList<String>>();
 
         for (Map.Entry<String, HashMap<String, Shift>> entry: s.getShiftsByCourse().entrySet()) {
             
-            String s1 = model.getCourses().get(entry.getKey()).getName();
-            shift = entry.getValue().keySet();
-            String joinShifts = String.join("-", shift);
+            String teacher = null;
+            String classroom = null;
             
-            shiftsList.add(s1 + " Turno: " + joinShifts);
+            String course = model.getCourses().get(entry.getKey()).getName();
+            Set shift = entry.getValue().keySet();
+            String joinedShifts = String.join("-", shift);
             
-        }   
+            for (Shift s: entry.getValue().values()) {
+                teacher = s.getTeacher();
+                classroom = s.getClassroom();
+            }
+            
+            ArrayList<String> info = new ArrayList<String>();
+            info.add(joinedShifts);
+            info.add(classroom);
+            info.add(teacher);
+            
+            userInfo.put(course,info);
+        }
         
-        return shiftsList;
+        return userInfo;
     }
              
     
@@ -191,6 +203,10 @@ public class Controller {
         
         this.showTeachers();
         this.showAllCourses();
+        
+        this.showPendingOffers();
+        this.showActiveOffers();
+        this.showStudentOffersHistory();
         
     }
     
@@ -244,11 +260,24 @@ public class Controller {
     
     private void showPendingOffers() {
         
-        ArrayList<String> pendingSwaps = new ArrayList<String>();
-        for (Swap s: model.getOpenSwaps().values()) {
-            String UC = model.getCourses().get(s.getCourseID()).getName();
-            pendingSwaps.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
-                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
+        ArrayList<ArrayList<String>> pendingSwaps = new ArrayList<ArrayList<String>>();
+        for (Swap swap: model.getOpenSwaps().values()) {
+            String UC = model.getCourses().get(swap.getCourseID()).getName();
+            ArrayList<String> swapList = new ArrayList<String>();
+            swapList.add(0, UC);
+            swapList.add(1, swap.getShiftOfferedID());
+            swapList.add(2, swap.getShiftWantedID());
+            swapList.add(3, swap.getBidderID());
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
+            String date = formatter.format(swap.getDateCreated());
+            
+            swapList.add(4, date);      
+            
+            String takeable = String.valueOf(model.isSwapTakeable(s.getID(), swap));
+            swapList.add(5, takeable);
+            
+            pendingSwaps.add(swapList);
         }
         
         view.showPendingOffers(pendingSwaps);

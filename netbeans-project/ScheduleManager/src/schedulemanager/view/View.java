@@ -3,11 +3,11 @@ package schedulemanager.view;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
 import javax.swing.JOptionPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -39,6 +39,8 @@ public class View extends javax.swing.JFrame {
         
         // background - White
         getContentPane().setBackground(Color.WHITE);
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+        jScrollPane2.getViewport().setBackground(Color.WHITE);
         
         // set JFrame to center of screen
         this.setLocationRelativeTo(null);
@@ -55,6 +57,22 @@ public class View extends javax.swing.JFrame {
         jLabel19.setVisible(false);
         jLabel20.setVisible(false);
         //jPanel4.setVisible(false);
+        
+        // columns cant be dragged
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.getViewport().setBorder(null);
+        jScrollPane1.setViewportBorder(null);
+        jScrollPane1.setBorder(null);
+        jScrollPane2.getViewport().setBorder(null);
+        jScrollPane2.setViewportBorder(null);
+        jScrollPane2.setBorder(null);
+        jTable1.getTableHeader();
+        ((DefaultTableCellRenderer)jTable1.getTableHeader().getDefaultRenderer())
+            .setHorizontalAlignment(JLabel.LEFT);
+        jTable2.getTableHeader();
+        ((DefaultTableCellRenderer)jTable2.getTableHeader().getDefaultRenderer())
+            .setHorizontalAlignment(JLabel.LEFT);
     }
     
     // Example method that receives a callback from the controller
@@ -191,7 +209,7 @@ public class View extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel5 = new javax.swing.JPanel();
+        jTable2 = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -271,18 +289,39 @@ public class View extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setText("Minhas UCs:");
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "UC", "Turno", "Sala", "Professor"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setFocusable(false);
+        jTable1.setGridColor(new java.awt.Color(204, 204, 204));
+        jTable1.setOpaque(false);
+        jTable1.setRequestFocusEnabled(false);
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.setShowHorizontalLines(false);
+        jTable1.setShowVerticalLines(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(300);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(350);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -311,9 +350,9 @@ public class View extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGap(66, 66, 66)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(320, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +378,7 @@ public class View extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel18)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -500,18 +539,37 @@ public class View extends javax.swing.JFrame {
 
         jLabel14.setText("Filtrar por UC:");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 906, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 395, Short.MAX_VALUE)
-        );
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jScrollPane2.setViewportView(jPanel5);
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "UC", "Turno oferecido", "Turno pretendido", "Pessoa", "Data", "Trocar"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable2.setShowHorizontalLines(false);
+        jTable2.setShowVerticalLines(false);
+        jTable2.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTable2);
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
 
@@ -1291,33 +1349,23 @@ public class View extends javax.swing.JFrame {
         jLabel20.setText(status);
     }
     
-    public void showUserUCs(ArrayList<String> userCourses){
-        
-        
-        javax.swing.JPanel jPanel4 = new JPanel();
-        jPanel4.add(jScrollPane1);
-        
+    public void showUserUCs(HashMap<String, ArrayList<String>> userInfo){
+       
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         
-        Object[] column = {"One", "Two"};
-        Object[][] data = {{1, 2}, {3, 4}, {5, 6}};
+        tableModel.setRowCount(0); // Remover todas as entradas da table
+        String[] data = new String[4];
         
-        tableModel.addRow(new Object[]{column, data[1]});
-        tableModel.fireTableDataChanged();
-        /*
-        jPanel4.setLayout(new GridLayout(15, 2));
-        jPanel4.setBackground(Color.white);
-         for(String c: userCourses ) {
-            JLabel lb = new JLabel("- " + c);
-            JLabel lbb = new JLabel("  ");
-            jPanel4.add(lb);
-            jPanel4.add(lbb);
-            jPanel4.revalidate();
-            jPanel4.repaint(); 
+        for(Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()){
+            data[0] = entry.getKey();
+            data[1] = entry.getValue().get(0);
+            data[2] = entry.getValue().get(1);
+            data[3] = entry.getValue().get(2); 
+        
+            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3]});
         }
-        */
-        
-    
+            
+        tableModel.fireTableDataChanged();
     }
     
     
@@ -1390,18 +1438,27 @@ public class View extends javax.swing.JFrame {
         jButton1.setEnabled(true);
     }
     
-    public void showPendingOffers(ArrayList<String> pendingOffers) {
+    public void showPendingOffers(ArrayList<ArrayList<String>> pendingOffers) {
         
-        jPanel5.setLayout(new GridLayout(15, 2));
-        jPanel5.setBackground(Color.white);
-        for(String c: pendingOffers) {
-            JLabel lb = new JLabel("- " + c);
-            JLabel lbb = new JLabel("  ");
-            jPanel5.add(lb);
-            jPanel5.add(lbb);
-            jPanel5.revalidate();
-            jPanel5.repaint(); 
+        DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
+        
+        tableModel.setRowCount(0); // Remover todas as entradas da table
+        String[] data = new String[6];
+        
+        for(ArrayList<String> list: pendingOffers) {
+            data[0] = list.get(0);
+            data[1] = list.get(1);
+            data[2] = list.get(2);
+            data[3] = list.get(3); 
+            data[4] = list.get(4); 
+            data[5] = list.get(5);
+            Boolean takeable = Boolean.parseBoolean(list.get(6));
+        
+            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3], data[4], data[5], takeable});
         }
+            
+        tableModel.fireTableDataChanged();
+        
     }
     
     public void showActiveOffers(ArrayList<String> activeOffers) {
@@ -1636,7 +1693,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -1647,6 +1703,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
