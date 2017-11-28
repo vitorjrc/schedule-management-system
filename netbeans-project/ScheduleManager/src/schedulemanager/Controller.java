@@ -55,6 +55,7 @@ public class Controller {
         view.createShift(this::createShift);
         
         view.createCourse(this::createCourse);
+        view.Logout(this::Logout);
         
     }
     
@@ -313,7 +314,7 @@ public class Controller {
         ArrayList<String> studentsList = new ArrayList<String>();
 
         for (Shift s: model.getCourses().get(courseID).getShifts().values()) {
-            for (Student st: s.getOccupants()) {
+            for (Student st: s.getOccupants().values()) {
                 studentsList.add(st.getID());
             }
                 
@@ -322,7 +323,6 @@ public class Controller {
         view.showCourseStudents(studentsList);
     }
     
-    // agr tenho de retornar os turnos da UC menos o que escolheu em cima
     private void StudentShifts(ArrayList<String> data) {
         
         String courseID = ucs.get(data.get(0));
@@ -342,20 +342,22 @@ public class Controller {
     private void possibleStudentShifts(ArrayList<String> data) {
         
         String courseID = ucs.get(data.get(0));
-        String studentID = data.get(1);
+        String originShift = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<String>();
         
-        Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
+        // Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
         Set<String> ucShifts = model.getCourses().get(courseID).getShifts().keySet();
         
-        for (String s: ucShifts){
-            shifts.remove(s);
-        }
-        
-        for(String s: shifts) {
+        for(String s: ucShifts) {
             shiftsList.add(s);
         }
+        
+        for (String s: shiftsList){
+            shiftsList.remove(originShift);
+        }
+        
+
         
         view.destinationShift(shiftsList);
     }
@@ -402,10 +404,10 @@ public class Controller {
         String selectedShift = data.get(1);
         
         ArrayList<String> shiftStudentsList = new ArrayList<String>();
-        Set<Student> shiftStudents = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants();
+        Set<String> shiftStudents = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants().keySet();
         
-        for (Student s: shiftStudents){
-            shiftStudentsList.add(s.getID());
+        for (String s: shiftStudents){
+            shiftStudentsList.add(s);
         }
         
         view.showStudentToRemove(shiftStudentsList);
@@ -428,7 +430,7 @@ public class Controller {
         String newID = data.get(1);
         String newLimit = data.get(2);
         String newTeacher = data.get(3);
-        String newClassroom = data.get(1);
+        String newClassroom = data.get(4);
         
         model.createShift(newID, selectedCourse, Integer.parseInt(newLimit), newTeacher, newClassroom);
         
@@ -441,10 +443,16 @@ public class Controller {
         String newName = data.get(1);
         String newTeacher = data.get(2);
         
-        // construtor de course vai ter de ter teacher
-        // model.createShift(newID, selectedCourse, Integer.parseInt(newLimit), newTeacher, newClassroom);
+        Course c = model.createCourse(newID, newName, newTeacher);
+
+        this.ucs.put(c.getName(), c.getId());
+        this.showAllCourses();
         
+    }
+    
+    private void Logout(ArrayList<String> data) {
         
+        model.logout();
     }
     
 }

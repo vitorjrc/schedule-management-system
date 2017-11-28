@@ -8,7 +8,8 @@ import java.util.function.Consumer; // This is the type we are going to use for 
 import javax.swing.JOptionPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.table.*;
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
@@ -53,7 +54,7 @@ public class View extends javax.swing.JFrame {
         jLabel1.setVisible(false);
         jLabel19.setVisible(false);
         jLabel20.setVisible(false);
-        jPanel4.setVisible(false);
+        //jPanel4.setVisible(false);
     }
     
     // Example method that receives a callback from the controller
@@ -62,7 +63,7 @@ public class View extends javax.swing.JFrame {
     //usar isto smp q quero mandar cenas para o array
     public void onRegister(Consumer<ArrayList<String>> callback) {
         
-        registeredListeners.add(callback);
+        registeredListeners.add(0, callback);
     }
     
     public void checkedCourse(Consumer<ArrayList<String>> callback) {
@@ -135,6 +136,11 @@ public class View extends javax.swing.JFrame {
         createCourse.add(0, callback);
     }
     
+    public void Logout(Consumer<ArrayList<String>> callback) {
+        
+        registeredListeners.add(1, callback);
+    }
+    
     
     
     
@@ -161,7 +167,8 @@ public class View extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -264,18 +271,18 @@ public class View extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel18.setText("Minhas UCs:");
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 463, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -304,9 +311,9 @@ public class View extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -332,8 +339,8 @@ public class View extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jLabel18)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Minha Área", jPanel1);
@@ -1040,9 +1047,18 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
-    //botão sair
+    //botão LOGOUT
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
         JOptionPane.showMessageDialog(null, "A sair...");
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = registeredListeners.get(1);
+        
+        method.accept(sc);
+        
+        
+        
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);
         jButton2.setEnabled(true);
@@ -1050,7 +1066,8 @@ public class View extends javax.swing.JFrame {
         jLabel1.setVisible(false);
         jLabel19.setVisible(false);
         jLabel20.setVisible(false);
-        jPanel4.setVisible(false);
+        //jPanel4.setVisible(false);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1086,8 +1103,8 @@ public class View extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         
-        String newID = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
-        String newName = jComboBox9.getItemAt(jComboBox9.getSelectedIndex());
+        String newID = jTextField13.getText();
+        String newName = jTextField14.getText();
         String selectedTeacher = jComboBox5.getItemAt(jComboBox5.getSelectedIndex());
         
         ArrayList<String> sc = new ArrayList<String>(); 
@@ -1200,13 +1217,13 @@ public class View extends javax.swing.JFrame {
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
        
         String selectedCourse = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
-        String selectedStudent = jComboBox9.getItemAt(jComboBox7.getSelectedIndex());
+        String selectedOriginShift = jComboBox7.getItemAt(jComboBox7.getSelectedIndex());
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(2);
         
         sc.add(selectedCourse);
-        sc.add(selectedStudent);
+        sc.add(selectedOriginShift);
         
         method.accept(sc);
         
@@ -1215,7 +1232,7 @@ public class View extends javax.swing.JFrame {
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
         
         String selectedCourse = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
-        String selectedStudent = jComboBox9.getItemAt(jComboBox7.getSelectedIndex());
+        String selectedStudent = jComboBox9.getItemAt(jComboBox9.getSelectedIndex());
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(1);
@@ -1276,6 +1293,18 @@ public class View extends javax.swing.JFrame {
     
     public void showUserUCs(ArrayList<String> userCourses){
         
+        
+        javax.swing.JPanel jPanel4 = new JPanel();
+        jPanel4.add(jScrollPane1);
+        
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+        
+        Object[] column = {"One", "Two"};
+        Object[][] data = {{1, 2}, {3, 4}, {5, 6}};
+        
+        tableModel.addRow(new Object[]{column, data[1]});
+        tableModel.fireTableDataChanged();
+        /*
         jPanel4.setLayout(new GridLayout(15, 2));
         jPanel4.setBackground(Color.white);
          for(String c: userCourses ) {
@@ -1286,6 +1315,8 @@ public class View extends javax.swing.JFrame {
             jPanel4.revalidate();
             jPanel4.repaint(); 
         }
+        */
+        
     
     }
     
@@ -1411,7 +1442,7 @@ public class View extends javax.swing.JFrame {
         jLabel1.setVisible(true);  //texto "logado como ..."
         jLabel19.setVisible(true); //dados pessoais
         jLabel20.setVisible(true); //dados pessoais
-        jPanel4.setVisible(true);  //minhas uc's
+        //jPanel4.setVisible(true);  //minhas uc's
         
     }
     
@@ -1605,16 +1636,17 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
