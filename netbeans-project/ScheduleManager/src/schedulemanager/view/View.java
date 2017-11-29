@@ -10,6 +10,8 @@ import java.awt.event.WindowEvent;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
+import java.awt.Dimension;
+import java.awt.event.*;
 
 /**
  * View class - The only one that knows which buttons and fields exist. It knows nothing about neither controller nor model.
@@ -20,6 +22,7 @@ public class View extends javax.swing.JFrame {
     private LoginArea loginDialog;
     
     private int registerOpened = 0;
+    private ArrayList<String> openSwapsOfStudent = new ArrayList<String>();
     
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> swapOffer = new ArrayList<Consumer<ArrayList<String>>>();
@@ -29,6 +32,7 @@ public class View extends javax.swing.JFrame {
     private ArrayList<Consumer<ArrayList<String>>> removeStudentFromShift = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> createShift = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> createCourse = new ArrayList<Consumer<ArrayList<String>>>();
+    private ArrayList<Consumer<ArrayList<String>>> cancelOffer = new ArrayList<Consumer<ArrayList<String>>>();
     
     //construtor da view
     public View() {
@@ -159,6 +163,11 @@ public class View extends javax.swing.JFrame {
         registeredListeners.add(1, callback);
     }
     
+    public void cancelOffer(Consumer<ArrayList<String>> callback) {
+        
+        cancelOffer.add(0, callback);
+    }
+    
     
     
     
@@ -194,8 +203,6 @@ public class View extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel7 = new javax.swing.JPanel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox3 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
@@ -204,6 +211,8 @@ public class View extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jPanel8 = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -401,19 +410,6 @@ public class View extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Ofertas ativas:");
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 449, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
-        );
-
-        jScrollPane3.setViewportView(jPanel7);
-
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -451,6 +447,19 @@ public class View extends javax.swing.JFrame {
         jLabel43.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel43.setText("Histórico de Trocas:");
 
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 445, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 320, Short.MAX_VALUE)
+        );
+
+        jScrollPane3.setViewportView(jPanel7);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -458,7 +467,7 @@ public class View extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 281, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(259, 259, 259)
                         .addComponent(jLabel11))
@@ -484,8 +493,8 @@ public class View extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -524,9 +533,9 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel43))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane3))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -1100,7 +1109,7 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = swapOffer.get(0);
         
-        sc.add(selectedCourse);
+        sc.add(0, selectedCourse);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox2ActionPerformed
@@ -1114,8 +1123,6 @@ public class View extends javax.swing.JFrame {
         Consumer method = registeredListeners.get(1);
         
         method.accept(sc);
-        
-        
         
         jTabbedPane1.setEnabledAt(1, false);
         jTabbedPane1.setEnabledAt(2, false);
@@ -1168,9 +1175,9 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createCourse.get(0);
         
-        sc.add(newID);
-        sc.add(newName);
-        sc.add(selectedTeacher);
+        sc.add(0, newID);
+        sc.add(1, newName);
+        sc.add(2, selectedTeacher);
         
         method.accept(sc);
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -1185,10 +1192,10 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(3);
         
-        sc.add(selectedCourse);
-        sc.add(selectedStudent);
-        sc.add(originShift);
-        sc.add(destinationShift);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedStudent);
+        sc.add(2, originShift);
+        sc.add(3, destinationShift);
         
         method.accept(sc);
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -1202,9 +1209,9 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = removeStudentFromShift.get(2);
         
-        sc.add(selectedCourse);
-        sc.add(selectedShift);
-        sc.add(selectedStudent);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedShift);
+        sc.add(2, selectedStudent);
         
         method.accept(sc);
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1220,11 +1227,11 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createShift.get(0);
         
-        sc.add(selectedCourse);
-        sc.add(newID);
-        sc.add(newLimit);
-        sc.add(newTeacher);
-        sc.add(newClassroom);
+        sc.add(0, selectedCourse);
+        sc.add(1, newID);
+        sc.add(2, newLimit);
+        sc.add(3, newTeacher);
+        sc.add(4, newClassroom);
         
         method.accept(sc);
     }//GEN-LAST:event_jButton10ActionPerformed
@@ -1238,9 +1245,9 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createTeacher.get(0);
         
-        sc.add(teacherName);
-        sc.add(teacherID);
-        sc.add(teacherPassword);
+        sc.add(0, teacherName);
+        sc.add(1, teacherID);
+        sc.add(2, teacherPassword);
         
         method.accept(sc);
     }//GEN-LAST:event_jButton11ActionPerformed
@@ -1253,8 +1260,8 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = swapOffer.get(1);
         
-        sc.add(selectedCourse);
-        sc.add(selectedOfferedShift);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedOfferedShift);
         
         method.accept(sc);
         
@@ -1267,7 +1274,7 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(0);
         
-        sc.add(selectedCourse);
+        sc.add(0, selectedCourse);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox6ActionPerformed
@@ -1280,8 +1287,8 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(2);
         
-        sc.add(selectedCourse);
-        sc.add(selectedOriginShift);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedOriginShift);
         
         method.accept(sc);
         
@@ -1295,8 +1302,8 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(1);
         
-        sc.add(selectedCourse);
-        sc.add(selectedStudent);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedStudent);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox9ActionPerformed
@@ -1308,7 +1315,7 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = removeStudentFromShift.get(0);
         
-        sc.add(selectedCourse);
+        sc.add(0, selectedCourse);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox10ActionPerformed
@@ -1321,8 +1328,8 @@ public class View extends javax.swing.JFrame {
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = removeStudentFromShift.get(1);
         
-        sc.add(selectedCourse);
-        sc.add(selectedShift);
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedShift);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox11ActionPerformed
@@ -1446,6 +1453,7 @@ public class View extends javax.swing.JFrame {
         String[] data = new String[6];
         
         for(ArrayList<String> list: pendingOffers) {
+            System.out.println(data[0]);
             data[0] = list.get(0);
             data[1] = list.get(1);
             data[2] = list.get(2);
@@ -1460,18 +1468,54 @@ public class View extends javax.swing.JFrame {
         
     }
     
-    public void showActiveOffers(ArrayList<String> activeOffers) {
-
+    public void showActiveOffers(ArrayList<ArrayList<String>> activeOffers) {
+        
         jPanel7.setLayout(new GridLayout(15, 2));
         jPanel7.setBackground(Color.white);
-        for(String c: activeOffers) {
-            JLabel lb = new JLabel("- " + c);
-            JLabel lbb = new JLabel("  ");
-            jPanel7.add(lb);
-            jPanel7.add(lbb);
-            jPanel7.revalidate();
-            jPanel7.repaint(); 
+        
+        for(ArrayList<String> list: activeOffers) {
+            
+            String toBePrinted = "UC: " + list.get(0) + " do " + list.get(1) + " para o "+ list.get(2);
+            if (this.printed(toBePrinted) == 1) continue;
+            else {
+                JLabel lb = new JLabel(toBePrinted);
+                this.openSwapsOfStudent.add(toBePrinted);
+                jPanel7.add(lb);
+                JButton b = new JButton("Cancelar oferta");
+                b.setPreferredSize(new Dimension(1, 1));
+                b.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        cancelOfferButtonClick(list.get(3));
+                        jPanel7.remove(b);
+                        jPanel7.remove(lb);
+                        jPanel7.revalidate();
+                        jPanel7.repaint();
+                    }
+                     });
+                jPanel7.add(b);
+                jPanel7.revalidate();
+                jPanel7.repaint(); 
+            }   
+        
         }
+    }
+    
+    private void cancelOfferButtonClick(String cancelSwapID) {
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = cancelOffer.get(0);
+        
+        sc.add(0, cancelSwapID);
+        
+        method.accept(sc);
+        
+    }
+    
+    private int printed(String c) {
+        for (int i = 0; i < openSwapsOfStudent.size(); i++) {
+                    if (openSwapsOfStudent.get(i).equals(c)) return 1;
+        }
+        return 0;
     }
     
     public void showStudentOffersHistory(ArrayList<String> studentOffersHistory) {

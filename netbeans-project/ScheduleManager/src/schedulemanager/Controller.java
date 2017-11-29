@@ -56,7 +56,10 @@ public class Controller {
         view.createShift(this::createShift);
         
         view.createCourse(this::createCourse);
+        
         view.Logout(this::Logout);
+        
+        view.cancelOffer(this::cancelOffer);
         
     }
     
@@ -204,11 +207,10 @@ public class Controller {
         this.showTeachers();
         this.showAllCourses();
         
-        /*
+        
         this.showPendingOffers();
         this.showActiveOffers();
         this.showStudentOffersHistory();
-*/
         
     }
     
@@ -288,15 +290,22 @@ public class Controller {
     }
     
     private void showActiveOffers() {
-        ArrayList<String> activeOffers = new ArrayList<String>();
         
-        for (Swap s: model.getOpenSwapsOfStudent(s.getID()).values()) {
-            String UC = model.getCourses().get(s.getCourseID()).getName();
-            activeOffers.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
-                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
+        ArrayList<ArrayList<String>> pendingSwapsofStudent = new ArrayList<ArrayList<String>>();
+        for (Swap swap: model.getOpenSwapsOfStudent(s.getID()).values()) {
+            
+            String UC = model.getCourses().get(swap.getCourseID()).getName();
+            
+            ArrayList<String> swapInfo = new ArrayList<String>();
+            swapInfo.add(0, UC);
+            swapInfo.add(1, swap.getShiftOfferedID());
+            swapInfo.add(2, swap.getShiftWantedID());
+            swapInfo.add(3, swap.getID());
+            
+            pendingSwapsofStudent.add(swapInfo);
         }
         
-        view.showActiveOffers(activeOffers);
+        view.showActiveOffers(pendingSwapsofStudent);
         
     }
     
@@ -309,7 +318,7 @@ public class Controller {
                     " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
         }
 
-        view.showActiveOffers(studentOffersHistory);
+        //view.showActiveOffers(studentOffersHistory);
         
     }
     
@@ -402,7 +411,10 @@ public class Controller {
         String originShift = data.get(2);
         String destinationShift = data.get(3);
         
+        System.out.println(selectedCourse + " " + selectedStudent + " " + originShift + " " + destinationShift);
+        
         model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
+        this.showInterfaceThings(s.getID());
     }
     
     private void createTeacher(ArrayList<String> data) {
@@ -452,8 +464,8 @@ public class Controller {
         String selectedShift = data.get(1);
         String selectedStudent = data.get(2);
         
-        Shift s = model.getCourses().get(selectedCourse).getShift(selectedShift);
-        model.getStudents().get(selectedStudent).removeFromShift(s);
+        Shift shift = model.getCourses().get(selectedCourse).getShift(selectedShift);
+        model.getStudents().get(selectedStudent).removeFromShift(shift);
         
     }
     
@@ -486,6 +498,14 @@ public class Controller {
     private void Logout(ArrayList<String> data) {
         
         model.logout();
+    }
+        
+    private void cancelOffer(ArrayList<String> data) {
+        
+        String swapID = data.get(0);
+        
+        model.cancelSwapOffer(s.getID(), swapID);
+        this.showInterfaceThings(s.getID());
     }
     
 }
