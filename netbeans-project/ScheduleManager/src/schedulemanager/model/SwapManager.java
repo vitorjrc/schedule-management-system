@@ -323,22 +323,42 @@ public class SwapManager implements Serializable{
 		}
 	}
 	
-	// Direct swap, without a taker. Only possible for worker students.
+	// Direct swap, without a taker. Only possible for worker students, course manager teachers, or the admin.
 	// courses parameter is needed to get Shift from courseID and shiftID
 	// Returns true if successful, false otherwise
 	public boolean directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, HashMap<String, Course> courses) {
 		
-		if (!this.authManager.isStudentLoggedIn()) {
+		if (this.authManager.isStudentLoggedIn()) {
+			
+			// A student is logged in - check that their ID equals StudentID
+			// and that they can direct swap
+			
+			Student s = (Student) this.authManager.getLoggedInUser();
+
+			if (!s.getID().equals(studentID) || !s.canDirectSwap()) {
+				
+				return false;
+			}
+			
+		} else if (this.authManager.isTeacherLoggedIn()) {
+			
+			// A teacher is logged in - check that they run the course with CourseID
+			
+			Teacher teacher = (Teacher) this.authManager.getLoggedInUser();
+			
+			if (!teacher.getCourseManagedID().equals(courseID)) {
+				
+				return false;
+			}
+		
+		} else if (!this.authManager.isAdminLoggedIn()) {
+			
+			// No student, teacher, nor admin is logged in - cancel
+			
 			return false;
 		}
 		
-		Student student = (Student) this.authManager.getLoggedInUser();
-		
-		// Check that swapper student is the one who is logged in
-		if (!studentID.equals(student.getID())) { return false; }
-		
-		// Check that student can direct swap
-		if (!student.canDirectSwap()) { return false; }
+		Student student = (Student) this.authManager.getStudentByID(studentID);
 		
 		Shift from = courses.get(courseID).getShift(fromShiftID);
 		Shift to = courses.get(courseID).getShift(toShiftID);
