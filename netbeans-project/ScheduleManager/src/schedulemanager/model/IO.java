@@ -29,7 +29,7 @@ public class IO {
             oos.writeObject(model.getCourses());
             oos.writeObject(model.getStudents());
             oos.writeObject(model.getTeachers());
-            oos.writeObject(model.getAllSwaps());
+            oos.writeObject(model.getSwapsByStudentID());
             
             oos.close();
         }

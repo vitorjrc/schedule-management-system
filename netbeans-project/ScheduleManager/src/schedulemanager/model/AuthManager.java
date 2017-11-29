@@ -1,16 +1,18 @@
 package schedulemanager.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Manages authentication stuff
  */
-public class AuthManager {
+public class AuthManager implements Serializable{
 	
 	private boolean isStudentLoggedIn = false;
 	private boolean isAdminLoggedIn = false;
 	private boolean isTeacherLoggedIn = false;
 	private User loggedInUser = null;
+        private static final long serialVersionUID = 7526472295622776147L;
 	
 	private HashMap<String, Student> registeredStudents; // StudentID -> Student
 	private HashMap<String, Teacher> registeredTeachers; // TeacherID -> Teacher

@@ -1,6 +1,6 @@
 package schedulemanager.model;
 
-import java.util.HashMap;
+import java.util.*;
 import java.io.Serializable;
 
 /**
@@ -25,14 +25,14 @@ public class SwapManager implements Serializable{
 	
         public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
-		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
+		this.swapsByStudentID = new HashMap<>();
                 this.swapsAllowed = true;
 	}
 	
 	
         public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
-		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
+		this.swapsByStudentID = new HashMap<>();
 		this.swapsAllowed = swapsAllowed;
 	}
 	
@@ -80,9 +80,10 @@ public class SwapManager implements Serializable{
     	
         HashMap<String, Swap> swaps = new HashMap<String, Swap>();
 		
-		for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
+		//for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
+                for(Map.Entry<String, HashMap<String, Swap>> entry: this.swapsByStudentID.entrySet()) {
 			
-			for (Swap swap: swapsOfAStudent.values()) {
+			for (Swap swap: entry.getValue().values()) {
 				
 				if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
 					
@@ -348,8 +349,13 @@ public class SwapManager implements Serializable{
 		return true;
 	}
         
+        public HashMap<String, HashMap<String, Swap>> getSwapsByStudentID() {
+            
+            return this.swapsByStudentID;
+        }
+        
         public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
                 
-                this.swapsByStudentID = newMap;
+            this.swapsByStudentID.putAll(newMap);
         } 
 }

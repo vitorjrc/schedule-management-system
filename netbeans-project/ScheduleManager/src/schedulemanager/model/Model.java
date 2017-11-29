@@ -209,4 +209,9 @@ public class Model {
         return this.authManager.getRegisteredTeachers();
     }
     
+    public HashMap<String, HashMap<String, Swap>> getSwapsByStudentID() {
+        
+        return this.swapManager.getSwapsByStudentID();
+    }
+    
 }
