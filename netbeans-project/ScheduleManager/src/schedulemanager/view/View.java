@@ -69,6 +69,7 @@ public class View extends javax.swing.JFrame {
         jTabbedPane1.remove(jPanel3);
         jTabbedPane1.remove(jPanel6);
         jTabbedPane1.remove(jPanel9);
+        jButton4.setEnabled(false);
         
     }
     
@@ -1104,13 +1105,16 @@ public class View extends javax.swing.JFrame {
         
         method.accept(sc);
         
-        jTabbedPane1.setEnabledAt(1, false);
-        jTabbedPane1.setEnabledAt(2, false);
         jButton4.setEnabled(false);
+        jButton1.setEnabled(true);
         jLabel1.setVisible(false);
-        jLabel19.setVisible(false);
-        jLabel20.setVisible(false);
-        //jPanel4.setVisible(false);
+        
+        // disabling tabs
+        jTabbedPane1.remove(jPanel1);
+        jTabbedPane1.remove(jPanel2);
+        jTabbedPane1.remove(jPanel3);
+        jTabbedPane1.remove(jPanel6);
+        jTabbedPane1.remove(jPanel9);
         
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -1456,7 +1460,8 @@ public class View extends javax.swing.JFrame {
         // A vida é muito curta para carregar em OK quando não aconteceu nada de mal
         //JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
         loginDialog.setVisible(false);
-        jButton1.setEnabled(true);
+        jButton1.setEnabled(false);
+        jButton4.setEnabled(true);
     }
     
     public void showPendingOffers(ArrayList<ArrayList<String>> pendingOffers) {
