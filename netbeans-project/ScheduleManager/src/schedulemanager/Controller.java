@@ -18,7 +18,8 @@ public class Controller {
     private Model model;
     private View view;
     private LinkedHashMap<String, String> ucs = new LinkedHashMap<String, String>(); // nameUC -> idUC
-    private Student s = null;
+    private Student userS = null;
+    private Teacher userT = null;
     
     public void setModel(Model model) {
         this.model = model;
@@ -60,6 +61,7 @@ public class Controller {
         view.Logout(this::Logout);
         
         view.cancelOffer(this::cancelOffer);
+        view.acceptOffer(this::acceptOffer);
         
     }
     
@@ -104,7 +106,7 @@ public class Controller {
         else { 
             
             ArrayList<String> newCourses = new ArrayList<String>();
-            s = model.registerStudent(newID, newName, newPassword, newStatus);
+            userS = model.registerStudent(newID, newName, newPassword, newStatus);
             
             for (int i = 4; i < data.size(); i++) {
                 
@@ -113,7 +115,7 @@ public class Controller {
                 model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
                 newCourses.add(courseID);
-                s.assignShift(newShift0);
+                userS.assignShift(newShift0);
                 
                 Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
             }
@@ -135,12 +137,35 @@ public class Controller {
                 view.showLoginError(message);     //msg de erro password incorreta
         else {
                 view.showLoginSuccess();
-                this.s = model.getLoggedinStudent(userID);
-                // show interface things because user is logged
-
-                showInterfaceThings(userID);
+                
+                if (model.isAdminLoggedIn()) {
+                    showAdminInterface();
+                }
+                
+                if (model.isStudentLoggedIn()) {
+                    this.userS = (Student) model.getLoggedInUser();
+                    this.userT = null;
+                    showStudentInterface(userID);
+                }
+                
+                if (model.isTeacherLoggedIn()) {
+                    this.userS = null;
+                    this.userT = (Teacher) model.getLoggedInUser();
+                    showTeacherInterface(userID);
+                }
         }
         
+    }
+    
+    private void showAdminInterface() {
+        view.adminInterface();
+        this.showTeachers();
+        this.showAllCourses();
+        System.out.println("Admin logado!");
+    }
+    
+    private void showTeacherInterface(String userID) {
+        System.out.println("Professor logado!");
     }
         
     private void saveButton(ArrayList<String> data) {
@@ -159,7 +184,7 @@ public class Controller {
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<String, ArrayList<String>>();
 
-        for (Map.Entry<String, HashMap<String, Shift>> entry: s.getShiftsByCourse().entrySet()) {
+        for (Map.Entry<String, HashMap<String, Shift>> entry: userS.getShiftsByCourse().entrySet()) {
             
             String teacher = null;
             String classroom = null;
@@ -185,32 +210,28 @@ public class Controller {
     }
              
     
-    private void showInterfaceThings(String userID) {
+    private void showStudentInterface(String userID) {
         
         ArrayList<String> courses = new ArrayList<String>();
-        Set<String> coursesSet = new LinkedHashSet<>();
         
         // Get UCs name of user
-        coursesSet = s.getShiftsByCourse().keySet();
+        Set<String> coursesSet = userS.getShiftsByCourse().keySet();
         for(String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
         
+        view.studentInterface();
         view.setCoursesList(courses);
-        view.setLoggedAs(s.getName());
-        view.setUserData(s.getID(), s.getRegimen());
+        view.setLoggedAs(userS.getName());
+        view.setUserData(userS.getID(), userS.getRegimen());
        
         view.showUserUCs(getShiftsofUser(userID));
         
-        view.showThingsAfterLogin();
-        
-        this.showTeachers();
-        this.showAllCourses();
-        
-        
-        this.showPendingOffers();
-        this.showActiveOffers();
-        this.showStudentOffersHistory();
+        if (!(model.getOpenSwaps().isEmpty())) this.showPendingOffers();
+        if (model.getSwapsByStudentID().containsKey(userS.getID())) {
+            this.showActiveOffers();
+            this.showStudentOffersHistory();
+        } 
         
     }
     
@@ -220,7 +241,7 @@ public class Controller {
         String courseName = data.get(0);
         String courseID = ucs.get(courseName);
         
-        Set<String> shift = shift = s.getShiftsByCourse().get(courseID).keySet();
+        Set<String> shift = shift = userS.getShiftsByCourse().get(courseID).keySet();
         
         ArrayList<String> myShifts = new ArrayList<String>();  
         for (String str : shift)  
@@ -251,7 +272,7 @@ public class Controller {
     
     private void swapOffer(ArrayList<String> data) {
         
-        String bidderID = s.getID();
+        String bidderID = userS.getID();
         String courseID = ucs.get(data.get(0));
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
@@ -270,18 +291,19 @@ public class Controller {
             String UC = model.getCourses().get(swap.getCourseID()).getName();
             ArrayList<String> swapList = new ArrayList<String>();
             swapList.add(0, UC);
-            swapList.add(1, swap.getShiftOfferedID());
-            swapList.add(2, swap.getShiftWantedID());
-            swapList.add(3, swap.getBidderID());
+            swapList.add(1, swap.getID());
+            swapList.add(2, swap.getShiftOfferedID());
+            swapList.add(3, swap.getShiftWantedID());
+            swapList.add(4, swap.getBidderID());
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
             String date = formatter.format(swap.getDateCreated());
             
-            swapList.add(4, date);      
+            swapList.add(5, date);      
             
-            String takeable = String.valueOf(model.isSwapTakeable(s.getID(), swap.getID()));
-            System.out.println(takeable);
-            swapList.add(5, takeable);
+            String takeable = String.valueOf(model.isSwapTakeable(userS.getID(), swap.getID()));
+            
+            swapList.add(6, takeable);
             
             pendingSwaps.add(swapList);
         }
@@ -292,7 +314,7 @@ public class Controller {
     private void showActiveOffers() {
         
         ArrayList<ArrayList<String>> pendingSwapsofStudent = new ArrayList<ArrayList<String>>();
-        for (Swap swap: model.getOpenSwapsOfStudent(s.getID()).values()) {
+        for (Swap swap: model.getOpenSwapsOfStudent(userS.getID()).values()) {
             
             String UC = model.getCourses().get(swap.getCourseID()).getName();
             
@@ -312,7 +334,7 @@ public class Controller {
     private void showStudentOffersHistory() {
         ArrayList<String> studentOffersHistory = new ArrayList<String>();
 
-        for (Swap s: model.getClosedSwapsOfStudent(s.getID()).values()) {
+        for (Swap s: model.getClosedSwapsOfStudent(userS.getID()).values()) {
             String UC = model.getCourses().get(s.getCourseID()).getName();
             studentOffersHistory.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
                     " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
@@ -411,10 +433,7 @@ public class Controller {
         String originShift = data.get(2);
         String destinationShift = data.get(3);
         
-        System.out.println(selectedCourse + " " + selectedStudent + " " + originShift + " " + destinationShift);
-        
         model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
-        this.showInterfaceThings(s.getID());
     }
     
     private void createTeacher(ArrayList<String> data) {
@@ -504,8 +523,16 @@ public class Controller {
         
         String swapID = data.get(0);
         
-        model.cancelSwapOffer(s.getID(), swapID);
-        this.showInterfaceThings(s.getID());
+        model.cancelSwapOffer(userS.getID(), swapID);
+        this.showStudentInterface(userS.getID());
+    }
+    
+    private void acceptOffer(ArrayList<String> data) {
+        
+        String swapID = data.get(0);
+        
+        model.takeSwapOffer(userS.getID(), swapID);
+        this.showStudentInterface(userS.getID());
     }
     
 }

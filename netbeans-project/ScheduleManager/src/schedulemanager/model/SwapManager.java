@@ -25,14 +25,14 @@ public class SwapManager implements Serializable{
 	
         public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
-		this.swapsByStudentID = new HashMap<>();
+		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
                 this.swapsAllowed = true;
 	}
 	
 	
         public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
-		this.swapsByStudentID = new HashMap<>();
+		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
 		this.swapsAllowed = swapsAllowed;
 	}
 	
@@ -80,10 +80,9 @@ public class SwapManager implements Serializable{
     	
         HashMap<String, Swap> swaps = new HashMap<String, Swap>();
 		
-		//for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
-                for(Map.Entry<String, HashMap<String, Swap>> entry: this.swapsByStudentID.entrySet()) {
+                for (HashMap<String, Swap> swapsOfAStudent: this.swapsByStudentID.values()) {
 			
-			for (Swap swap: entry.getValue().values()) {
+			for (Swap swap: swapsOfAStudent.values()) {
 				
 				if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
 					
@@ -296,7 +295,7 @@ public class SwapManager implements Serializable{
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
-		if (loggedInStudent.getID().equals(takerID)) {
+		if (!(loggedInStudent.getID().equals(takerID))) {
 			
 			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
 			return false;
@@ -376,6 +375,6 @@ public class SwapManager implements Serializable{
         
         public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
                 
-            this.swapsByStudentID.putAll(newMap);
+            this.swapsByStudentID = newMap;
         } 
 }
