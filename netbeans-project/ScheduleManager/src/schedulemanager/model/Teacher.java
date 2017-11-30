@@ -9,11 +9,10 @@ public class Teacher extends User {
 	
 	private String courseManagedID; // ID of Course this teacher manages
 	
-	public Teacher(String id, String name, String password, String courseManagedID) {
+	public Teacher(String id, String name, String password) {
 		
 		super(id, name, password);
 		
-		this.courseManagedID = courseManagedID;
 	}
 	
 	public Teacher(Teacher t) {
@@ -24,6 +23,10 @@ public class Teacher extends User {
 	}
 	
 	public String getCourseManagedID() { return this.courseManagedID; }
+        
+        public void setManagedCourseID (String course) {
+            this.courseManagedID = course;
+        }
 	
 
         public Teacher clone() {

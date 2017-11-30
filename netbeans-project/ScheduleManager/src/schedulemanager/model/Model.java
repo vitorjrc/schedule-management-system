@@ -57,9 +57,14 @@ public class Model {
         return this.authManager.registerStudent(id, name, password, regimen);
     }
     
-    public Teacher registerTeacher(String id, String name, String password, String managedCourseID) {
+    public Teacher registerTeacher(String id, String name, String password) {
     	
-    	return this.authManager.registerTeacher(id, name, password, managedCourseID);
+    	return this.authManager.registerTeacher(id, name, password);
+    }
+    
+    public void assignTeacherToCourse(String teacherID, String course) {
+        
+        this.authManager.assignTeacherToCourse(teacherID, course);
     }
     
     public String login(String id, String password) {

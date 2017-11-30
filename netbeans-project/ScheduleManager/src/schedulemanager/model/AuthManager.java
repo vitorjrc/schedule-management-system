@@ -38,9 +38,9 @@ public class AuthManager implements Serializable{
 	
 	// Register a Teacher.
 	// courseManagedID is the ID of the course the teacher manages.
-	public Teacher registerTeacher(String id, String name, String password, String managedCourseID) {
+	public Teacher registerTeacher(String id, String name, String password) {
 		
-		Teacher newTeacher = new Teacher(id, name, password, managedCourseID);
+		Teacher newTeacher = new Teacher(id, name, password);
 		
 		registeredTeachers.put(id, newTeacher);
 		
@@ -172,6 +172,11 @@ public class AuthManager implements Serializable{
 			return null;
 		}
 	}
+        
+        public void assignTeacherToCourse(String teacherID, String courseID) {
+            
+            this.registeredTeachers.get(teacherID).setManagedCourseID(courseID);
+        }
         
         public void setStudents(HashMap<String, Student> newMap) {
             this.registeredStudents = newMap;

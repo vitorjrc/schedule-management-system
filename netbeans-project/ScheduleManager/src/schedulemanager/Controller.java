@@ -359,11 +359,11 @@ public class Controller {
     
     private void showTeachers() {
         
-        model.registerTeacher("1", "JBB", "123", "18");
+        model.registerTeacher("1", "JBB", "123");
         
         ArrayList<String> teachers = new ArrayList<String>();
         for (Teacher t: model.getTeachers().values())
-            teachers.add(t.getName());
+            teachers.add(t.getID());
         
         view.showTeachers(teachers);
     }
@@ -447,9 +447,8 @@ public class Controller {
         String teacherName = data.get(0);
         String teacherID = data.get(1);
         String teacherPassword = data.get(2);
-        String teacherCourse = ucs.get("Programação Funcional");
         
-        model.registerTeacher(teacherID, teacherName, teacherPassword, teacherCourse);
+        model.registerTeacher(teacherID, teacherName, teacherPassword);
         this.showTeachers();
         
     }
@@ -517,6 +516,8 @@ public class Controller {
 
         this.ucs.put(c.getName(), c.getId());
         this.showAllCourses();
+        
+        model.assignTeacherToCourse(newTeacher, newID);
         
     }
     
