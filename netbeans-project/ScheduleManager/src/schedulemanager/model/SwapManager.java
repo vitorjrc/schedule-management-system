@@ -304,7 +304,7 @@ public class SwapManager implements Serializable{
 		// Check that bidder and taker still have the shifts to trade
 		
 		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
-		Student taker = this.authManager.getStudentByID(swap.getTakerID());
+		Student taker = (Student) this.authManager.getLoggedInUser();
 		
 		if (bidder == null) {
 			
@@ -313,7 +313,7 @@ public class SwapManager implements Serializable{
 			
 		} else if (taker == null) {
 			
-			System.out.println("Swap not takeable: Couldn't find student with ID of taker (" + swap.getTakerID() + ")\n");
+			System.out.println("Swap not takeable: Couldn't find logged in student to be the swap taker\n");
 			return false;
 			
 		} else if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
