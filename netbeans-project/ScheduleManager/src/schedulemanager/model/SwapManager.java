@@ -16,21 +16,21 @@ public class SwapManager implements Serializable{
 	 * not be worth the increase in complexity.
 	 */
          
-        private static final long serialVersionUID = 7526472295622776147L;
+    private static final long serialVersionUID = 7526472295622776147L;
          
 	private HashMap<String, HashMap<String, Swap>> swapsByStudentID; // studentID -> (swapID -> Swap)
 	private boolean swapsAllowed;        // Keeps track of whether Swaps are still allowed.
 	private AuthManager authManager;     // Keeps an instance of authManager to check student info
 	
 	
-        public SwapManager(AuthManager authManager) {
+    public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
 		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
                 this.swapsAllowed = true;
 	}
 	
 	
-        public SwapManager(AuthManager authManager, boolean swapsAllowed) {
+    public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
 		this.swapsByStudentID = new HashMap<String, HashMap<String, Swap>>();
 		this.swapsAllowed = swapsAllowed;
@@ -295,7 +295,7 @@ public class SwapManager implements Serializable{
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
-		if ((loggedInStudent.getID().equals(takerID))) {
+		if (!loggedInStudent.getID().equals(takerID)) {
 			
 			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
 			return false;
@@ -305,11 +305,18 @@ public class SwapManager implements Serializable{
 		
 		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
 		Student taker = this.authManager.getStudentByID(swap.getTakerID());
-                System.out.println(swap.getCourseID());
-                System.out.println(swap.getShiftWantedID());
-                System.out.println(swap.getBidderID());
 		
-		if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
+		if (bidder == null) {
+			
+			System.out.println("Swap not takeable: Couldn't find student with ID of bidder (" + swap.getBidderID() + ")\n");
+			return false;
+			
+		} else if (taker == null) {
+			
+			System.out.println("Swap not takeable: Couldn't find student with ID of taker (" + swap.getTakerID() + ")\n");
+			return false;
+			
+		} else if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
 			
 			System.out.println("Swap not takeable: Bidder doesn't have shift " + swap.getShiftOfferedID() + " in course " + swap.getCourseID() + "\n");
 			return false;
