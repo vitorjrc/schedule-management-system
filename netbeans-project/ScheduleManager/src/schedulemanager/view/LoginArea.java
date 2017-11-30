@@ -61,12 +61,6 @@ public class LoginArea extends javax.swing.JDialog {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
-            }
-        });
-
         jButton1.setText("Entrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,12 +70,6 @@ public class LoginArea extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Área de Login:");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,14 +125,6 @@ public class LoginArea extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     //botao login, depois da funçao seguinte
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
