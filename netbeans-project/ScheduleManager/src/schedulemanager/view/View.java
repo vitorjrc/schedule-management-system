@@ -1456,31 +1456,7 @@ public class View extends javax.swing.JFrame {
                 registrationDialog.resetDialog();
             }
         });
-    }
-    
-    private void tableOffersListener(JTable jTable2) {
-        jTable2.getModel().addTableModelListener(new TableModelListener() {
-
-            @Override
-            public void tableChanged(TableModelEvent event) {
-                getRow(event);
-            }
-        });
-    }
-    
-    private void getRow(TableModelEvent event) {
-       
-        TableModel modelo = ((TableModel) (event.getSource()));
-            int row = event.getFirstRow();
-            int column = event.getColumn();
-            String swapID = null;
-            
-            if (column == 6){
-                swapID = modelo.getValueAt(row,1).toString();
-            }
-            System.out.println(swapID);
-    }
-        
+    }   
     
     public RegistrationArea getRegistrationArea() {
         return registrationDialog;
@@ -1538,11 +1514,11 @@ public class View extends javax.swing.JFrame {
                                     jPanel4.remove(b);
                                     jPanel4.remove(lb);
                                     openSwapsOfStudent.remove(toBePrinted);
-                                    jPanel4.revalidate();
-                                    jPanel4.repaint();
                                 }
                                  });
                             jPanel4.add(b);
+                            jPanel4.revalidate();
+                            jPanel4.repaint();
                         }
                         jPanel4.revalidate();
                         jPanel4.repaint(); 
@@ -1563,6 +1539,8 @@ public class View extends javax.swing.JFrame {
     }
     
     public void showActiveOffers(ArrayList<ArrayList<String>> activeOffers) {
+        
+        this.openSwapsOfStudent = new ArrayList<>();
         
         jPanel7.setLayout(new GridLayout(15, 2));
         jPanel7.setBackground(Color.white);
