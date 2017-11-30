@@ -145,13 +145,13 @@ public class Controller {
                 if (model.isStudentLoggedIn()) {
                     this.userS = (Student) model.getLoggedInUser();
                     this.userT = null;
-                    showStudentInterface(userID);
+                    showStudentInterface();
                 }
                 
                 if (model.isTeacherLoggedIn()) {
                     this.userS = null;
                     this.userT = (Teacher) model.getLoggedInUser();
-                    showTeacherInterface(userID);
+                    showTeacherInterface();
                 }
         }
         
@@ -161,11 +161,13 @@ public class Controller {
         view.adminInterface();
         this.showTeachers();
         this.showAllCourses();
-        System.out.println("Admin logado!");
     }
     
-    private void showTeacherInterface(String userID) {
-        System.out.println("Professor logado!");
+    private void showTeacherInterface() {
+        
+        String course = model.getCourses().get(userT.getCourseManagedID()).getName();
+        
+        view.teacherInterface(userT.getName(), course);
     }
         
     private void saveButton(ArrayList<String> data) {
@@ -210,7 +212,7 @@ public class Controller {
     }
              
     
-    private void showStudentInterface(String userID) {
+    private void showStudentInterface() {
         
         ArrayList<String> courses = new ArrayList<String>();
         
@@ -222,10 +224,9 @@ public class Controller {
         
         view.studentInterface();
         view.setCoursesList(courses);
-        view.setLoggedAs(userS.getName());
-        view.setUserData(userS.getID(), userS.getRegimen());
+        view.setUserData(userS.getName(), userS.getID(), userS.getRegimen());
        
-        view.showUserUCs(getShiftsofUser(userID));
+        view.showUserUCs(getShiftsofUser(userS.getID()));
         
         if (!(model.getOpenSwaps().isEmpty())) this.showPendingOffers();
         if (model.getSwapsByStudentID().containsKey(userS.getID())) {
@@ -277,11 +278,20 @@ public class Controller {
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
         
+        if (userS.getRegimen().equals("WORKERSTUDENT")) {
+            model.directSwap(bidderID, courseID, offeredShiftID, wantedShiftID);
+            this.showStudentInterface();
+        }
+        
+        else {
+        
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
         
         this.showPendingOffers();
         this.showActiveOffers();
         this.showStudentOffersHistory();
+        
+        }
     }
     
     private void showPendingOffers() {
@@ -390,11 +400,10 @@ public class Controller {
     private void StudentShifts(ArrayList<String> data) {
         
         String courseID = ucs.get(data.get(0));
-        String studentID = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<String>();
         
-        Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
+        Set<String> shifts = model.getCourses().get(courseID).getShifts().keySet();
         
         for(String s: shifts) {
             shiftsList.add(s);
@@ -410,7 +419,6 @@ public class Controller {
         
         ArrayList<String> shiftsList = new ArrayList<String>();
         
-        // Set<String> shifts = model.getStudents().get(studentID).getShiftsByCourse().get(courseID).keySet();
         Set<String> ucShifts = model.getCourses().get(courseID).getShifts().keySet();
         
         for(String s: ucShifts) {
@@ -420,8 +428,6 @@ public class Controller {
         for (String s: shiftsList){
             shiftsList.remove(originShift);
         }
-        
-
         
         view.destinationShift(shiftsList);
     }
@@ -524,7 +530,7 @@ public class Controller {
         String swapID = data.get(0);
         
         model.cancelSwapOffer(userS.getID(), swapID);
-        this.showStudentInterface(userS.getID());
+        this.showStudentInterface();
     }
     
     private void acceptOffer(ArrayList<String> data) {
@@ -532,7 +538,7 @@ public class Controller {
         String swapID = data.get(0);
         
         model.takeSwapOffer(userS.getID(), swapID);
-        this.showStudentInterface(userS.getID());
+        this.showStudentInterface();
     }
     
 }

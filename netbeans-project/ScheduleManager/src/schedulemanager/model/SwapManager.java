@@ -48,7 +48,7 @@ public class SwapManager implements Serializable{
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
 		// Check that bidder is the student that is logged in
-		if (loggedInStudent.getID() != bidderID) {
+		if (!loggedInStudent.getID().equals(bidderID)) {
 			
 			System.out.println("Swap offer not allowed: Logged in student has ID " + loggedInStudent.getID() + ", but received bidderID " + bidderID + ".");
 			return false;
@@ -295,7 +295,7 @@ public class SwapManager implements Serializable{
 		
 		Student loggedInStudent = (Student) this.authManager.getLoggedInUser();
 		
-		if (!(loggedInStudent.getID().equals(takerID))) {
+		if ((loggedInStudent.getID().equals(takerID))) {
 			
 			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
 			return false;
@@ -305,6 +305,9 @@ public class SwapManager implements Serializable{
 		
 		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
 		Student taker = this.authManager.getStudentByID(swap.getTakerID());
+                System.out.println(swap.getCourseID());
+                System.out.println(swap.getShiftWantedID());
+                System.out.println(swap.getBidderID());
 		
 		if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
 			
