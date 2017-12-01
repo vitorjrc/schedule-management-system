@@ -25,8 +25,6 @@ public class View extends javax.swing.JFrame {
     private RegistrationArea registrationDialog;
     private LoginArea loginDialog;
     
-    private int registerOpened = 0;
-    
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> swapOffer = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> IO = new ArrayList<Consumer<ArrayList<String>>>();
@@ -1396,13 +1394,10 @@ public class View extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         
-        if (registerOpened == 0) {
             
-            ArrayList<String> sc = new ArrayList<String>(); 
-            Consumer method = registeredListeners.get(0);
-            method.accept(sc);
-            this.registerOpened = 1;
-        }
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = registeredListeners.get(0);
+        method.accept(sc);
         
         registrationDialog.setVisible(true);
         this.registrationOpened();

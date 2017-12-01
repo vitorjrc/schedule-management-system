@@ -28,8 +28,6 @@ public class Controller {
         this.view = view;
     }
     
-
-    
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
     	view.onRegister(this::onRegister);
@@ -202,6 +200,15 @@ public class Controller {
     private void loadButton(ArrayList<String> data) {
         
         model.load();
+        for (Course c: model.getCourses().values()){
+            
+            if (ucs.containsKey(c.getName())) {
+                continue;
+            } 
+            else {
+                ucs.put(c.getName(), c.getId());
+            }
+        }
     }
                 
     

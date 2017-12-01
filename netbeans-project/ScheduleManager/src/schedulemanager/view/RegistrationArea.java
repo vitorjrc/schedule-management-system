@@ -193,6 +193,10 @@ public class RegistrationArea extends javax.swing.JDialog {
 
     public void showCourses(LinkedHashMap<String, String> coursesList) {
         
+        jPanel1.removeAll();
+        jPanel1.revalidate(); 
+        jPanel1.repaint();
+        
         jPanel1.setLayout(new GridLayout(15, 2));
         jScrollPane1.getViewport().setSize(400, 400);
         
