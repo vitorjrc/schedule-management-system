@@ -1599,6 +1599,9 @@ public class View extends javax.swing.JFrame {
             jPanel8.revalidate();
             jPanel8.repaint(); 
         }
+        
+            jPanel8.revalidate();
+            jPanel8.repaint(); 
     }
     
     ///////////////////////////////////////////////////////////////////////////
