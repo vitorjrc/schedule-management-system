@@ -184,6 +184,11 @@ public class View extends javax.swing.JFrame {
         jScrollPane3.setBorder(BorderFactory.createEmptyBorder());
         jScrollPane4.setBorder(BorderFactory.createEmptyBorder());
         
+        // resetting panels
+        jPanel7.removeAll();
+        jPanel8.removeAll();
+        jPanel4.removeAll();
+        
         // show student tabs
         jTabbedPane1.addTab("Minha Área", jPanel1);
         jTabbedPane1.addTab("Minhas Trocas", jPanel2);
