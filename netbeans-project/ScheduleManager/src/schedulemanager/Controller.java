@@ -60,6 +60,9 @@ public class Controller {
         view.cancelOffer(this::cancelOffer);
         view.acceptOffer(this::acceptOffer);
         
+        view.lockSwaps(this::lockSwaps);
+        view.unlockSwaps(this::unlockSwaps);
+        
     }
     
     // Called when the view sends an onRegister event
@@ -658,6 +661,18 @@ public class Controller {
         this.showActiveOffers();
         
         this.showStudentOffersHistory();
+    }
+    
+    private void unlockSwaps(ArrayList<String> data) {
+        
+        model.unlockSwaps();
+        view.showSucessMessage();
+    }
+    
+    private void lockSwaps(ArrayList<String> data) {
+        
+        model.lockSwaps();
+        view.showSucessMessage();
     }
     
 }
