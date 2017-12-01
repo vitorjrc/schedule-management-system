@@ -1207,6 +1207,9 @@ public class View extends javax.swing.JFrame {
         sc.add(2, selectedTeacher);
         
         method.accept(sc);
+        
+        jTextField13.setText("");
+        jTextField14.setText("");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1261,6 +1264,12 @@ public class View extends javax.swing.JFrame {
         sc.add(4, newClassroom);
         
         method.accept(sc);
+        
+        jTextField11.setText("");
+        jTextField12.setText("");
+        jTextField18.setText("");
+        jTextField19.setText("");
+        
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jComboBox13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox13ActionPerformed
@@ -1386,6 +1395,10 @@ public class View extends javax.swing.JFrame {
         sc.add(2, teacherPassword);
         
         method.accept(sc);
+        
+        jTextField20.setText("");
+        jTextField21.setText("");
+        jTextField22.setText("");
     }//GEN-LAST:event_jButton12ActionPerformed
 
     // method that fills fields where the list of user courses is required
