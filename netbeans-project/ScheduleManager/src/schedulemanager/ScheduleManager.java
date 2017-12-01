@@ -64,6 +64,7 @@ public class ScheduleManager {
         model.createCourse("33", "Comunicações por Computador", "teste");
         model.createCourse("34", "Processamento de Linguagens", "teste");
         model.createCourse("35", "Laboratórios de Informática IV", "teste");
+        model.registerTeacher("1", "JBB", "123");
         
         controller.ucsName();
         

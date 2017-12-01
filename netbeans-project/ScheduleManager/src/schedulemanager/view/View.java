@@ -26,7 +26,6 @@ public class View extends javax.swing.JFrame {
     private LoginArea loginDialog;
     
     private int registerOpened = 0;
-    private ArrayList<String> openSwapsOfStudent = new ArrayList<String>();
     
     private ArrayList<Consumer<ArrayList<String>>> registeredListeners = new ArrayList<Consumer<ArrayList<String>>>(); // Example array of callbacks to call when a register happens
     private ArrayList<Consumer<ArrayList<String>>> swapOffer = new ArrayList<Consumer<ArrayList<String>>>();
@@ -177,6 +176,7 @@ public class View extends javax.swing.JFrame {
     public void studentInterface() {
         
         // disable table's border
+        jLabel1.setVisible(true);
         jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
         jScrollPane2.setBorder(BorderFactory.createEmptyBorder());
         jScrollPane3.setBorder(BorderFactory.createEmptyBorder());
@@ -191,6 +191,7 @@ public class View extends javax.swing.JFrame {
     
     public void adminInterface() {
         
+        jLabel1.setVisible(true);
         jTabbedPane1.addTab("Criar UCs e Turnos", jPanel6);
         jTabbedPane1.addTab("Gestão", jPanel9);
         jTabbedPane1.addTab("Criar Docentes", jPanel5);
@@ -200,6 +201,7 @@ public class View extends javax.swing.JFrame {
     
     public void teacherInterface(String teacherName, String teacherCourse) {
         
+        jLabel1.setVisible(true);
         jTabbedPane1.addTab("Gestão da UC", jPanel9);
         jLabel49.setVisible(true);
         jLabel53.setVisible(true);
@@ -208,9 +210,9 @@ public class View extends javax.swing.JFrame {
         
         String[] course = new String[1];
             course[0] = teacherCourse;
-        
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(course));
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(course));
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(course));
+        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(course));
         
         
     }
@@ -1470,11 +1472,11 @@ public class View extends javax.swing.JFrame {
          JOptionPane.showMessageDialog(null, message);
     }
     
-    public void showRegisterError1(){
-         JOptionPane.showMessageDialog(null, "Este utilizador já existe no sistema!");
+    public void showError1(){
+         JOptionPane.showMessageDialog(null, "Já existe no sistema!");
     }
         
-    public void showRegisterError2(){
+    public void showError(){
          JOptionPane.showMessageDialog(null, "Deve preencher todos os campos!");
     }
     
@@ -1483,27 +1485,31 @@ public class View extends javax.swing.JFrame {
          registrationDialog.dispose();
     }
     
-    public void showLoginSuccess(){
-        // Linha abaixo comentada - passo desnecessário
-        // A vida é muito curta para carregar em OK quando não aconteceu nada de mal
-        //JOptionPane.showMessageDialog(null, "Login Efetuado com Sucesso!");
+    public void showSucessMessage() {
+        JOptionPane.showMessageDialog(null, "Operação efetuada com sucesso");
+    }
+    
+    public void LoginSuccess(){
+
         loginDialog.setVisible(false);
         jButton1.setEnabled(false);
         jButton4.setEnabled(true);
     }
     
     public void showPendingOffers(ArrayList<ArrayList<String>> pendingOffers) {
+                
+                jPanel4.removeAll();
+                jPanel4.revalidate(); 
+                jPanel4.repaint();
+                
                 jPanel4.setLayout(new GridLayout(20,0));
                 jPanel4.setBackground(Color.white);
 
                 for(ArrayList<String> list: pendingOffers) {
-
+                    
                     String toBePrinted = "UC: " + list.get(0) + " do " + list.get(2) + " para o "+ list.get(3) + " do " + list.get(4);
-                    if (this.isAlreadyPrinted(toBePrinted) == 1) continue;
-                    else {
                         JLabel lb = new JLabel(toBePrinted);
                         lb.setHorizontalAlignment(JLabel.CENTER);
-                        this.openSwapsOfStudent.add(toBePrinted);
                         jPanel4.add(lb);
                         if(list.get(6).equals("true")){
                             JButton b = new JButton("Aceitar oferta");
@@ -1513,19 +1519,18 @@ public class View extends javax.swing.JFrame {
                                     acceptOfferButtonClick(list.get(1));
                                     jPanel4.remove(b);
                                     jPanel4.remove(lb);
-                                    openSwapsOfStudent.remove(toBePrinted);
                                 }
                                  });
-                            jPanel4.add(b);
-                            jPanel4.revalidate();
-                            jPanel4.repaint();
+                        jPanel4.add(b);
+                        jPanel4.revalidate();
+                        jPanel4.repaint();
                         }
                         jPanel4.revalidate();
                         jPanel4.repaint(); 
-                    }   
-
-                }
-            }
+                }   
+                    jPanel4.revalidate();
+                    jPanel4.repaint();
+        }
     
         private void acceptOfferButtonClick(String acceptSwapID) {
         
@@ -1540,18 +1545,17 @@ public class View extends javax.swing.JFrame {
     
     public void showActiveOffers(ArrayList<ArrayList<String>> activeOffers) {
         
-        this.openSwapsOfStudent = new ArrayList<>();
+        jPanel7.removeAll();
+        jPanel7.revalidate(); 
+        jPanel7.repaint();
         
         jPanel7.setLayout(new GridLayout(15, 2));
         jPanel7.setBackground(Color.white);
         
         for(ArrayList<String> list: activeOffers) {
             
-            String toBePrinted = "UC: " + list.get(0) + " do " + list.get(1) + " para o "+ list.get(2);
-            if (this.isAlreadyPrinted(toBePrinted) == 1) continue;
-            else {
+                String toBePrinted = "UC: " + list.get(0) + " do " + list.get(1) + " para o "+ list.get(2);
                 JLabel lb = new JLabel(toBePrinted);
-                this.openSwapsOfStudent.add(toBePrinted);
                 jPanel7.add(lb);
                 JButton b = new JButton("Cancelar oferta");
                 b.setPreferredSize(new Dimension(1, 1));
@@ -1560,16 +1564,13 @@ public class View extends javax.swing.JFrame {
                         cancelOfferButtonClick(list.get(3));
                         jPanel7.remove(b);
                         jPanel7.remove(lb);
-                        openSwapsOfStudent.remove(toBePrinted);
                         jPanel7.revalidate();
                         jPanel7.repaint();
                     }
                      });
                 jPanel7.add(b);
                 jPanel7.revalidate();
-                jPanel7.repaint(); 
-            }   
-        
+                jPanel7.repaint();      
         }
     }
     
@@ -1584,15 +1585,12 @@ public class View extends javax.swing.JFrame {
         
     }
     
-    private int isAlreadyPrinted(String c) {
-        for (int i = 0; i < openSwapsOfStudent.size(); i++) {
-                    if (openSwapsOfStudent.get(i).equals(c)) return 1;
-        }
-        return 0;
-    }
-    
     public void showStudentOffersHistory(ArrayList<String> studentOffersHistory) {
-
+        
+        jPanel8.removeAll();
+        jPanel8.revalidate(); 
+        jPanel8.repaint();
+        
         jPanel8.setLayout(new GridLayout(15, 2));
         jPanel8.setBackground(Color.white);
         for(String c: studentOffersHistory) {

@@ -289,7 +289,7 @@ public class SwapManager implements Serializable{
 		
 		if (!this.authManager.isStudentLoggedIn()) {
 			
-			System.out.println("Swap not takeable: No student is logged in\n");
+			//System.out.println("Swap not takeable: No student is logged in\n");
 			return false;
 		}
 		
@@ -297,7 +297,7 @@ public class SwapManager implements Serializable{
 		
 		if (!loggedInStudent.getID().equals(takerID)) {
 			
-			System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
+			//System.out.println("Swap not takeable: logged in student has ID " + loggedInStudent.getID() + " while taker has ID " + takerID + "\n");
 			return false;
 		}
 		
@@ -308,22 +308,22 @@ public class SwapManager implements Serializable{
 		
 		if (bidder == null) {
 			
-			System.out.println("Swap not takeable: Couldn't find student with ID of bidder (" + swap.getBidderID() + ")\n");
+			//System.out.println("Swap not takeable: Couldn't find student with ID of bidder (" + swap.getBidderID() + ")\n");
 			return false;
 			
 		} else if (taker == null) {
 			
-			System.out.println("Swap not takeable: Couldn't find logged in student to be the swap taker\n");
+			//System.out.println("Swap not takeable: Couldn't find logged in student to be the swap taker\n");
 			return false;
 			
 		} else if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
 			
-			System.out.println("Swap not takeable: Bidder doesn't have shift " + swap.getShiftOfferedID() + " in course " + swap.getCourseID() + "\n");
+			//System.out.println("Swap not takeable: Bidder doesn't have shift " + swap.getShiftOfferedID() + " in course " + swap.getCourseID() + "\n");
 			return false;
 		
 		} else if (!taker.hasShift(swap.getCourseID(), swap.getShiftWantedID())) {
 		
-			System.out.println("Swap not takeable: Taker doesn't have shift " + swap.getShiftWantedID() + " in course " + swap.getCourseID() + "\n");
+			//System.out.println("Swap not takeable: Taker doesn't have shift " + swap.getShiftWantedID() + " in course " + swap.getCourseID() + "\n");
 			return false;
 			
 		} else {

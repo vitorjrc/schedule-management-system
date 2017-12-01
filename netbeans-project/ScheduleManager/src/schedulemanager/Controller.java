@@ -83,9 +83,21 @@ public class Controller {
     private void RegisterButton(ArrayList<String> data) {
         
         String newID = data.get(0);
+        
+        if(model.getStudents().containsKey(newID) || model.getTeachers().containsKey(newID)) {
+            view.showError1();
+            return;
+        }
+        
         String newPassword = data.get(1);
         String newName = data.get(2);
         String newStatus = data.get(3);
+        
+        if(newStatus == null) {
+            view.showError1();
+            return;
+        }
+        
         
         String te = "Trabalhador-Estudante";
         String rn = "Regime Normal";
@@ -95,12 +107,23 @@ public class Controller {
         }
         else if (newStatus.equals(rn)) {
             newStatus = "student";
+            
         } else {
-            throw new RuntimeException("Invalid student regimen in Controller");
+            newStatus = "null";
         }
         
-        if (newID.equals("") || newPassword.equals("") || newPassword.equals("")) {
-            view.showRegisterError2();
+        // Testing if user checked at least 1 course
+        ArrayList<String> new_Courses = new ArrayList<String>();
+        
+        int found = 0;
+        for(int i = 4; i < data.size(); i++) {   
+            new_Courses.add(data.get(i));
+            if (!(data.get(i).equals("")))
+                found = 1;
+        }
+        
+        if (newID.equals("") || newPassword.equals("") || newPassword.equals("") || found == 0) {
+            view.showError1();
         }
         
         else { 
@@ -116,8 +139,6 @@ public class Controller {
                 
                 newCourses.add(courseID);
                 userS.assignShift(newShift0);
-                
-                Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
             }
             
             view.showRegisterSuccess();
@@ -136,7 +157,7 @@ public class Controller {
         if (message != null)
                 view.showLoginError(message);     //msg de erro password incorreta
         else {
-                view.showLoginSuccess();
+                view.LoginSuccess();
                 
                 if (model.isAdminLoggedIn()) {
                     showAdminInterface();
@@ -145,6 +166,7 @@ public class Controller {
                 if (model.isStudentLoggedIn()) {
                     this.userS = (Student) model.getLoggedInUser();
                     this.userT = null;
+                    view.studentInterface();
                     showStudentInterface();
                 }
                 
@@ -222,13 +244,12 @@ public class Controller {
             courses.add(model.getCourses().get(s).getName());
         }
         
-        view.studentInterface();
         view.setCoursesList(courses);
         view.setUserData(userS.getName(), userS.getID(), userS.getRegimen());
        
         view.showUserUCs(getShiftsofUser(userS.getID()));
         
-        if (!(model.getOpenSwaps().isEmpty())) this.showPendingOffers();
+        this.showPendingOffers();
         if (model.getSwapsByStudentID().containsKey(userS.getID())) {
             this.showActiveOffers();
             this.showStudentOffersHistory();
@@ -278,6 +299,11 @@ public class Controller {
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
         
+        if (courseID == null || wantedShiftID == null || offeredShiftID == null) {
+            view.showError();
+            return;
+        }
+        
         if (userS.getRegimen().equals("WORKERSTUDENT")) {
             model.directSwap(bidderID, courseID, offeredShiftID, wantedShiftID);
             this.showStudentInterface();
@@ -287,9 +313,8 @@ public class Controller {
         
         model.createSwapOffer(bidderID, courseID, offeredShiftID, wantedShiftID);
         
-        this.showPendingOffers();
-        this.showActiveOffers();
-        this.showStudentOffersHistory();
+        this.update();
+        view.showSucessMessage();
         
         }
     }
@@ -346,11 +371,14 @@ public class Controller {
 
         for (Swap s: model.getClosedSwapsOfStudent(userS.getID()).values()) {
             String UC = model.getCourses().get(s.getCourseID()).getName();
-            studentOffersHistory.add("UC: " + UC + " Turno Oferecido: " + s.getShiftOfferedID() + " Turno pretendido: " + s.getShiftWantedID() + 
-                    " Aluno " + s.getBidderID() + " Data: " + LocalDateTime.ofInstant(s.getDateCreated(), ZoneId.systemDefault()));
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
+            String date = formatter.format(s.getDateTaken());
+
+            studentOffersHistory.add(UC + " -> mudei do turno " + s.getShiftOfferedID() + " para o " + s.getShiftWantedID() + " em " + date);
         }
 
-        //view.showActiveOffers(studentOffersHistory);
+        view.showStudentOffersHistory(studentOffersHistory);
         
     }
     
@@ -358,9 +386,7 @@ public class Controller {
     //////////////////////// ADMIN
     
     private void showTeachers() {
-        
-        model.registerTeacher("1", "JBB", "123");
-        
+
         ArrayList<String> teachers = new ArrayList<String>();
         for (Teacher t: model.getTeachers().values())
             teachers.add(t.getID());
@@ -389,7 +415,15 @@ public class Controller {
 
         for (Shift s: model.getCourses().get(courseID).getShifts().values()) {
             for (Student st: s.getOccupants().values()) {
+                
+                // adding students to arrayList...
                 studentsList.add(st.getID());
+                
+                // removing duplicates students
+                Set<String> noDuplications = new HashSet<>();
+                noDuplications.addAll(studentsList);
+                studentsList.clear();
+                studentsList.addAll(noDuplications);
             }
                 
         }
@@ -439,7 +473,14 @@ public class Controller {
         String originShift = data.get(2);
         String destinationShift = data.get(3);
         
+        if (selectedCourse == null || selectedStudent == null || originShift == null || destinationShift == null) {
+            view.showError();
+            return;
+        }
+        
         model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
+        
+        view.showSucessMessage();
     }
     
     private void createTeacher(ArrayList<String> data) {
@@ -448,7 +489,20 @@ public class Controller {
         String teacherID = data.get(1);
         String teacherPassword = data.get(2);
         
+        if (model.getTeachers().containsKey(teacherID)) {
+            view.showError1();
+            return;
+        }
+        
+        if (teacherName == null || teacherID == null || teacherPassword == null) {
+            view.showError();
+            return;
+        }
+        
         model.registerTeacher(teacherID, teacherName, teacherPassword);
+        
+        view.showSucessMessage();
+        
         this.showTeachers();
         
     }
@@ -488,8 +542,15 @@ public class Controller {
         String selectedShift = data.get(1);
         String selectedStudent = data.get(2);
         
+        if (selectedCourse == null || selectedShift == null || selectedStudent == null) {
+            view.showError();
+            return;
+        }
+        
         Shift shift = model.getCourses().get(selectedCourse).getShift(selectedShift);
         model.getStudents().get(selectedStudent).removeFromShift(shift);
+        
+        view.showSucessMessage();
         
     }
     
@@ -501,8 +562,19 @@ public class Controller {
         String newTeacher = data.get(3);
         String newClassroom = data.get(4);
         
+        if (model.getCourses().get(selectedCourse).getShifts().containsKey(newID)) {
+            view.showError1();
+            return;
+        }
+        
+        if (newID == null || newLimit == null || newTeacher == null|| newClassroom == null) {
+            view.showError();
+            return;
+        }
+        
         model.createShift(newID, selectedCourse, Integer.parseInt(newLimit), newTeacher, newClassroom);
         
+        view.showSucessMessage();
         
     }
     
@@ -512,12 +584,24 @@ public class Controller {
         String newName = data.get(1);
         String newTeacher = data.get(2);
         
+        if (newID == null || newName == null || newTeacher == null) {
+            view.showError();
+            return;
+        }
+        
+        if (model.getCourses().containsKey(newID)) {
+            view.showError1();
+            return;
+        }
+        
         Course c = model.createCourse(newID, newName, newTeacher);
 
         this.ucs.put(c.getName(), c.getId());
         this.showAllCourses();
         
         model.assignTeacherToCourse(newTeacher, newID);
+        
+        view.showSucessMessage();
         
     }
     
@@ -532,6 +616,7 @@ public class Controller {
         
         model.cancelSwapOffer(userS.getID(), swapID);
         this.showStudentInterface();
+        this.update();
     }
     
     private void acceptOffer(ArrayList<String> data) {
@@ -540,6 +625,12 @@ public class Controller {
         
         model.takeSwapOffer(userS.getID(), swapID);
         this.showStudentInterface();
+    }
+    
+    private void update() {
+        this.showPendingOffers();
+        this.showActiveOffers();
+        this.showStudentOffersHistory();
     }
     
 }
