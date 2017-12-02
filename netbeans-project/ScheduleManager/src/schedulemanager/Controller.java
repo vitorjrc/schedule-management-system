@@ -30,6 +30,7 @@ public class Controller {
     
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
+        
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
@@ -220,7 +221,7 @@ public class Controller {
     }
                 
     
-    public HashMap<String, ArrayList<String>> getShiftsofUser(String userID) {
+    private HashMap<String, ArrayList<String>> getShiftsofUser(String userID) {
             
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
@@ -659,6 +660,7 @@ public class Controller {
         model.takeSwapOffer(userS.getID(), swapID);
         
         this.showStudentInterface();
+        this.update();
     }
     
     private void update() {

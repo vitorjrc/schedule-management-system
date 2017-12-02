@@ -1488,7 +1488,7 @@ public class View extends javax.swing.JFrame {
     public void setCoursesList(ArrayList<String> userCourses) {
         
         String[] coursesList = new String[userCourses.size()];
-        for(int i = 0; i < userCourses.size(); i++) {
+        for (int i = 0; i < userCourses.size(); i++) {
             coursesList[i] = userCourses.get(i);
         }
         
@@ -1496,20 +1496,20 @@ public class View extends javax.swing.JFrame {
     }
    
     //dados pessoais
-    public void setUserData(String name, String id, String status){
+    public void setUserData(String name, String id, String status) {
         jLabel1.setText(name);
         jLabel19.setText(id);
         jLabel20.setText(status);
     }
     
-    public void showUserUCs(HashMap<String, ArrayList<String>> userInfo){
+    public void showUserUCs(HashMap<String, ArrayList<String>> userInfo) { 
        
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         
         tableModel.setRowCount(0); // Remover todas as entradas da table
         String[] data = new String[4];
         
-        for(Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()){
+        for (Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()) {
             data[0] = entry.getKey();
             data[1] = entry.getValue().get(0);
             data[2] = entry.getValue().get(1);
@@ -1526,7 +1526,7 @@ public class View extends javax.swing.JFrame {
     public void setShiftsList(ArrayList<String> shiftsCourses) {
         
         String[] shiftsList = new String[shiftsCourses.size()];
-        for(int i = 0; i < shiftsCourses.size(); i++) {
+        for (int i = 0; i < shiftsCourses.size(); i++) {
             shiftsList[i] = shiftsCourses.get(i);
         }
         
@@ -1536,7 +1536,7 @@ public class View extends javax.swing.JFrame {
     public void myShifts(ArrayList<String> myShifts) {
         
         String[] shiftsList = new String[myShifts.size()];
-        for(int i = 0; i < myShifts.size(); i++) {
+        for (int i = 0; i < myShifts.size(); i++) {
             shiftsList[i] = myShifts.get(i);
         }
         
@@ -1564,19 +1564,19 @@ public class View extends javax.swing.JFrame {
         return loginDialog;
     }
     
-    public void showLoginError(String message){
+    public void showLoginError(String message) {
          JOptionPane.showMessageDialog(null, message);
     }
     
-    public void showError1(){
+    public void showError1() {
          JOptionPane.showMessageDialog(null, "Já existe no sistema!");
     }
         
-    public void showError(){
+    public void showError() {
          JOptionPane.showMessageDialog(null, "Deve preencher todos os campos!");
     }
     
-    public void showRegisterSuccess(){
+    public void showRegisterSuccess() {
          JOptionPane.showMessageDialog(null, "Registo Efetuado com Sucesso!");
          registrationDialog.dispose();
     }
@@ -1585,7 +1585,7 @@ public class View extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Operação efetuada com sucesso");
     }
     
-    public void LoginSuccess(){
+    public void LoginSuccess() {
 
         loginDialog.setVisible(false);
         jButton1.setEnabled(false);
@@ -1601,28 +1601,35 @@ public class View extends javax.swing.JFrame {
                 jPanel4.setLayout(new GridLayout(20,0));
                 jPanel4.setBackground(Color.white);
 
-                for(ArrayList<String> list: pendingOffers) {
+                for (ArrayList<String> list: pendingOffers) {
                     
                     String toBePrinted = "UC: " + list.get(0) + " do " + list.get(2) + " para o "+ list.get(3) + " do " + list.get(4);
-                        JLabel lb = new JLabel(toBePrinted);
-                        lb.setHorizontalAlignment(JLabel.CENTER);
-                        jPanel4.add(lb);
-                        if(list.get(6).equals("true")){
-                            JButton b = new JButton("Aceitar oferta");
-                            b.setPreferredSize(new Dimension(1, 1));
-                            b.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                    acceptOfferButtonClick(list.get(1));
-                                    jPanel4.remove(b);
-                                    jPanel4.remove(lb);
-                                }
-                                 });
-                        jPanel4.add(b);
-                        jPanel4.revalidate();
-                        jPanel4.repaint();
-                        }
-                        jPanel4.revalidate();
-                        jPanel4.repaint(); 
+                    JLabel lb = new JLabel(toBePrinted);
+                    
+                    lb.setHorizontalAlignment(JLabel.CENTER);
+                    jPanel4.add(lb);
+                    
+                    if(list.get(6).equals("true")) {
+                        
+                        JButton b = new JButton("Aceitar oferta");
+                        b.setPreferredSize(new Dimension(1, 1));
+                        b.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                acceptOfferButtonClick(list.get(1));
+                                jPanel4.remove(b);
+                                jPanel4.remove(lb);
+                            }
+                        });
+                        
+                    jPanel4.add(b);
+                    jPanel4.revalidate();
+                    jPanel4.repaint();
+                    
+                    }
+                    
+                    jPanel4.revalidate();
+                    jPanel4.repaint(); 
+                    
                 }   
                     jPanel4.revalidate();
                     jPanel4.repaint();
@@ -1648,14 +1655,18 @@ public class View extends javax.swing.JFrame {
         jPanel7.setLayout(new GridLayout(15, 2));
         jPanel7.setBackground(Color.white);
         
-        for(ArrayList<String> list: activeOffers) {
+        for (ArrayList<String> list: activeOffers) {
             
                 String toBePrinted = "UC: " + list.get(0) + " do " + list.get(1) + " para o "+ list.get(2);
                 JLabel lb = new JLabel(toBePrinted);
                 jPanel7.add(lb);
+                
                 JButton b = new JButton("Cancelar oferta");
+                
                 b.setPreferredSize(new Dimension(1, 1));
+                
                 b.addActionListener(new ActionListener() {
+                    
                     public void actionPerformed(ActionEvent e) {
                         cancelOfferButtonClick(list.get(3));
                         jPanel7.remove(b);
@@ -1663,7 +1674,8 @@ public class View extends javax.swing.JFrame {
                         jPanel7.revalidate();
                         jPanel7.repaint();
                     }
-                     });
+                });
+                
                 jPanel7.add(b);
                 jPanel7.revalidate();
                 jPanel7.repaint();      
@@ -1689,15 +1701,17 @@ public class View extends javax.swing.JFrame {
         
         jPanel8.setLayout(new GridLayout(15, 2));
         jPanel8.setBackground(Color.white);
-        for(String c: studentOffersHistory) {
+        for (String c: studentOffersHistory) {
+            
             JLabel lb = new JLabel(c);
             jPanel8.add(lb);
             jPanel8.revalidate();
             jPanel8.repaint(); 
+            
         }
         
-            jPanel8.revalidate();
-            jPanel8.repaint(); 
+        jPanel8.revalidate();
+        jPanel8.repaint(); 
     }
     
     ///////////////////////////////////////////////////////////////////////////
@@ -1706,7 +1720,7 @@ public class View extends javax.swing.JFrame {
     public void showTeachers(ArrayList<String> teachers) {
             
         String[] teachersList = new String[teachers.size()];
-        for(int i = 0; i < teachers.size(); i++) {
+        for (int i = 0; i < teachers.size(); i++) {
             teachersList[i] = teachers.get(i);
         }
         
@@ -1716,7 +1730,7 @@ public class View extends javax.swing.JFrame {
     public void showCourses(ArrayList<String> courses) {
         
         String[] coursesList = new String[courses.size()];
-        for(int i = 0; i < courses.size(); i++) {
+        for (int i = 0; i < courses.size(); i++) {
             coursesList[i] = courses.get(i);
         }
         
@@ -1729,7 +1743,7 @@ public class View extends javax.swing.JFrame {
     public void showCourseStudents(ArrayList<String> students) {
         
         String[] studentsList = new String[students.size()];
-        for(int i = 0; i < students.size(); i++) {
+        for (int i = 0; i < students.size(); i++) {
             studentsList[i] = students.get(i);
         }
         
@@ -1741,7 +1755,7 @@ public class View extends javax.swing.JFrame {
     public void originShift(ArrayList<String> shifts) {
         
         String[] shiftsList = new String[shifts.size()];
-        for(int i = 0; i < shifts.size(); i++) {
+        for (int i = 0; i < shifts.size(); i++) {
             shiftsList[i] = shifts.get(i);
         }
         
@@ -1752,7 +1766,7 @@ public class View extends javax.swing.JFrame {
     public void destinationShift(ArrayList<String> shifts) {
         
         String[] shiftsList = new String[shifts.size()];
-        for(int i = 0; i < shifts.size(); i++) {
+        for (int i = 0; i < shifts.size(); i++) {
             shiftsList[i] = shifts.get(i);
         }
         
@@ -1763,7 +1777,7 @@ public class View extends javax.swing.JFrame {
     public void showShiftsofCourse(ArrayList<String> shifts) {
         
         String[] shiftsList = new String[shifts.size()];
-        for(int i = 0; i < shifts.size(); i++) {
+        for (int i = 0; i < shifts.size(); i++) {
             shiftsList[i] = shifts.get(i);
         }
         
@@ -1774,23 +1788,15 @@ public class View extends javax.swing.JFrame {
     public void showStudentToRemove(ArrayList<String> students) {
         
         String[] studentsList = new String[students.size()];
-        for(int i = 0; i < students.size(); i++) {
+        for (int i = 0; i < students.size(); i++) {
             studentsList[i] = students.get(i);
         }
         
         jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(studentsList));
         
     }
-    
-    
-            
    
     public static void start() {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
