@@ -117,6 +117,8 @@ public class SwapManager implements Serializable{
     	
     	HashMap<String, Swap> studentSwaps = this.swapsByStudentID.get(student.getID());
     	
+        if (studentSwaps == null) return;
+        
     	for(Swap s: studentSwaps.values()) {
     	
     		if (s.getShiftOfferedID().equals(shiftID)) {

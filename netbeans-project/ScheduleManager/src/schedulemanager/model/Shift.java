@@ -63,6 +63,7 @@ public class Shift implements Serializable {
     }
     
     public void addOccupant(Student s) {
+        
     	this.occupants.put(s.getID(), new Student(s));
     }
    

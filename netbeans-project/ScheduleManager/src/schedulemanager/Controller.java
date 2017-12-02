@@ -72,7 +72,7 @@ public class Controller {
     
     public LinkedHashMap<String, String> ucsName() {
         
-        for(Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
+        for (Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
             ucs.put(entry.getValue().getName(), entry.getKey());
         }
         
@@ -117,7 +117,7 @@ public class Controller {
         ArrayList<String> new_Courses = new ArrayList<>();
         
         int found = 0;
-        for(int i = 4; i < data.size(); i++) {   
+        for (int i = 4; i < data.size(); i++) {   
             
             new_Courses.add(data.get(i));
             
@@ -167,6 +167,7 @@ public class Controller {
                 }
                 
                 if (model.isStudentLoggedIn()) {
+                    
                     this.userS = (Student) model.getLoggedInUser();
                     this.userT = null;
                     view.studentInterface();
@@ -174,6 +175,7 @@ public class Controller {
                 }
                 
                 if (model.isTeacherLoggedIn()) {
+                    
                     this.userS = null;
                     this.userT = (Teacher) model.getLoggedInUser();
                     showTeacherInterface();
@@ -183,9 +185,11 @@ public class Controller {
     }
     
     private void showAdminInterface() {
+        
         view.adminInterface();
         this.showTeachers();
         this.showAllCourses();
+        
     }
     
     private void showTeacherInterface() {
@@ -203,11 +207,12 @@ public class Controller {
     private void loadButton(ArrayList<String> data) {
         
         model.load();
-        for (Course c: model.getCourses().values()){
+        for (Course c: model.getCourses().values()) {
             
             if (ucs.containsKey(c.getName())) {
                 continue;
             } 
+            
             else {
                 ucs.put(c.getName(), c.getId());
             }
@@ -235,6 +240,7 @@ public class Controller {
             }
             
             ArrayList<String> info = new ArrayList<>();
+            
             info.add(joinedShifts);
             info.add(classroom);
             info.add(teacher);
@@ -253,7 +259,7 @@ public class Controller {
         // Get UCs name of user
         Set<String> coursesSet = userS.getShiftsByCourse().keySet();
         
-        for(String s : coursesSet) {
+        for (String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
         
@@ -298,7 +304,7 @@ public class Controller {
         
         Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
         
-        for(String s: shiftIDs) {
+        for (String s: shiftIDs) {
             if (!offeredShift.equals(s))
                 shiftsList.add(s);
         }
@@ -419,7 +425,7 @@ public class Controller {
         
         Set<String> courses = this.ucs.keySet();
         
-        for(String s: courses) {
+        for (String s: courses) {
                 coursesList.add(s);
         }
         view.showCourses(coursesList);
@@ -433,19 +439,20 @@ public class Controller {
         ArrayList<String> studentsList = new ArrayList<>();
 
         for (Shift s: model.getCourses().get(courseID).getShifts().values()) {
+            
             for (Student st: s.getOccupants().values()) {
                 
                 // adding students to arrayList...
                 studentsList.add(st.getID());
-                
-                // removing duplicates students
-                Set<String> noDuplications = new HashSet<>();
-                noDuplications.addAll(studentsList);
-                studentsList.clear();
-                studentsList.addAll(noDuplications);
             }
                 
         }
+        
+        // removing duplicates students
+        Set<String> noDuplications = new HashSet<>();
+        noDuplications.addAll(studentsList);
+        studentsList.clear();
+        studentsList.addAll(noDuplications);
         
         view.showCourseStudents(studentsList);
     }
@@ -458,7 +465,7 @@ public class Controller {
         
         Set<String> shifts = model.getCourses().get(courseID).getShifts().keySet();
         
-        for(String s: shifts) {
+        for (String s: shifts) {
             shiftsList.add(s);
         }
         
@@ -474,11 +481,11 @@ public class Controller {
         
         Set<String> ucShifts = model.getCourses().get(courseID).getShifts().keySet();
         
-        for(String s: ucShifts) {
+        for (String s: ucShifts) {
             shiftsList.add(s);
         }
         
-        for (String s: shiftsList){
+        for (String s: shiftsList) {
             shiftsList.remove(originShift);
         }
         
@@ -534,7 +541,7 @@ public class Controller {
         
         Set<String> ucShifts = model.getCourses().get(selectedCourse).getShifts().keySet();
         
-        for (String s: ucShifts){
+        for (String s: ucShifts) {
             
             shiftsList.add(s);
         }
@@ -552,7 +559,7 @@ public class Controller {
         
         Set<String> shiftStudents = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants().keySet();
         
-        for (String s: shiftStudents){
+        for (String s: shiftStudents) {
             
             shiftStudentsList.add(s);
         }
