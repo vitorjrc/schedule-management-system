@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
-import schedulemanager.model.Course;
+import schedulemanager.model.Swap;
 
-public class CourseDAO implements Map<String, Course> {
+public class SwapDAO implements Map<String, Swap> {
     
     private Connection conn;
     
@@ -22,7 +25,7 @@ public class CourseDAO implements Map<String, Course> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Course where id>0");
+            stm.executeUpdate("DELETE FROM Swap where id>0");
         } catch (Exception e) {
             //runtime exeption!
             throw new NullPointerException(e.getMessage()); 
@@ -45,7 +48,7 @@ public class CourseDAO implements Map<String, Course> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Course WHERE `id`=?;";
+            String sql = "SELECT `id` FROM Swap WHERE `id`=?;";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -70,8 +73,8 @@ public class CourseDAO implements Map<String, Course> {
      */
     @Override
     public boolean containsValue(Object value) {
-        Course s = (Course) value;
-        return containsKey(s.getId());
+        Swap s = (Swap) value;
+        return containsKey(s.getID());
     }
     
     
@@ -79,7 +82,7 @@ public class CourseDAO implements Map<String, Course> {
     *NAO MEXI
     */
     @Override
-    public Set<Map.Entry<String,Course>> entrySet() {
+    public Set<Map.Entry<String,Swap>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
     
@@ -100,15 +103,22 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Course get(Object key) {
-        Course st = null;
+    public Swap get(Object key) {
+        Swap st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Course WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Swap WHERE id=?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                st = new Course(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id"));
+                LocalDate dateCreated = LocalDate.parse(rs.getString("dateCreated"));
+                Instant dateCreatedI = dateCreated.atStartOfDay(ZoneId.of("Europe/Lisbon")).toInstant();
+
+                LocalDate dateTaken = LocalDate.parse(rs.getString("dateTaken"));
+                Instant dateTakenI = dateTaken.atStartOfDay(ZoneId.of("Europe/Lisbon")).toInstant();
+                
+                st = new Swap(rs.getString("Id"), rs.getString("bidderID"), rs.getString("takerID"), rs.getString("shiftOfferedID"), rs.getString("shiftWantedID")
+                        , dateCreatedI, dateTakenI, rs.getBoolean("isClosed"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,15 +168,21 @@ public class CourseDAO implements Map<String, Course> {
      */
     
     @Override
-    public Course put(String key, Course value) {
-        Course stud = null;
+    public Swap put(String key, Swap value) {
+        Swap stud = null;
         try {
             conn = Connect.connect();
             PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
-                "VALUES (?, ?, ?)");
-            stm.setString(1, value.getId());
-            stm.setString(2, value.getName());
-            stm.setString(3, value.getTeacherID());
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
+            stm.setString(1, value.getID());
+            stm.setString(2, value.getBidderID());
+            stm.setString(3, value.getTakerID());
+            stm.setString(4, value.getCourseID());
+            stm.setString(5, value.getShiftOfferedID());
+            stm.setString(6, value.getShiftWantedID());
+            stm.setString(7, value.getDateCreated().toString());
+            stm.setString(8, value.getDateTaken().toString());
+            stm.setBoolean(9, value.isClosed());
 
             stm.executeUpdate();
             
@@ -186,9 +202,9 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public void putAll(Map<? extends String,? extends Course> t) {
-        for(Course s : t.values()) {
-            put(s.getId(), s);
+    public void putAll(Map<? extends String,? extends Swap> t) {
+        for(Swap s : t.values()) {
+            put(s.getID(), s);
         }
     }
     
@@ -200,11 +216,11 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Course remove(Object key) {
-        Course al = this.get(key);
+    public Swap remove(Object key) {
+        Swap al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Course where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Swap where id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -227,7 +243,7 @@ public class CourseDAO implements Map<String, Course> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Course");
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Swap");
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -246,14 +262,22 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Collection<Course> values() {
-        Collection<Course> col = new HashSet<Course>();
+    public Collection<Swap> values() {
+        Collection<Swap> col = new HashSet<Swap>();
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Course");
+            ResultSet rs = stm.executeQuery("SELECT * FROM Swap");
             while (rs.next()) {
-                col.add(new Course(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id")));
+                
+                LocalDate dateCreated = LocalDate.parse(rs.getString("dateCreated"));
+                Instant dateCreatedI = dateCreated.atStartOfDay(ZoneId.of("Europe/Lisbon")).toInstant();
+
+                LocalDate dateTaken = LocalDate.parse(rs.getString("dateTaken"));
+                Instant dateTakenI = dateTaken.atStartOfDay(ZoneId.of("Europe/Lisbon")).toInstant();
+                
+                col.add(new Swap(rs.getString("Id"), rs.getString("bidderID"), rs.getString("takerID"), rs.getString("shiftOfferedID"), rs.getString("shiftWantedID")
+                        , dateCreatedI, dateTakenI, rs.getBoolean("isClosed")));
             }
             
         } catch (Exception e) {

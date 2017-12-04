@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
-import schedulemanager.model.Course;
+import schedulemanager.db.ShiftDAO;
+import schedulemanager.model.Swap;
 
-public class CourseDAO implements Map<String, Course> {
+
+public class coursesByStudentDAO implements Map<String, ShiftDAO> {
     
     private Connection conn;
+    ShiftDAO ShiftDAO = new ShiftDAO();
     
     /**
      * Apagar todos os alunos
@@ -22,7 +25,7 @@ public class CourseDAO implements Map<String, Course> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Course where id>0");
+            stm.executeUpdate("DELETE FROM HashMap<String, Swap> where id>0");
         } catch (Exception e) {
             //runtime exeption!
             throw new NullPointerException(e.getMessage()); 
@@ -45,7 +48,7 @@ public class CourseDAO implements Map<String, Course> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Course WHERE `id`=?;";
+            String sql = "SELECT `id` FROM HashMap<String, Swap> WHERE `id`=?;";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -68,10 +71,10 @@ public class CourseDAO implements Map<String, Course> {
      * 
      * NAO MEXI
      */
+    
     @Override
     public boolean containsValue(Object value) {
-        Course s = (Course) value;
-        return containsKey(s.getId());
+        throw new NullPointerException("not implemented!");
     }
     
     
@@ -79,7 +82,7 @@ public class CourseDAO implements Map<String, Course> {
     *NAO MEXI
     */
     @Override
-    public Set<Map.Entry<String,Course>> entrySet() {
+    public Set<Map.Entry<String, ShiftDAO>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
     
@@ -100,15 +103,15 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Course get(Object key) {
-        Course st = null;
+    public ShiftDAO get(Object key) {
+        ShiftDAO st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Course WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM HashMap<String, Swap> WHERE id=?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                st = new Course(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id"));
+                st = new ShiftDAO();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -158,15 +161,13 @@ public class CourseDAO implements Map<String, Course> {
      */
     
     @Override
-    public Course put(String key, Course value) {
-        Course stud = null;
+    public ShiftDAO put(String key, ShiftDAO value) {
+        ShiftDAO stud = null;
         try {
             conn = Connect.connect();
             PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
-                "VALUES (?, ?, ?)");
-            stm.setString(1, value.getId());
-            stm.setString(2, value.getName());
-            stm.setString(3, value.getTeacherID());
+                "VALUES (?)");
+            stm.setString(1, ShiftDAO);
 
             stm.executeUpdate();
             
@@ -186,8 +187,8 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public void putAll(Map<? extends String,? extends Course> t) {
-        for(Course s : t.values()) {
+    public void putAll(Map<? extends String,? extends ShiftDAO> t) {
+        for(ShiftDAO s : t.values()) {
             put(s.getId(), s);
         }
     }
@@ -200,11 +201,11 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Course remove(Object key) {
-        Course al = this.get(key);
+    public ShiftDAO remove(Object key) {
+        ShiftDAO al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Course where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from HashMap<String, Swap> where id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -227,7 +228,7 @@ public class CourseDAO implements Map<String, Course> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Course");
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM HashMap<String, Swap>");
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -246,14 +247,14 @@ public class CourseDAO implements Map<String, Course> {
      * NAO MEXI
      */
     @Override
-    public Collection<Course> values() {
-        Collection<Course> col = new HashSet<Course>();
+    public Collection<ShiftDAO> values() {
+        Collection<HashMap<String, Swap>> col = new HashSet<HashMap<String, Swap>>();
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Course");
+            ResultSet rs = stm.executeQuery("SELECT * FROM HashMap<String, Swap>");
             while (rs.next()) {
-                col.add(new Course(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id")));
+                col.add(new HashMap<String, Swap>(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id")));
             }
             
         } catch (Exception e) {
