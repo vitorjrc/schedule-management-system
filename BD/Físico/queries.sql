@@ -452,9 +452,6 @@ DELIMITER ;
 SELECT * FROM trocaturnos.viewAluno;
 
 
-GRANT SELECT ON trocaturnos.viewAluno TO 'stud1'@'localhost',
-										 'stud2'@'localhost',
-										 'stud3'@'localhost';
-                                         
+
 -- -----------------------------------------------------------------------
 
