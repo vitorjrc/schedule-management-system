@@ -2,6 +2,7 @@ package schedulemanager.model;
 
 import java.util.*;
 import java.io.Serializable;
+import schedulemanager.db.*;
 
 /**
  * Runs shift exchange functionality and keeps track of swap history
@@ -237,7 +238,7 @@ public class SwapManager implements Serializable{
 	// Registers a swap offer as taken, and deals with assigning the shifts to the students
 	// courses parameter is needed to get Shift from shiftID in a Swap
 	// Returns true if successful, false otherwise
-	public boolean takeSwapOffer(String takerID, String swapID, HashMap<String, Course> courses) {
+	public boolean takeSwapOffer(String takerID, String swapID, CourseDAO courses) {
 		
 		// Find the swap
 		Swap swap = null;
@@ -337,7 +338,7 @@ public class SwapManager implements Serializable{
 	// Direct swap, without a taker. Only possible for worker students, course manager teachers, or the admin.
 	// courses parameter is needed to get Shift from courseID and shiftID
 	// Returns true if successful, false otherwise
-	public boolean directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, HashMap<String, Course> courses) {
+	public boolean directSwap(String studentID, String courseID, String fromShiftID, String toShiftID, CourseDAO courses) {
 		
 		if (this.authManager.isStudentLoggedIn()) {
 			

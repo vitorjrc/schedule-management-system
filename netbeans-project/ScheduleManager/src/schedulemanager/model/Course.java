@@ -2,6 +2,7 @@ package schedulemanager.model;
 
 import java.util.*;
 import java.io.Serializable;
+import schedulemanager.db.ShiftDAO;
 
 /**
  * Represents a course, which has shifts, which in turn have enrolled students.
@@ -12,23 +13,22 @@ public class Course implements Serializable {
     private String id;
     private String name;
     private String teacherID; // ID of teacher that runs this course
-    private HashMap<String, Shift> shifts; // Shift ID -> Shift
+    private ShiftDAO shiftDAO;
     
     // Constructors
     public Course(String id, String name, String teacherID) {
         this.id = id;
         this.name = name;
         this.teacherID = teacherID;
-        this.shifts = new HashMap<String, Shift>();
+        this.shiftDAO = new ShiftDAO();
     }
     
     public Course(Course c) {
         this.id = c.getId();
         this.name = c.getName();
         this.teacherID = c.getTeacherID();
-        this.shifts = new HashMap<String, Shift>();
         for (Shift s: c.getShifts().values()) {
-            shifts.put(s.getId(), s.clone());
+            shiftDAO.put(s.getId(), s.clone());
         }
     }
     
@@ -48,7 +48,7 @@ public class Course implements Serializable {
     
     public HashMap<String, Shift> getShifts() { 
         HashMap<String, Shift> ret = new HashMap<String, Shift>();
-        for(Shift s : this.shifts.values()){
+        for(Shift s : this.shiftDAO.values()){
             ret.put(s.getId(), s.clone());
         }
         
@@ -57,7 +57,7 @@ public class Course implements Serializable {
     
     public Shift getShift(String shiftID) {
     	// return this.shifts.get(shiftID).clone();
-        return this.shifts.get(shiftID);    
+        return this.shiftDAO.get(shiftID);    
     }
     
     // Attaches a previously created shift to this course
@@ -65,11 +65,11 @@ public class Course implements Serializable {
     	
     	shift.setCourseId(this.id);
 
-        this.shifts.put(id, shift);
+        this.shiftDAO.put(id, shift);
     }
     
     public void removeShift(String id) {
-    	this.shifts.remove(id);
+    	this.shiftDAO.remove(id);
     }
     
     

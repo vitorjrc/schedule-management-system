@@ -1,5 +1,5 @@
 
-package schedulemanager.model;
+package schedulemanager.db;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -18,9 +18,11 @@ public class Connect {
         try {
             
             Connection cn = DriverManager.getConnection("jdbc:mysql://"+ URL + "/" + TABLE + "?user=" + USERNAME + "&password=" + PASSWORD);
+            System.out.println("conexao feita");
             return cn;
             
         } catch(Exception e) {
+            System.out.println("Não conseguiu");
             e.printStackTrace();
         }
         
