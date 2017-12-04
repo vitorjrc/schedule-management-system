@@ -1,5 +1,5 @@
 
-package schedulemanager.model;
+package schedulemanager.db;
 
 import java.sql.DriverManager;
 import java.sql.Connection;

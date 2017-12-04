@@ -1,13 +1,12 @@
-package schedulemanager.model;
+package schedulemanager.db;
 
+import schedulemanager.db.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import schedulemanager.model.Student;
 
 public class StudentDAO implements Map<String,Student> {
     
@@ -19,16 +18,19 @@ public class StudentDAO implements Map<String,Student> {
      */
     @Override
     public void clear () {
+        throw new NullPointerException("clear not implemented!");
+        /*
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM aluno where id>0");
+            stm.executeUpdate("DELETE FROM Student where id>0");
         } catch (Exception e) {
             //runtime exeption!
             throw new NullPointerException(e.getMessage()); 
         } finally {
             Connect.close(conn);
         }
+        */
     }
     
     /**
@@ -44,9 +46,9 @@ public class StudentDAO implements Map<String,Student> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `nome` FROM `aluno` WHERE `id`=?;";
+            String sql = "SELECT `id` FROM Student WHERE `id`=?;";
             PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setInt(1, Integer.parseInt(key.toString()));
+            stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             r = rs.next();
         } catch (Exception e) {
@@ -69,8 +71,8 @@ public class StudentDAO implements Map<String,Student> {
      */
     @Override
     public boolean containsValue(Object value) {
-        Aluno a = (Aluno) value;
-        return containsKey(a.getNumero());
+        Student s = (Student) value;
+        return containsKey(s.getID());
     }
     
     
@@ -78,7 +80,7 @@ public class StudentDAO implements Map<String,Student> {
     *NAO MEXI
     */
     @Override
-    public Set<Map.Entry<String,Aluno>> entrySet() {
+    public Set<Map.Entry<String,Student>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
     
@@ -99,28 +101,27 @@ public class StudentDAO implements Map<String,Student> {
      * NAO MEXI
      */
     @Override
-    public Aluno get(Object key) {
-        Aluno al = null;
+    public Student get(Object key) {
+        Student st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM aluno WHERE id=?");
-            stm.setInt(1, (Integer)key);
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Student WHERE id=?");
+            stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                al = new Aluno(rs.getString("nome"),rs.getInt("id"),rs.getString("email"));
+                st = new Student(rs.getString("Name") ,rs.getString("Id"), rs.getString("Password"), rs.getString("Regimen"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
-        return al;
+        return st;
     }
     
     
     /*
     *NAO MEXI
-    */
     */
     @Override
     public int hashCode() {
@@ -142,7 +143,7 @@ public class StudentDAO implements Map<String,Student> {
     /*
     * NAO MEXI
     */
-    */
+    
     @Override
     public Set<String> keySet() {
         throw new NullPointerException("Not implemented!");
@@ -162,11 +163,11 @@ public class StudentDAO implements Map<String,Student> {
         try {
             conn = Connect.connect();
             PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
-                "VALUES (?, ?, ?)\n" +
-                "ON DUPLICATE KEY UPDATE nome=VALUES(nome),  email=VALUES(email)", Statement.RETURN_GENERATED_KEYS);
+                "VALUES (?, ?, ?, ?)");
             stm.setString(1, value.getID());
             stm.setString(2, value.getName());
             stm.setString(3, value.getPassword());
+            stm.setString(4, value.getRegimen());
 
             stm.executeUpdate();
             
@@ -187,8 +188,8 @@ public class StudentDAO implements Map<String,Student> {
      */
     @Override
     public void putAll(Map<? extends String,? extends Student> t) {
-        for(Student a : t.values()) {
-            put(a.getID(), a);
+        for(Student s : t.values()) {
+            put(s.getID(), s);
         }
     }
     
@@ -204,7 +205,7 @@ public class StudentDAO implements Map<String,Student> {
         Student al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from aluno where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Student where id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -227,7 +228,7 @@ public class StudentDAO implements Map<String,Student> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM aluno");
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Student");
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -246,14 +247,14 @@ public class StudentDAO implements Map<String,Student> {
      * NAO MEXI
      */
     @Override
-    public Collection<Aluno> values() {
-        Collection<Aluno> col = new HashSet<Aluno>();
+    public Collection<Student> values() {
+        Collection<Student> col = new HashSet<Student>();
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM aluno");
+            ResultSet rs = stm.executeQuery("SELECT * FROM Student");
             while (rs.next()) {
-                col.add(new Aluno(rs.getString("nome"),rs.getInt("id"),rs.getString("email")));
+                col.add(new Student(rs.getString("Name"),rs.getString("Id"),rs.getString("Password"),rs.getString("Regimen")));
             }
             
         } catch (Exception e) {
