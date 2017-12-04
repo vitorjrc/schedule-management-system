@@ -46,7 +46,7 @@ public class TeacherDAO implements Map<String,Teacher> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM RegTeacher WHERE `id`=?;";
+            String sql = "SELECT Id FROM RegTeacher WHERE Id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -105,7 +105,7 @@ public class TeacherDAO implements Map<String,Teacher> {
         Teacher st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM RegTeacher WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM RegTeacher WHERE Id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -204,7 +204,7 @@ public class TeacherDAO implements Map<String,Teacher> {
         Teacher al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from RegTeacher where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from RegTeacher where Id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {

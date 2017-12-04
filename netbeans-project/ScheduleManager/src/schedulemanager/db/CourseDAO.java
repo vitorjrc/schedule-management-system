@@ -45,7 +45,7 @@ public class CourseDAO implements Map<String, Course> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Course WHERE `id`=?;";
+            String sql = "SELECT Id FROM Course WHERE id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -104,7 +104,7 @@ public class CourseDAO implements Map<String, Course> {
         Course st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Course WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Course WHERE Id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -162,7 +162,7 @@ public class CourseDAO implements Map<String, Course> {
         Course stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Course\n" +
                 "VALUES (?, ?, ?)");
             stm.setString(1, value.getId());
             stm.setString(2, value.getName());

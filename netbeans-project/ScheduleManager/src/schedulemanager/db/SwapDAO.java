@@ -220,7 +220,7 @@ public class SwapDAO implements Map<String, Swap> {
         Swap al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Swap where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Swap where Id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {

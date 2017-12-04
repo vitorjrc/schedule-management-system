@@ -9,10 +9,10 @@ import schedulemanager.db.ShiftDAO;
 import schedulemanager.model.Swap;
 
 
-public class coursesByStudentDAO implements Map<String, ShiftDAO> {
+public class CoursesByStudentDAO implements Map<String, ShiftDAO> {
     
     private Connection conn;
-    ShiftDAO ShiftDAO = new ShiftDAO();
+    ShiftDAO shiftDAO = new ShiftDAO();
     
     /**
      * Apagar todos os alunos
@@ -48,7 +48,7 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM HashMap<String, Swap> WHERE `id`=?;";
+            String sql = "SELECT Id FROM Course WHERE id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -107,7 +107,7 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
         ShiftDAO st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM HashMap<String, Swap> WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Course WHERE id=?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -165,9 +165,9 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
         ShiftDAO stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
                 "VALUES (?)");
-            stm.setString(1, ShiftDAO);
+            stm.setInt(1, value.hashCode());
 
             stm.executeUpdate();
             
@@ -188,10 +188,13 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
      */
     @Override
     public void putAll(Map<? extends String,? extends ShiftDAO> t) {
+        /*
         for(ShiftDAO s : t.values()) {
             put(s.getId(), s);
         }
-    }
+        */
+        throw new NullPointerException("not implemented!");
+        }
     
     /**
      * Remover um aluno, dado o seu numero
@@ -205,7 +208,7 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
         ShiftDAO al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from HashMap<String, Swap> where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Course where id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -228,7 +231,7 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM HashMap<String, Swap>");
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Course");
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -248,13 +251,13 @@ public class coursesByStudentDAO implements Map<String, ShiftDAO> {
      */
     @Override
     public Collection<ShiftDAO> values() {
-        Collection<HashMap<String, Swap>> col = new HashSet<HashMap<String, Swap>>();
+        Collection<ShiftDAO> col = new HashSet<ShiftDAO>();
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM HashMap<String, Swap>");
+            ResultSet rs = stm.executeQuery("SELECT * FROM Course");
             while (rs.next()) {
-                col.add(new HashMap<String, Swap>(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id")));
+                col.add(shiftDAO);
             }
             
         } catch (Exception e) {

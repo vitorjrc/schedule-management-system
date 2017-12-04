@@ -9,7 +9,7 @@ import schedulemanager.db.SwapDAO;
 import schedulemanager.model.Swap;
 
 
-public class swapsByStudentDAO implements Map<String, SwapDAO> {
+public class SwapsByStudentDAO implements Map<String, SwapDAO> {
     
     private Connection conn;
     SwapDAO swapDAO = new SwapDAO();
@@ -48,7 +48,7 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM HashMap<String, Swap> WHERE `id`=?;";
+            String sql = "SELECT Id FROM Swap WHERE Id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -107,7 +107,7 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
         SwapDAO st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM HashMap<String, Swap> WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Swap WHERE Id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -165,9 +165,9 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
         SwapDAO stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
                 "VALUES (?)");
-            stm.setString(1, swapDAO);
+            stm.setInt(1, value.hashCode());
 
             stm.executeUpdate();
             
@@ -188,9 +188,12 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
      */
     @Override
     public void putAll(Map<? extends String,? extends SwapDAO> t) {
+        /*
         for(SwapDAO s : t.values()) {
             put(s.getId(), s);
         }
+        */
+        throw new NullPointerException("not implemented!");
     }
     
     /**
@@ -205,7 +208,7 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
         SwapDAO al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from HashMap<String, Swap> where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Swap where id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {
@@ -228,7 +231,7 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM HashMap<String, Swap>");
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Swap");
             if(rs.next()) {
                 i = rs.getInt(1);
             }
@@ -248,13 +251,13 @@ public class swapsByStudentDAO implements Map<String, SwapDAO> {
      */
     @Override
     public Collection<SwapDAO> values() {
-        Collection<HashMap<String, Swap>> col = new HashSet<HashMap<String, Swap>>();
+        Collection<SwapDAO> col = new HashSet<SwapDAO>();
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM HashMap<String, Swap>");
+            ResultSet rs = stm.executeQuery("SELECT * FROM Swap");
             while (rs.next()) {
-                col.add(new HashMap<String, Swap>(rs.getString("Id") ,rs.getString("Name"), rs.getString("RegTeacher_Id")));
+                col.add(swapDAO);
             }
             
         } catch (Exception e) {

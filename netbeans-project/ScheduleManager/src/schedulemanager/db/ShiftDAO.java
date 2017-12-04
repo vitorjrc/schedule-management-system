@@ -45,7 +45,7 @@ public class ShiftDAO implements Map<String, Shift> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Shift WHERE `id`=?;";
+            String sql = "SELECT Id FROM Shift WHERE Id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -104,7 +104,7 @@ public class ShiftDAO implements Map<String, Shift> {
         Shift st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Shift WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Shift WHERE Id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -162,13 +162,13 @@ public class ShiftDAO implements Map<String, Shift> {
         Shift stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
                 "VALUES (?, ?, ?, ?, ?)");
             stm.setString(1, value.getId());
             stm.setInt(2, value.getOccupationLimit());
             stm.setString(3, value.getTeacher());
             stm.setString(4, value.getClassroom());
-            stm.setString(4, value.getCourseId());
+            stm.setString(5, value.getCourseId());
 
             stm.executeUpdate();
             
@@ -206,7 +206,7 @@ public class ShiftDAO implements Map<String, Shift> {
         Shift al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Shift where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Shift where Id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {

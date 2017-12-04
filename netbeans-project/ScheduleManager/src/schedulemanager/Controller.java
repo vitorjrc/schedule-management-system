@@ -5,6 +5,7 @@ import java.util.*;
 import schedulemanager.model.*;
 import schedulemanager.view.*;
 import java.time.format.*;
+import schedulemanager.db.*;
 
 /**
  * Controller class - The only one that knows how view and model are implemented and depends on that implementation.
@@ -226,7 +227,7 @@ public class Controller {
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
 
-        for (Map.Entry<String, HashMap<String, Shift>> entry: userS.getShiftsByCourse().entrySet()) {
+        for (Map.Entry<String, ShiftDAO> entry: userS.getShiftsByCourse().entrySet()) {
             
             String teacher = null;
             String classroom = null;

@@ -46,7 +46,7 @@ public class StudentDAO implements Map<String,Student> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Student WHERE `id`=?;";
+            String sql = "SELECT Id FROM Student WHERE Id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -105,7 +105,7 @@ public class StudentDAO implements Map<String,Student> {
         Student st = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Student WHERE id=?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Student WHERE id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
@@ -162,7 +162,7 @@ public class StudentDAO implements Map<String,Student> {
         Student stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
                 "VALUES (?, ?, ?, ?)");
             stm.setString(1, value.getID());
             stm.setString(2, value.getName());
@@ -205,7 +205,7 @@ public class StudentDAO implements Map<String,Student> {
         Student al = this.get(key);
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Student where id = ?");
+            PreparedStatement stm = conn.prepareStatement("delete from Student where Id = ?");
             stm.setInt(1, (Integer)key);
             stm.executeUpdate();
         } catch (Exception e) {

@@ -6,13 +6,15 @@ package schedulemanager.model;
 
 import java.util.*;
 import java.io.Serializable;
+import schedulemanager.db.*;
 
 public class Student extends User implements Serializable {
 
     private static final long serialVersionUID = 7526472295622776147L;              
     
     private StudentRegimen regimen;
-    private HashMap<String, HashMap<String, Shift>> shifts; // Shifts this user is enrolled in (CourseID -> (ShiftID -> Shift))
+    // Shifts this user is enrolled in (CourseID -> (ShiftID -> Shift))
+    private CoursesByStudentDAO coursesByStudentDAO;
     
     public Student(String id, String name, String password, String regimen) {
     	
@@ -30,7 +32,7 @@ public class Student extends User implements Serializable {
         	throw new java.lang.RuntimeException("Tried to create student with unknown regimen");
         }
         
-        this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Starts out empty
+        coursesByStudentDAO = new CoursesByStudentDAO(); // Starts out empty
     }
     
     public Student(Student s){
@@ -38,19 +40,21 @@ public class Student extends User implements Serializable {
     	super(s);
 
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
-        this.shifts = new HashMap<String, HashMap<String, Shift>>(); // Shallow clone - good enough
-        shifts.putAll(s.getShiftsByCourse());
+        coursesByStudentDAO = new CoursesByStudentDAO();
+        coursesByStudentDAO.putAll(s.getShiftsByCourse());
         
     }
     
     public String getRegimen() { return this.regimen.name(); }
     
     // Returns de student's shifts in the format CourseID -> (ShiftID -> Shift)
-    public HashMap<String, HashMap<String, Shift>> getShiftsByCourse() { return new HashMap<String, HashMap<String, Shift>>(this.shifts); }
+    public CoursesByStudentDAO getShiftsByCourse() { 
+        return coursesByStudentDAO;
+    }
     
     public ArrayList<String> getCourses() {
         
-        return new ArrayList<String>(shifts.keySet());
+        return new ArrayList<String>(coursesByStudentDAO.keySet());
     }
  
     // === Methods
@@ -64,12 +68,12 @@ public class Student extends User implements Serializable {
     public void assignShift(Shift shift) {
 
     	// Check if HashMap of this course's shifts exists
-        if (!this.shifts.containsKey(shift.getCourseId())) {
-            this.shifts.put(shift.getCourseId(), new HashMap<String, Shift>());
+        if (!coursesByStudentDAO.containsKey(shift.getCourseId())) {
+            coursesByStudentDAO.put(shift.getCourseId(), new ShiftDAO());
     	}
         
         // Add this shift to the right course on the shifts HashMap
-        this.shifts.get(shift.getCourseId()).put(shift.getId(), shift);
+        coursesByStudentDAO.get(shift.getCourseId()).put(shift.getId(), shift);
         
         // Add this student to the occupant list on the shift
         shift.addOccupant(this);
@@ -79,19 +83,19 @@ public class Student extends User implements Serializable {
     	
     	String courseID = shift.getCourseId();
     	
-    	if (this.shifts.containsKey(courseID)) {
-    		this.shifts.get(courseID).remove(shift.getId());
+    	if (coursesByStudentDAO.containsKey(courseID)) {
+    		coursesByStudentDAO.get(courseID).remove(shift.getId());
     	}
     }
     
     public boolean hasShift(String courseID, String shiftID) {
     	
-    	return this.shifts.containsKey(courseID) && this.shifts.get(courseID).containsKey(shiftID);
+    	return coursesByStudentDAO.containsKey(courseID) && coursesByStudentDAO.get(courseID).containsKey(shiftID);
     }
     
     public void setShifts(ArrayList<String> novo) {
         for(String s: novo) {
-            this.shifts.put(s, new HashMap<String, Shift>());
+            coursesByStudentDAO.put(s, new ShiftDAO());
         }
     }
     
@@ -105,7 +109,7 @@ public class Student extends User implements Serializable {
                  this.id.equals(s.getID()) &&
                  this.password.equals(s.getPassword()) &&
                  this.regimen.toString().equals(s.getRegimen()) &&
-                 this.shifts.equals(s.getShiftsByCourse())
+                 coursesByStudentDAO.equals(s.getShiftsByCourse())
         );
     }
     
@@ -119,11 +123,11 @@ public class Student extends User implements Serializable {
         s.append("REGIME: " + this.regimen.toString() + "\n");
         s.append("Enrolled in the following shifts: \n");
         
-        for (String course: this.shifts.keySet()) {
+        for (String course: coursesByStudentDAO.keySet()) {
             
         	s.append("  " + course + ":\n");
             
-            for (String shift: this.shifts.get(course).keySet()) {
+            for (String shift: coursesByStudentDAO.get(course).keySet()) {
 
             	s.append("  " + shift + "\n");
             }

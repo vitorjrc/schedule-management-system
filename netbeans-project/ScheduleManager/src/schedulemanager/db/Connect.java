@@ -7,7 +7,7 @@ import java.sql.Connection;
 public class Connect {
 
     private static final String URL = "localhost";
-    private static final String TABLE = "trocaturnos";
+    private static final String TABLE = "mydb";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin1";
     
@@ -18,11 +18,9 @@ public class Connect {
         try {
             
             Connection cn = DriverManager.getConnection("jdbc:mysql://"+ URL + "/" + TABLE + "?user=" + USERNAME + "&password=" + PASSWORD);
-            System.out.println("conexao feita");
             return cn;
             
         } catch(Exception e) {
-            System.out.println("Não conseguiu");
             e.printStackTrace();
         }
         

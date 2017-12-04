@@ -62,7 +62,6 @@ public class IO {
             
             HashMap<String, HashMap<String, Swap>> newMapSwaps = new HashMap<String, HashMap<String, Swap>>();
             newMapSwaps = (HashMap<String, HashMap<String, Swap>>) ois.readObject();
-            model.setSwaps(newMapSwaps);
 
             ois.close();
         

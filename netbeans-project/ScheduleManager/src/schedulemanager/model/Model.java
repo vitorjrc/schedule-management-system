@@ -185,10 +185,12 @@ public class Model {
         return this.authManager.getStudentByID(id);
     }
     
+    /*
     public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
         
         this.swapManager.setSwaps(newMap);
     }
+    */
     /*
     public void setStudents(HashMap<String, Student> newMap) {
         
@@ -217,7 +219,7 @@ public class Model {
         return this.authManager.getRegisteredTeachers();
     }
     
-    public HashMap<String, HashMap<String, Swap>> getSwapsByStudentID() {
+    public SwapsByStudentDAO getSwapsByStudentID() {
         
         return this.swapManager.getSwapsByStudentID();
     }
