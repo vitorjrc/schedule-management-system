@@ -59,18 +59,6 @@ public class IO {
             ois = new ObjectInputStream(fileinput);
 
             // reading object's value
-
-            LinkedHashMap<String, Course> newMapCourse = new LinkedHashMap<String, Course>();
-            newMapCourse = (LinkedHashMap<String, Course>) ois.readObject();
-            model.setCourses(newMapCourse);
-
-            HashMap<String, Student> newMapStudent = new HashMap<String, Student>();
-            newMapStudent = (HashMap<String, Student>) ois.readObject();
-            model.setStudents(newMapStudent);
-
-            HashMap<String, Teacher> newMapTeacher = new HashMap<String, Teacher>();
-            newMapTeacher = (HashMap<String, Teacher>) ois.readObject();
-            model.setTeachers(newMapTeacher);
             
             HashMap<String, HashMap<String, Swap>> newMapSwaps = new HashMap<String, HashMap<String, Swap>>();
             newMapSwaps = (HashMap<String, HashMap<String, Swap>>) ois.readObject();

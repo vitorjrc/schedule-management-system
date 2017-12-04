@@ -1,28 +1,29 @@
 package schedulemanager.model;
 
 import java.util.*;
+import schedulemanager.db.*;
 
 /**
  * Model class - The only one that knows about the data source. It knows nothing about neither view nor controller.
  */
 public class Model {
     
-    private LinkedHashMap<String, Course> coursesList = new LinkedHashMap<String, Course>(); // Course ID -> Course
     private AuthManager authManager;
     private SwapManager swapManager;
     private IO IO;
-	
+    private CourseDAO courseDAO;
+
     public Model() {
         this.authManager = new AuthManager();
         this.swapManager = new SwapManager(authManager);
         this.IO = new IO(this);
-        //this.coursesList = new LinkedHashMap<String, Course>();
+        this.courseDAO = new CourseDAO();
     }
     
     public LinkedHashMap<String, Course> getCourses() {
         
         LinkedHashMap<String, Course> ret = new LinkedHashMap<String, Course>();
-        for(Course c : this.coursesList.values())
+        for(Course c : this.courseDAO.values())
             ret.put(c.getId(), c.clone());
         
         return ret;
@@ -32,14 +33,14 @@ public class Model {
     	
     	Course newCourse = new Course(courseID, courseName, teacherID);
     	
-    	this.coursesList.put(courseID, newCourse);
+    	this.courseDAO.put(courseID, newCourse);
     	
     	return newCourse;
     }
     
     public Shift createShift(String shiftID, String courseID, int occupationLimit, String teacher, String classroom) {
     	
-    	if (!this.coursesList.containsKey(courseID)) {
+    	if (!this.courseDAO.containsKey(courseID)) {
     		
     		return null; // Tried to create shift of a course that doesn't exist
     	}
@@ -47,7 +48,7 @@ public class Model {
     	Shift newShift = new Shift(shiftID, courseID, occupationLimit, teacher, classroom);
     	
     	// Add shift to its course
-    	this.coursesList.get(courseID).addShift(shiftID, newShift);
+    	this.courseDAO.get(courseID).addShift(shiftID, newShift);
     	
     	return newShift;
     }
@@ -91,7 +92,7 @@ public class Model {
     
     public boolean directSwap(String studentID, String courseID, String fromShiftID, String toShiftID) {
     	
-    	return this.swapManager.directSwap(studentID, courseID, fromShiftID, toShiftID, (HashMap<String, Course>) this.coursesList);
+    	return this.swapManager.directSwap(studentID, courseID, fromShiftID, toShiftID, (CourseDAO) this.courseDAO);
     }
     
     public User getLoggedInUser() {
@@ -110,7 +111,7 @@ public class Model {
     
     public boolean takeSwapOffer(String takerID, String swapID) {
     	
-    	return this.swapManager.takeSwapOffer(takerID, swapID, this.coursesList);
+    	return this.swapManager.takeSwapOffer(takerID, swapID, this.courseDAO);
     }
     
     public boolean isSwapTakeable(String takerID, Swap swap) {
@@ -188,7 +189,7 @@ public class Model {
         
         this.swapManager.setSwaps(newMap);
     }
-    
+    /*
     public void setStudents(HashMap<String, Student> newMap) {
         
         this.authManager.setStudents(newMap);
@@ -198,18 +199,20 @@ public class Model {
         
         this.authManager.setTeachers(newMap);
     }
+
     
     public void setCourses(LinkedHashMap<String, Course> newMap) {
         
-        this.coursesList = newMap;
+        this.courseDAO = newMap;
     }
+*/
     
-    public HashMap<String, Student> getStudents() {
+    public StudentDAO getStudents() {
         
         return this.authManager.getRegisteredStudents();
     }
     
-    public HashMap<String, Teacher> getTeachers() {
+    public TeacherDAO getTeachers() {
         
         return this.authManager.getRegisteredTeachers();
     }

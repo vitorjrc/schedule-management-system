@@ -2,6 +2,8 @@ package schedulemanager.model;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import schedulemanager.db.TeacherDAO;
+import schedulemanager.db.StudentDAO;
 
 /**
  * Manages authentication stuff
@@ -13,9 +15,12 @@ public class AuthManager implements Serializable{
 	private boolean isTeacherLoggedIn = false;
 	private User loggedInUser = null;
         private static final long serialVersionUID = 7526472295622776147L;
+        private StudentDAO studentDAO;
+        private TeacherDAO teacherDAO;
+        
 	
-	private HashMap<String, Student> registeredStudents; // StudentID -> Student
-	private HashMap<String, Teacher> registeredTeachers; // TeacherID -> Teacher
+	//private HashMap<String, Student> studentDAO; // StudentID -> Student
+	//private HashMap<String, Teacher> teacherDAO; // TeacherID -> Teacher
 	
 	// Admin login credentials. Not safe in current form.
 	private static final String adminID = "admin";
@@ -23,15 +28,16 @@ public class AuthManager implements Serializable{
 	
 	public AuthManager() {
 		
-		this.registeredStudents = new HashMap<String, Student>();
-		this.registeredTeachers = new HashMap<String, Teacher>();
-	}
+            this.studentDAO = new StudentDAO();
+            this.teacherDAO = new TeacherDAO();
+	
+        }
 	
 	public Student registerStudent(String id, String name, String password, String regimen) {
 		
 		Student newStudent = new Student(id, name, password, regimen);
 		
-		registeredStudents.put(id, newStudent);
+		studentDAO.put(id, newStudent);
 		
 		return newStudent;
 	}
@@ -42,19 +48,19 @@ public class AuthManager implements Serializable{
 		
 		Teacher newTeacher = new Teacher(id, name, password);
 		
-		registeredTeachers.put(id, newTeacher);
+		teacherDAO.put(id, newTeacher);
 		
 		return newTeacher;
 	}
 	
 	public Student getStudentByID(String id) {
 		
-		return this.registeredStudents.get(id);
+		return this.studentDAO.get(id);
 	}
 	
 	public Teacher getTeacherByID(String id) {
 		
-		return this.registeredTeachers.get(id);
+		return this.teacherDAO.get(id);
 	}
 	
 	// Returns null if login was successful, error message otherwise
@@ -79,13 +85,13 @@ public class AuthManager implements Serializable{
 		User loginUser;
 		
 		// Check if a student exists with the given ID
-		if (this.registeredStudents.containsKey(id)) {
+		if (this.studentDAO.containsKey(id)) {
 			
-			loginUser = this.registeredStudents.get(id);
+			loginUser = this.studentDAO.get(id);
 			
-		} else if (this.registeredTeachers.containsKey(id)) { // Check if a teacher exists with the given ID
+		} else if (this.teacherDAO.containsKey(id)) { // Check if a teacher exists with the given ID
 		
-			loginUser = this.registeredTeachers.get(id);
+			loginUser = this.teacherDAO.get(id);
 		
 		} else {
 			
@@ -143,18 +149,14 @@ public class AuthManager implements Serializable{
 		return this.isTeacherLoggedIn;
 	}
         
-        public HashMap<String, Student> getRegisteredStudents() {
-            HashMap<String, Student> ret = new HashMap<String, Student>();
-            for(Student s : this.registeredStudents.values())
-                ret.put(s.getID(), s.clone());
-            return ret;
+        public StudentDAO getRegisteredStudents() {
+            
+            return studentDAO;
         }
         
-        public HashMap<String, Teacher> getRegisteredTeachers() {
-            HashMap<String, Teacher> ret = new HashMap<String, Teacher>();
-            for(Teacher s : this.registeredTeachers.values())
-                ret.put(s.getID(), s.clone());
-            return ret;
+        public TeacherDAO getRegisteredTeachers() {
+            
+            return teacherDAO;
         }
 	
 	public User getLoggedInUser() {
@@ -175,14 +177,7 @@ public class AuthManager implements Serializable{
         
         public void assignTeacherToCourse(String teacherID, String courseID) {
             
-            this.registeredTeachers.get(teacherID).setManagedCourseID(courseID);
+            this.teacherDAO.get(teacherID).setManagedCourseID(courseID);
         }
         
-        public void setStudents(HashMap<String, Student> newMap) {
-            this.registeredStudents = newMap;
-        } 
-        
-        public void setTeachers(HashMap<String, Teacher> newMap) {
-            this.registeredTeachers = newMap;
-        } 
 }
