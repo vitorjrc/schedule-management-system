@@ -162,7 +162,7 @@ public class ShiftDAO implements Map<String, Shift> {
         Shift stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Shift\n" +
                 "VALUES (?, ?, ?, ?, ?)");
             stm.setString(1, value.getId());
             stm.setInt(2, value.getOccupationLimit());

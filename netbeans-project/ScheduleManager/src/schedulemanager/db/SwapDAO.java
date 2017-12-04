@@ -48,7 +48,7 @@ public class SwapDAO implements Map<String, Swap> {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT `id` FROM Swap WHERE `id`=?;";
+            String sql = "SELECT Id FROM Swap WHERE Id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -172,7 +172,7 @@ public class SwapDAO implements Map<String, Swap> {
         Swap stud = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Aluno\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Swap\n" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ? ,?)");
             stm.setString(1, value.getID());
             stm.setString(2, value.getBidderID());
