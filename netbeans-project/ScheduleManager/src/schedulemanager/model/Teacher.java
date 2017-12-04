@@ -24,12 +24,11 @@ public class Teacher extends User {
 	
 	public String getCourseManagedID() { return this.courseManagedID; }
         
-        public void setManagedCourseID (String course) {
+    public void setManagedCourseID (String course) {
             this.courseManagedID = course;
-        }
-	
+    }
 
-        public Teacher clone() {
+    public Teacher clone() {
             return new Teacher(this);
     }
 }
