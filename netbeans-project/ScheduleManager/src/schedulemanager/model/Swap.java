@@ -83,7 +83,7 @@ public class Swap implements Serializable {
     	} else {
     		
     		// Clone instant before sending
-    		// (Instant class has no .clone()/copy constructor)
+    		// (Instant class has no .clone() nor copy constructor)
     		return Instant.from(this.dateTaken); 
     	}
     }

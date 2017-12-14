@@ -126,7 +126,7 @@ public class StudentDAO implements Map<String, Student> {
     }
     
     /**
-     * Insert a student in the database
+     * Insert a student into the database
      */
     @Override
     public Student put(String key, Student value) {

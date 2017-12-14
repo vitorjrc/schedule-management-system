@@ -126,7 +126,7 @@ public class CourseDAO implements Map<String, Course> {
     }
     
     /**
-     * Insert a course in the database
+     * Insert a course into the database
      */
     @Override
     public Course put(String key, Course value) {

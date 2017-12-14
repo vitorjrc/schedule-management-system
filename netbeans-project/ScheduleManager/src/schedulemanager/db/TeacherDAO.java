@@ -126,7 +126,7 @@ public class TeacherDAO implements Map<String, Teacher> {
     }
     
     /**
-     * Insert a teacher in the database
+     * Insert a teacher into the database
      */
     @Override
     public Teacher put(String key, Teacher value) {
