@@ -89,7 +89,7 @@ public class StudentDAO implements Map<String, Student> {
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                t = new Student(rs.getString("name") ,rs.getString("id"), rs.getString("password"), rs.getString("regimen"));
+                t = new Student(rs.getString("id") ,rs.getString("name"), rs.getString("password"), rs.getString("regimen"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,7 +229,7 @@ public class StudentDAO implements Map<String, Student> {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM student");
             while (rs.next()) {
-                col.add(new Student(rs.getString("name"),rs.getString("id"),rs.getString("password"),rs.getString("regimen")));
+                col.add(new Student(rs.getString("id"),rs.getString("name"),rs.getString("password"),rs.getString("regimen")));
             }
             
         } catch (Exception e) {

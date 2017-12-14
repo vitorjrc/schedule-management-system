@@ -89,7 +89,7 @@ public class TeacherDAO implements Map<String, Teacher> {
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                t = new Teacher(rs.getString("name") ,rs.getString("id"), rs.getString("password"));
+                t = new Teacher(rs.getString("id") ,rs.getString("name"), rs.getString("password"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,7 +228,7 @@ public class TeacherDAO implements Map<String, Teacher> {
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery("SELECT * FROM teacher");
             while (rs.next()) {
-                col.add(new Teacher(rs.getString("name"),rs.getString("id"),rs.getString("password")));
+                col.add(new Teacher(rs.getString("id"),rs.getString("name"),rs.getString("password")));
             }
             
         } catch (Exception e) {
