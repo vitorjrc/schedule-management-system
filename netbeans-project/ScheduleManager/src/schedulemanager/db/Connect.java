@@ -17,9 +17,11 @@ public class Connect {
         try {
             
             Connection cn = DriverManager.getConnection("jdbc:mysql://"+ URL + "/" + TABLE + "?user=" + USERNAME + "&password=" + PASSWORD);
+           
             return cn;
             
         } catch(Exception e) {
+        	
             e.printStackTrace();
         }
         
@@ -31,10 +33,11 @@ public class Connect {
         try {
             
             connection.close();
+            
         } catch (Exception e) {
             
             e.printStackTrace();
         }
-        
+
     }
 }

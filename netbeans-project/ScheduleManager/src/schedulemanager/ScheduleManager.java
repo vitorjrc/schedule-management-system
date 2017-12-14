@@ -2,20 +2,11 @@ package schedulemanager;
 
 import schedulemanager.model.Model;
 import schedulemanager.view.View;
-import schedulemanager.db.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+
 /**
  * Main class that initializes the application
  */
 public class ScheduleManager {
-
-    
-    
-    //public static final String SELECT_QUERY = "SELECT Aluno.Numero, Aluno.Nome FROM Aluno;";
     
     public static void main(String[] args) {
         
@@ -68,33 +59,10 @@ public class ScheduleManager {
         model.createCourse("34", "Processamento de Linguagens", "90");
         model.createCourse("35", "Laboratórios de Informática IV", "90");
         
-        
         controller.ucsName();
         
         // Show view
         view.setVisible(true);
-        
-/*
-        String host = "jdbc:mysql://localhost:3306/trocaturnos";
-        String uName = "admin";
-        String uPass = "admin1";
-        
-        try {
-            Connection conn = DriverManager.getConnection(host, uName, uPass);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(SELECT_QUERY); 
-            
-            while (rs.next()) {
-                //read your lines one ofter one
-                String id = rs.getString("Numero");
-                String name = rs.getString("Nome");
-                
-                System.out.println(name);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-*/
  
     }
 }
