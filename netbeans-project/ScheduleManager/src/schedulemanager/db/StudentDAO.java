@@ -8,45 +8,36 @@ import java.sql.Statement;
 import java.util.*;
 import schedulemanager.model.Student;
 
-public class StudentDAO implements Map<String,Student> {
+public class StudentDAO implements Map<String, Student> {
     
     private Connection conn;
     
     /**
-     * Apagar todos os alunos
-     * NAO MEXI
+     * Delete all students
      */
     @Override
-    public void clear () {
-        throw new NullPointerException("clear not implemented!");
-        /*
+    public void clear() {
+
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Student where id>0");
+            stm.executeUpdate("DELETE FROM student");
         } catch (Exception e) {
-            //runtime exeption!
             throw new NullPointerException(e.getMessage()); 
         } finally {
             Connect.close(conn);
         }
-        */
     }
     
     /**
-     * Verifica se um número de aluno existe na base de dados
-     * @param key
-     * @return
-     * @throws NullPointerException 
-     * 
-     * NAO MEXI
+     * Checks if a student with a given ID exists in the database
      */
     @Override
     public boolean containsKey(Object key) throws NullPointerException {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT Id FROM Student WHERE Id = ?";
+            String sql = "SELECT id FROM student WHERE id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -60,14 +51,9 @@ public class StudentDAO implements Map<String,Student> {
     }
     
     /**
-     * Verifica se um aluno existe na base de dados
+     * Checks if a student exists in the database 
      * 
-     * Esta implementação é provisória. Devia testar todo o objecto e não apenas a chave.
-     * 
-     * @param value
-     * @return 
-     * 
-     * NAO MEXI
+     * Provisional implementation - should check entire object and not just key
      */
     @Override
     public boolean containsValue(Object value) {
@@ -75,64 +61,55 @@ public class StudentDAO implements Map<String,Student> {
         return containsKey(s.getID());
     }
     
-    
-    /*
-    *NAO MEXI
-    */
+    /**
+     * Return the set of entries
+     */
     @Override
     public Set<Map.Entry<String,Student>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
     
-    
-    /*
-    *NAO MEXI
-    */    
+    /**
+     * Equals
+     */    
     @Override
     public boolean equals(Object o) {
         throw new NullPointerException("public boolean equals(Object o) not implemented!");
     }
     
     /**
-     * Obter um aluno, dado o seu número
-     * @param key
-     * @return 
-     * 
-     * NAO MEXI
+     * Return a student with a given ID
      */
     @Override
     public Student get(Object key) {
-        Student st = null;
+        Student t = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Student WHERE id = ?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student WHERE id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                st = new Student(rs.getString("Name") ,rs.getString("Id"), rs.getString("Password"), rs.getString("Regimen"));
+                t = new Student(rs.getString("name") ,rs.getString("id"), rs.getString("password"), rs.getString("regimen"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
-        return st;
+        return t;
     }
     
     
-    /*
-    *NAO MEXI
-    */
+    /**
+     * hashCode
+     */
     @Override
     public int hashCode() {
         return this.conn.hashCode();
     }
     
     /**
-     * Verifica se existem entradas
-     * @return 
-     * 
-     * NAO MEXI
+     * Check if database table is empty
      */
     @Override
     public boolean isEmpty() {
@@ -140,29 +117,31 @@ public class StudentDAO implements Map<String,Student> {
     }
     
     
-    /*
-    * NAO MEXI
-    */
-    
+    /**
+     * keySet
+     */
     @Override
     public Set<String> keySet() {
         throw new NullPointerException("Not implemented!");
     }
     
     /**
-     * Insere um aluno na base de dados
-     * @param key
-     * @param value
-     * @return 
-     * 
-     * DONE
+     * Insert a student in the database
      */
     @Override
     public Student put(String key, Student value) {
-        Student stud = null;
+    	
+    	// From Java docs:
+        // Returns:
+        // the previous value associated with key, or null if there was no mapping for key.
+        // (A null return can also indicate that the map previously associated null with key,
+        // if the implementation supports null values.)
+    	
+    	Student previous = this.get(key);
+    	
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Student\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO student\n" +
                 "VALUES (?, ?, ?, ?)");
             stm.setString(1, value.getID());
             stm.setString(2, value.getName());
@@ -171,98 +150,94 @@ public class StudentDAO implements Map<String,Student> {
 
             stm.executeUpdate();
             
-            stud = value;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
-        return stud;
+        
+        return previous;
     }
 
     /**
-     * Por um conjunto de alunos na base de dados
-     * @param t 
-     * 
-     * NAO MEXI
+     * Insert a set of students into the database
      */
     @Override
-    public void putAll(Map<? extends String,? extends Student> t) {
+    public void putAll(Map<? extends String, ? extends Student> t) {
         for(Student s : t.values()) {
-            put(s.getID(), s);
+            this.put(s.getID(), s);
         }
     }
     
     /**
-     * Remover um aluno, dado o seu numero
-     * @param key
-     * @return 
-     * 
-     * NAO MEXI
+     * Remove a student given their ID
      */
     @Override
     public Student remove(Object key) {
-        Student al = this.get(key);
+    	
+        Student previous = this.get(key);
+        
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Student where Id = ?");
-            stm.setInt(1, (Integer)key);
+            PreparedStatement stm = conn.prepareStatement("delete from student where id = ?");
+            stm.setInt(1, (Integer) key);
             stm.executeUpdate();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         } finally {
             Connect.close(conn);
         }
-        return al;
+        
+        return previous;
     }
     
     /**
-     * Retorna o número de entradas na base de dados
-     * @return 
-     * 
-     * NAO MEXI
+     * Return the number of student rows in the database
      */
     @Override
     public int size() {
+    	
         int i = 0;
+        
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Student");
-            if(rs.next()) {
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM student");
+            if (rs.next()) {
                 i = rs.getInt(1);
             }
-        }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
-        finally {
+        
+        } catch (Exception e) {
+        	throw new NullPointerException(e.getMessage());
+        } finally {
             Connect.close(conn);
         }
+        
         return i;
     }
     
     /**
-     * Obtém todos os alunos da base de dados
-     * @return 
-     * 
-     * NAO MEXI
+     * Get all students in the database
      */
     @Override
     public Collection<Student> values() {
+    	
         Collection<Student> col = new HashSet<Student>();
+        
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Student");
+            ResultSet rs = stm.executeQuery("SELECT * FROM student");
             while (rs.next()) {
-                col.add(new Student(rs.getString("Name"),rs.getString("Id"),rs.getString("Password"),rs.getString("Regimen")));
+                col.add(new Student(rs.getString("name"),rs.getString("id"),rs.getString("password"),rs.getString("regimen")));
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             Connect.close(conn);
         }
+        
         return col;
     }
     

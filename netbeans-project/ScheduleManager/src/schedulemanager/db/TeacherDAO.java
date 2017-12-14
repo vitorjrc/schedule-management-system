@@ -233,10 +233,10 @@ public class TeacherDAO implements Map<String, Teacher> {
             
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             Connect.close(conn);
         }
+        
         return col;
     }
     
