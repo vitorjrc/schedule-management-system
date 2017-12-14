@@ -24,7 +24,7 @@ public class Course implements Serializable {
     }
     
     public Course(Course c) {
-        this.id = c.getId();
+        this.id = c.getID();
         this.name = c.getName();
         this.teacherID = c.getTeacherID();
         for (Shift s: c.getShifts().values()) {
@@ -34,7 +34,7 @@ public class Course implements Serializable {
     
     // Getters
     
-    public String getId() { 
+    public String getID() { 
         return this.id; 
     }
     
