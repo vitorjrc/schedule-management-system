@@ -9,9 +9,8 @@ public class Connect {
     private static final String URL = "localhost";
     private static final String TABLE = "mydb";
     private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin1";
-    
-    
+    private static final String PASSWORD = "admin";
+    //private static final String PASSWORD = "admin1";
     
     public static Connection connect() {
         
@@ -38,9 +37,4 @@ public class Connect {
         }
         
     }
-    
-    
-    
-    
-    
 }
