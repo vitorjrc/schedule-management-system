@@ -1,5 +1,6 @@
 package schedulemanager.db;
 
+import schedulemanager.db.Connect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,40 +13,31 @@ public class ShiftDAO implements Map<String, Shift> {
     private Connection conn;
     
     /**
-     * Apagar todos os alunos
-     * NAO MEXI
+     * Delete all shifts
      */
     @Override
-    public void clear () {
-        throw new NullPointerException("clear not implemented!");
-        /*
+    public void clear() {
+
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            stm.executeUpdate("DELETE FROM Shift where id>0");
+            stm.executeUpdate("DELETE FROM shift");
         } catch (Exception e) {
-            //runtime exeption!
             throw new NullPointerException(e.getMessage()); 
         } finally {
             Connect.close(conn);
         }
-        */
     }
     
     /**
-     * Verifica se um número de aluno existe na base de dados
-     * @param key
-     * @return
-     * @throws NullPointerException 
-     * 
-     * NAO MEXI
+     * Checks if a shift with a given ID exists in the database
      */
     @Override
     public boolean containsKey(Object key) throws NullPointerException {
         boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT Id FROM Shift WHERE Id = ?";
+            String sql = "SELECT id FROM shift WHERE id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
@@ -59,79 +51,71 @@ public class ShiftDAO implements Map<String, Shift> {
     }
     
     /**
-     * Verifica se um aluno existe na base de dados
+     * Checks if a shift exists in the database 
      * 
-     * Esta implementação é provisória. Devia testar todo o objecto e não apenas a chave.
-     * 
-     * @param value
-     * @return 
-     * 
-     * NAO MEXI
+     * Provisional implementation - should check entire object and not just key
      */
     @Override
     public boolean containsValue(Object value) {
         Shift s = (Shift) value;
-        return containsKey(s.getId());
+        return containsKey(s.getID());
     }
     
-    
-    /*
-    *NAO MEXI
-    */
+    /**
+     * Return the set of entries
+     */
     @Override
     public Set<Map.Entry<String,Shift>> entrySet() {
         throw new NullPointerException("public Set<Map.Entry<String,Aluno>> entrySet() not implemented!");
     }
     
-    
-    /*
-    *NAO MEXI
-    */    
+    /**
+     * Equals
+     */    
     @Override
     public boolean equals(Object o) {
         throw new NullPointerException("public boolean equals(Object o) not implemented!");
     }
     
     /**
-     * Obter um aluno, dado o seu número
-     * @param key
-     * @return 
-     * 
-     * NAO MEXI
+     * Return a shift with a given ID
      */
     @Override
     public Shift get(Object key) {
-        Shift st = null;
+        Shift t = null;
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM Shift WHERE Id = ?");
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM shift WHERE id = ?");
             stm.setString(1, key.toString());
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                st = new Shift(rs.getString("Id") ,rs.getString("Course_Id"), rs.getInt("Limit"), rs.getString("Teacher"), rs.getString("Classroom"));
+                t = new Shift(
+                	rs.getString("id"),
+                	rs.getString("course_id"),
+                	rs.getInt("occupation_limit"),
+                	rs.getString("teacher"),
+                	rs.getString("classroom")
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
-        return st;
+        return t;
     }
     
     
-    /*
-    *NAO MEXI
-    */
+    /**
+     * hashCode
+     */
     @Override
     public int hashCode() {
         return this.conn.hashCode();
     }
     
     /**
-     * Verifica se existem entradas
-     * @return 
-     * 
-     * NAO MEXI
+     * Check if database table is empty
      */
     @Override
     public boolean isEmpty() {
@@ -139,132 +123,259 @@ public class ShiftDAO implements Map<String, Shift> {
     }
     
     
-    /*
-    * NAO MEXI
-    */
-    
+    /**
+     * keySet
+     */
     @Override
     public Set<String> keySet() {
         throw new NullPointerException("Not implemented!");
     }
     
     /**
-     * Insere um aluno na base de dados
-     * @param key
-     * @param value
-     * @return 
-     * 
-     * DONE
+     * Insert a shift into the database
      */
-    
     @Override
     public Shift put(String key, Shift value) {
-        Shift stud = null;
+    	
+    	// From Java docs:
+        // Returns:
+        // the previous value associated with key, or null if there was no mapping for key.
+        // (A null return can also indicate that the map previously associated null with key,
+        // if the implementation supports null values.)
+    	
+    	Shift previous = this.get(key);
+    	
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Shift\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO shift\n" +
                 "VALUES (?, ?, ?, ?, ?)");
-            stm.setString(1, value.getId());
-            stm.setInt(2, value.getOccupationLimit());
+            stm.setString(1, value.getID());
+            stm.setString(2, String.valueOf(value.getOccupationLimit()));
             stm.setString(3, value.getTeacher());
             stm.setString(4, value.getClassroom());
             stm.setString(5, value.getCourseId());
 
             stm.executeUpdate();
             
-            stud = value;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
-        return stud;
+        
+        return previous;
     }
 
     /**
-     * Por um conjunto de alunos na base de dados
-     * @param t 
-     * 
-     * NAO MEXI
+     * Insert a set of shifts into the database
      */
     @Override
-    public void putAll(Map<? extends String,? extends Shift> t) {
+    public void putAll(Map<? extends String, ? extends Shift> t) {
         for(Shift s : t.values()) {
-            put(s.getId(), s);
+            this.put(s.getID(), s);
         }
     }
     
     /**
-     * Remover um aluno, dado o seu numero
-     * @param key
-     * @return 
-     * 
-     * NAO MEXI
+     * Remove a shift given their ID
      */
     @Override
     public Shift remove(Object key) {
-        Shift al = this.get(key);
+    	
+        Shift previous = this.get(key);
+        
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from Shift where Id = ?");
-            stm.setInt(1, (Integer)key);
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM shift WHERE id = ?");
+            stm.setString(1, (String) key);
             stm.executeUpdate();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
         } finally {
             Connect.close(conn);
         }
-        return al;
+        
+        return previous;
     }
     
     /**
-     * Retorna o número de entradas na base de dados
-     * @return 
-     * 
-     * NAO MEXI
+     * Return the number of shift rows in the database
      */
     @Override
     public int size() {
+    	
         int i = 0;
+        
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT count(*) FROM Shift");
-            if(rs.next()) {
+            ResultSet rs = stm.executeQuery("SELECT count(*) FROM shift");
+            if (rs.next()) {
                 i = rs.getInt(1);
             }
-        }
-        catch (Exception e) {throw new NullPointerException(e.getMessage());}
-        finally {
+        
+        } catch (Exception e) {
+        	throw new NullPointerException(e.getMessage());
+        } finally {
             Connect.close(conn);
         }
+        
         return i;
     }
     
     /**
-     * Obtém todos os alunos da base de dados
-     * @return 
-     * 
-     * NAO MEXI
+     * Get all shifts in the database
      */
     @Override
     public Collection<Shift> values() {
+    	
         Collection<Shift> col = new HashSet<Shift>();
+        
         try {
             conn = Connect.connect();
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery("SELECT * FROM Shift");
+            ResultSet rs = stm.executeQuery("SELECT * FROM shift");
             while (rs.next()) {
-                col.add(new Shift(rs.getString("Id") ,rs.getString("Course_Id"), rs.getInt("Limit"), rs.getString("Teacher"), rs.getString("Classroom")));
+                col.add(new Shift(
+                	rs.getString("id"),
+                	rs.getString("course_id"),
+                	rs.getInt("occupation_limit"),
+                	rs.getString("teacher"),
+                	rs.getString("classroom")
+                ));
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             Connect.close(conn);
         }
+        
         return col;
     }
     
+    /**
+     * Get all shifts of a course
+     */
+    public Collection<Shift> getShiftsOfCourse(String courseID) {
+    	
+    	Collection<Shift> col = new HashSet<Shift>();
+        
+        try {
+            conn = Connect.connect();
+
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM shift WHERE course_id = ?");
+            stm.setString(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+                col.add(new Shift(
+                	rs.getString("id"),
+                	rs.getString("course_id"),
+                	rs.getInt("occupation_limit"),
+                	rs.getString("teacher"),
+                	rs.getString("classroom")
+                ));
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return col;
+    }
+    
+    /**
+     * Get all shifts of a student
+     */
+    public Collection<Shift> getShiftsOfStudent(String studentID) {
+    	
+    	Collection<Shift> col = new HashSet<Shift>();
+        
+        try {
+            conn = Connect.connect();
+
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_shift WHERE student_id = ?");
+            stm.setString(1, studentID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+            	
+            	Shift s = this.get(rs.getString("shift_id"));
+            	
+                col.add(s);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return col;
+    	
+    }
+    
+    /**
+     * Add a student to a shift
+     */
+    public void assignStudentToShift(String studentID, String shiftID) {
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO student_shift\n" +
+                "VALUES (?, ?)");
+            stm.setString(1, studentID);
+            stm.setString(2, shiftID);
+
+            stm.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+    }
+    
+    /**
+     * Remove a student from a shift
+     */
+    public void removeStudentFromShift(String studentID, String shiftID) {
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM student_shift WHERE student_id = ? AND shift_id = ?");
+            stm.setString(1, studentID);
+            stm.setString(2, shiftID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+    }
+    
+    /**
+     * Check if a student is in a certain shift
+     */
+    public boolean isStudentInShift(String studentID, String shiftID) {
+    	
+    	boolean r = false;
+        try {
+            conn = Connect.connect();
+            String sql = "SELECT student_id FROM shift WHERE student_id = ? AND shift_id = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, studentID);
+            stm.setString(2, shiftID);
+            ResultSet rs = stm.executeQuery();
+            r = rs.next();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        return r;
+    }
 }

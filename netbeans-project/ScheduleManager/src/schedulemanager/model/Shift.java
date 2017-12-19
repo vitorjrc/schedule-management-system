@@ -16,9 +16,9 @@ public class Shift implements Serializable {
     private String classroom;
     private HashMap<String, Student> occupants; // The students that frequent this shift - StudentID -> Student
     
-     public Shift(String id, String courseId, int occupationLimit, String teacher, String classroom) {
+     public Shift(String id, String courseID, int occupationLimit, String teacher, String classroom) {
         this.id = id;
-        this.courseId = courseId;
+        this.courseId = courseID;
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
@@ -26,7 +26,7 @@ public class Shift implements Serializable {
     }
     
     public Shift(Shift s) {
-        this.id = s.getId();
+        this.id = s.getID();
         this.courseId = s.getCourseId();
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
@@ -34,7 +34,7 @@ public class Shift implements Serializable {
         this.occupants = new HashMap<String, Student>(s.getOccupants());
     }
     
-    public String getId() {
+    public String getID() {
         return this.id;
     }
     
