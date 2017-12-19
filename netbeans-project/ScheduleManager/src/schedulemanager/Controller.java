@@ -127,13 +127,16 @@ public class Controller {
                 found = 1;
         }
         
-        if (newID.equals("") || newPassword.equals("") || newPassword.equals("") || found == 0) {
+        if (newID.equals("") || newPassword.equals("") || found == 0) {
             view.showError1();
         }
         
         else { 
             
-            ArrayList<String> newCourses = new ArrayList<>();
+            //apagar este teste e adicionar por default um aluno a um turno zero, por exemplo
+            //ou simplesmente por nulls e preparar o programa para nulls
+            
+            //ArrayList<String> newCourses = new ArrayList<>();
             userS = model.registerStudent(newID, newName, newPassword, newStatus);
             
             for (int i = 4; i < data.size(); i++) {
@@ -142,7 +145,7 @@ public class Controller {
                 Shift newShift0 = model.createShift("PL0", courseID, 30, "Elfrida", "A4");
                 model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
-                newCourses.add(courseID);
+                //newCourses.add(courseID);
                 userS.assignShift(newShift0);
             }
             
