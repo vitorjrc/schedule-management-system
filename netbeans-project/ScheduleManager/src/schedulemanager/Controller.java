@@ -162,6 +162,8 @@ public class Controller {
         
         String message = model.login(userID, userPassword);
        
+        
+        // login do authmanager returns null if login was successful, error message otherwise
         if (message != null)
                 view.showLoginError(message);     //msg de erro password incorreta
         else {
