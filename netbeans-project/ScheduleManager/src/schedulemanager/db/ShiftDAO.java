@@ -341,8 +341,14 @@ public class ShiftDAO implements Map<String, Shift> {
     
     /**
      * Remove a student from a shift
+     * 
+     * Returns true if the removal was successful, false otherwise
      */
-    public void removeStudentFromShift(String studentID, String shiftID) {
+    public boolean removeStudentFromShift(String studentID, String shiftID) {
+    	
+    	if (!this.isStudentInShift(studentID, shiftID)) {
+    		return false;
+    	}
     	
     	try {
             conn = Connect.connect();
@@ -355,6 +361,8 @@ public class ShiftDAO implements Map<String, Shift> {
         } finally {
             Connect.close(conn);
         }
+    	
+    	return true;
     }
     
     /**
@@ -365,7 +373,7 @@ public class ShiftDAO implements Map<String, Shift> {
     	boolean r = false;
         try {
             conn = Connect.connect();
-            String sql = "SELECT student_id FROM shift WHERE student_id = ? AND shift_id = ?";
+            String sql = "SELECT student_id FROM student_shift WHERE student_id = ? AND shift_id = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1, studentID);
             stm.setString(2, shiftID);
