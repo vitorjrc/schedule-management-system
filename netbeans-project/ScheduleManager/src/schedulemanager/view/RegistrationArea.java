@@ -191,7 +191,7 @@ public class RegistrationArea extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void showCourses(LinkedHashMap<String, String> coursesList) {
+    public void showCourses(ArrayList<String> coursesList) {
         
         jPanel1.removeAll();
         jPanel1.revalidate(); 
@@ -200,9 +200,9 @@ public class RegistrationArea extends javax.swing.JDialog {
         jPanel1.setLayout(new GridLayout(15, 2));
         jScrollPane1.getViewport().setSize(400, 400);
         
-        for(Map.Entry<String, String> entry : coursesList.entrySet()) {
+        for(String s: coursesList) {
 
-            JCheckBox cb = new JCheckBox(entry.getKey());
+            JCheckBox cb = new JCheckBox(s);
             cb.setBackground(Color.WHITE);
             
             jPanel1.add(cb);

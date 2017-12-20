@@ -19,7 +19,7 @@ public class ScheduleManager {
         controller.setModel(model);
         controller.setView(view);
         controller.attachToView();
-        
+        /*
         // Initialize model with courses
         model.registerTeacher("90", "JBB", "123");
         
@@ -58,9 +58,7 @@ public class ScheduleManager {
         model.createCourse("33", "Comunicações por Computador", "90");
         model.createCourse("34", "Processamento de Linguagens", "90");
         model.createCourse("35", "Laboratórios de Informática IV", "90");
-        
-        controller.ucsName();
-        
+        */
         // Show view
         view.setVisible(true);
  

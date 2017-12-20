@@ -231,4 +231,12 @@ public class Model {
     	this.shiftDAO.assignStudentToShift(studentID, shiftID);
     }
     
+    public String getNameOfCourse(String id) {
+        return courseDAO.getNameOfCourse(id);
+    }
+    
+    public String getIdOfCourse(String name) {
+        return courseDAO.getIdOfCourse(name);
+    }
+    
 }

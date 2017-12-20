@@ -17,7 +17,6 @@ public class Controller {
     
     private Model model;
     private View view;
-    private LinkedHashMap<String, String> ucs = new LinkedHashMap<>(); // nameUC -> idUC
     private Student userStudent = null;
     private Teacher userTeacher = null;
     
@@ -38,11 +37,11 @@ public class Controller {
         view.saveButton(this::saveButton);
         view.saveButton(this::loadButton);
         
-        view.checkedCourse(this::checkedCourse);
+        view.checkedCourse(this::ShiftOfCourseSelected);
         view.checkedOfferedShift(this::checkedOfferedShift);
         view.swapOffer(this::swapOffer);
         
-        view.showCourseStudents(this::showCourseStudents);
+        view.showCourseStudents(this::showAllStudents);
         view.StudentShifts(this::StudentShifts);
         view.possibleStudentShifts(this::possibleStudentShifts);
         view.enrollButton(this::enrollButton);
@@ -69,18 +68,15 @@ public class Controller {
     
     // Called when the view sends an onRegister event
     private void onRegister(ArrayList<String> data) {
-        view.getRegistrationArea().showCourses(ucs);
-    }
-    
-    public LinkedHashMap<String, String> ucsName() {
         
-        for (Map.Entry<String, Course> entry: model.getCourses().entrySet()) {
-            ucs.put(entry.getValue().getName(), entry.getKey());
+        ArrayList<String> courses = new ArrayList<>();
+        
+        for (Course c: model.getCourses().values()) {
+            courses.add(c.getName());
         }
         
-        return ucs;
+        view.getRegistrationArea().showCourses(courses);
     }
-    
     
     private void RegisterButton(ArrayList<String> data) {
         
@@ -138,16 +134,18 @@ public class Controller {
             
             //ArrayList<String> newCourses = new ArrayList<>();
             userStudent = model.registerStudent(newID, newName, newPassword, newStatus);
-            
+            /*
             for (int i = 4; i < data.size(); i++) {
                 
-                String courseID = ucs.get(data.get(i));
+                String courseID = model.getIdOfCourse(data.get(i));
+                
                 Shift newShift0 = model.createShift("PL0", courseID, 30, "Elfrida", "A4");
                 model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
                 //newCourses.add(courseID);
                 userStudent.assignShift(newShift0);
             }
+            */
             
             view.showRegisterSuccess();
         }
@@ -201,18 +199,25 @@ public class Controller {
     
     private void showTeacherInterface() {
         
-        String course = model.getCourses().get(userTeacher.getCourseManagedID()).getName();
+        String course = null;
+        if (userTeacher.getCourseManagedID() == null) {
+            view.showLoginError("Não tem unidade curricular atribuída.");
+            return;
+        }
+        
+        else course = model.getCourses().get(userTeacher.getCourseManagedID()).getName();
         
         view.teacherInterface(userTeacher.getName(), course);
     }
         
+    
     private void saveButton(ArrayList<String> data) {
         
-        model.save();
+        //model.save();
     }
     
     private void loadButton(ArrayList<String> data) {
-        
+        /*
         model.load();
         for (Course c: model.getCourses().values()) {
             
@@ -224,28 +229,35 @@ public class Controller {
                 ucs.put(c.getName(), c.getID());
             }
         }
+        
     }
-                
+        */
+    }       
     
     private HashMap<String, ArrayList<String>> getShiftsofUser(String userID) {
             
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
-
-        for (Map.Entry<String, ShiftDAO> entry: userStudent.getShiftsByCourse().entrySet()) {
+        
+        //for (Map.Entry<String, ShiftDAO> entry: userStudent.getShifts().entrySet()) {
             
             String teacher = null;
             String classroom = null;
             
-            String course = model.getCourses().get(entry.getKey()).getName();
-            Set shift = entry.getValue().keySet();
-            String joinedShifts = String.join("-", shift);
-            
+            // String course = model.getCourses().get(entry.getKey()).getName();
+            String course = "teste";
+            // Set shift = entry.getValue().keySet();
+            // String joinedShifts = String.join("-", shift);
+            /*
             for (Shift s: entry.getValue().values()) {
                 teacher = s.getTeacher();
                 classroom = s.getClassroom();
             }
+            */
             
+            for(Shift s: userStudent.getShifts()) {
+            
+            String joinedShifts = s.getID();
             ArrayList<String> info = new ArrayList<>();
             
             info.add(joinedShifts);
@@ -253,7 +265,9 @@ public class Controller {
             info.add(teacher);
             
             userInfo.put(course,info);
-        }
+            
+            }
+        //}
         
         return userInfo;
     }
@@ -264,10 +278,10 @@ public class Controller {
         ArrayList<String> courses = new ArrayList<>();
         
         // Get UCs name of user
-        Set<String> coursesSet = userStudent.getShiftsByCourse().keySet();
+        ArrayList<Shift> coursesSet = new ArrayList<>(userStudent.getShifts());
         
-        for (String s : coursesSet) {
-            courses.add(model.getCourses().get(s).getName());
+        for (Shift s : coursesSet) {
+            courses.add(s.getCourseID());
         }
         
         view.setCoursesList(courses);
@@ -276,25 +290,27 @@ public class Controller {
         view.showUserUCs(getShiftsofUser(userStudent.getID()));
         
         this.showPendingOffers();
-        if (model.getSwapsByStudentID().containsKey(userStudent.getID())) {
+        if (model.getSwaps().containsKey(userStudent.getID())) {
             this.showActiveOffers();
             this.showStudentOffersHistory();
         } 
         
     }
     
-    // metodo que traz a disciplina que o user quer trocar
-    private void checkedCourse(ArrayList<String> data) {
+    // metodo que devolve os turnos onde o aluno está inscrito na disciplina escolhida
+    private void ShiftOfCourseSelected(ArrayList<String> data) {
         
         String courseName = data.get(0);
-        String courseID = ucs.get(courseName);
-        
-        Set<String> shift = userStudent.getShiftsByCourse().get(courseID).keySet();
+        String courseID = model.getIdOfCourse(courseName);
         
         ArrayList<String> myShifts = new ArrayList<>();  
+        ArrayList<Shift> shifts = new ArrayList<>(userStudent.getShifts());
         
-        for (String str : shift)  
-            myShifts.add(str);
+        for (Shift s: shifts) {
+            if (s.getCourseID() == courseID) {
+                myShifts.add(s.getID());
+            }
+        } 
         
         view.myShifts(myShifts);
         
@@ -303,7 +319,7 @@ public class Controller {
     private void checkedOfferedShift(ArrayList<String> data) {
         
         String courseName = data.get(0);
-        String courseID = ucs.get(courseName);
+        String courseID = model.getIdOfCourse(courseName);
         
         String offeredShift = data.get(1);
         
@@ -322,7 +338,7 @@ public class Controller {
     private void swapOffer(ArrayList<String> data) {
         
         String bidderID = userStudent.getID();
-        String courseID = ucs.get(data.get(0));
+        String courseID = model.getIdOfCourse(data.get(0));
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
         
@@ -428,20 +444,19 @@ public class Controller {
     
     private void showAllCourses() {
         
-        ArrayList<String> coursesList = new ArrayList<>();
+        ArrayList<String> courses = new ArrayList<>();
         
-        Set<String> courses = this.ucs.keySet();
-        
-        for (String s: courses) {
-                coursesList.add(s);
+        for (Course c: model.getCourses().values()) {
+            courses.add(c.getName());
         }
-        view.showCourses(coursesList);
+        
+        view.showCourses(courses);
     }
     
     // retornar na view os turnos da uc
-    private void showCourseStudents(ArrayList<String> data) {
-        
-        String courseID = ucs.get(data.get(0));
+    private void showAllStudents(ArrayList<String> data) {
+        /*
+        String courseID = model.getIdOfCourse(data.get(0));
         
         ArrayList<String> studentsList = new ArrayList<>();
 
@@ -460,20 +475,27 @@ public class Controller {
         noDuplications.addAll(studentsList);
         studentsList.clear();
         studentsList.addAll(noDuplications);
+        */
+        ArrayList<String> studentsList = new ArrayList<>();
+        
+        for(Student s: model.getStudents().values())
+            studentsList.add(s.getID());
         
         view.showCourseStudents(studentsList);
     }
     
     private void StudentShifts(ArrayList<String> data) {
         
-        String courseID = ucs.get(data.get(0));
+        String courseID = model.getIdOfCourse(data.get(0));
+        String studentID = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
         
-        Set<String> shifts = model.getCourses().get(courseID).getShifts().keySet();
-        
-        for (String s: shifts) {
-            shiftsList.add(s);
+        shiftsList.add("Sem turno");
+
+        for (Shift s: model.getStudents().get(studentID).getShifts()) {
+            if (s.getCourseID().equals(courseID)) 
+                shiftsList.add(s.getID());
         }
         
         view.originShift(shiftsList);
@@ -481,7 +503,7 @@ public class Controller {
     
     private void possibleStudentShifts(ArrayList<String> data) {
         
-        String courseID = ucs.get(data.get(0));
+        String courseID = model.getIdOfCourse(data.get(0));
         String originShift = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
@@ -501,7 +523,7 @@ public class Controller {
     
     private void enrollButton(ArrayList<String> data) {
         
-        String selectedCourse = ucs.get(data.get(0));
+        String selectedCourse = model.getIdOfCourse(data.get(0));
         String selectedStudent = data.get(1);
         String originShift = data.get(2);
         String destinationShift = data.get(3);
@@ -511,7 +533,9 @@ public class Controller {
             return;
         }
         
-        model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
+        if (originShift.equals("Sem Turno")) model.assignStudentToShift(selectedStudent, destinationShift);
+        
+        else model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
         
         view.showSucessMessage();
     }
@@ -542,7 +566,7 @@ public class Controller {
     
     private void shiftsOfStudent(ArrayList<String> data) {
         
-        String selectedCourse = ucs.get(data.get(0));
+        String selectedCourse = model.getIdOfCourse(data.get(0));
         
         ArrayList<String> shiftsList = new ArrayList<>();
         
@@ -559,7 +583,7 @@ public class Controller {
     
     private void getStudentToRemove(ArrayList<String> data) {
         
-        String selectedCourse = ucs.get(data.get(0));
+        String selectedCourse = model.getIdOfCourse(data.get(0));
         String selectedShift = data.get(1);
         
         ArrayList<String> shiftStudentsList = new ArrayList<>();
@@ -576,7 +600,7 @@ public class Controller {
         
     private void removeButton(ArrayList<String> data) {
         
-        String selectedCourse = ucs.get(data.get(0));
+        String selectedCourse = model.getIdOfCourse(data.get(0));
         String selectedShift = data.get(1);
         String selectedStudent = data.get(2);
         
@@ -595,7 +619,7 @@ public class Controller {
     
     private void createShift(ArrayList<String> data) {
             
-        String selectedCourse = ucs.get(data.get(0));
+        String selectedCourse = model.getIdOfCourse(data.get(0));
         String newID = data.get(1);
         String newLimit = data.get(2);
         String newTeacher = data.get(3);
@@ -635,7 +659,6 @@ public class Controller {
         
         Course c = model.createCourse(newID, newName, newTeacher);
 
-        this.ucs.put(c.getName(), c.getID());
         this.showAllCourses();
         
         model.assignTeacherToCourse(newTeacher, newID);

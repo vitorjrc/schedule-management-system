@@ -240,4 +240,54 @@ public class CourseDAO implements Map<String, Course> {
         return col;
     }
     
+    public String getIdOfCourse(String name) {
+        
+        String ID = null;
+        
+        try {
+            
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT course.id from course where name = ?");
+            stm.setString(1, (String) name);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                int tempID = rs.getInt("id");
+                ID = Integer.toString(tempID);
+            }
+            
+            
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return ID;
+    }
+    
+    
+    public String getNameOfCourse(String id) {
+        
+        String name = null;
+        
+        try {
+            
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT course.name from course where id = ?");
+            stm.setString(1, (String) id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("name");
+            }
+            
+            
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return name;
+    }
+    
 }

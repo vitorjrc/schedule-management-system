@@ -1388,11 +1388,13 @@ public class View extends javax.swing.JFrame {
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
         
         String selectedCourse = jComboBox6.getItemAt(jComboBox6.getSelectedIndex());
+        String selectedStudent = jComboBox9.getItemAt(jComboBox9.getSelectedIndex());
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = enrollStudent.get(1);
         
         sc.add(0, selectedCourse);
+        sc.add(1, selectedStudent);
         
         method.accept(sc);
     }//GEN-LAST:event_jComboBox9ActionPerformed
