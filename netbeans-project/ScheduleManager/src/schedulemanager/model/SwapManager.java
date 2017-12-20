@@ -8,33 +8,22 @@ import schedulemanager.db.*;
  * Runs shift exchange functionality and keeps track of swap history
  */
 public class SwapManager implements Serializable{
-	
-	/* We store swaps in a HashMap that links each student ID
-	 * to another HashMap, which in turn links swap IDs to Swaps.
-	 *
-	 * For simplicity, closed swaps are not stored separately from
-	 * open swaps. The slight efficiency gain in separating them would
-	 * not be worth the increase in complexity.
-	 */
          
     private static final long serialVersionUID = 7526472295622776147L;
-         
-	// studentID -> (swapID -> Swap)
-        private SwapsByStudentDAO swapsByStudentDAO;
+
+    private SwapDAO swapDAO;
 	private boolean swapsAllowed;        // Keeps track of whether Swaps are still allowed.
 	private AuthManager authManager;     // Keeps an instance of authManager to check student info
 	
-	
     public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
-		this.swapsByStudentDAO = new SwapsByStudentDAO();
-                this.swapsAllowed = true;
+		this.swapDAO = new SwapDAO();
+		this.swapsAllowed = true;
 	}
-	
 	
     public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
-		this.swapsByStudentDAO = new SwapsByStudentDAO();
+		this.swapDAO = new SwapDAO();
 		this.swapsAllowed = swapsAllowed;
 	}
 	
@@ -57,7 +46,7 @@ public class SwapManager implements Serializable{
 		}
 		
 		// Check that bidder has this shift to offer
-		if (!loggedInStudent.hasShift(courseID, offeredShiftID)) {
+		if (!loggedInStudent.hasShift(offeredShiftID)) {
 			
 			System.out.println("Swap offer not allowed: Student does not have that shift to offer.");
 			return false;
@@ -65,108 +54,41 @@ public class SwapManager implements Serializable{
 		
 		return true;
 	}
-	
-	// Creates a given student's HashMap of swaps if it doesn't exist
-	private void createStudentSwapsMapIfNotExists(String studentID) {
-		
-		if (!this.swapsByStudentDAO.containsKey(studentID)) {
-			
-			this.swapsByStudentDAO.put(studentID, new SwapDAO());
-		}
-	}
-    
-    // Auxiliary function
-    // Returns all open swaps if parameter is true,
-    // all closed swaps if parameter is false
-    private HashMap<String, Swap> getSwapsWithCondition(boolean openSwaps) {
-    	
-        HashMap<String, Swap> swaps = new HashMap<String, Swap>();
-		
-                for (SwapDAO swapsOfAStudent: this.swapsByStudentDAO.values()) {
-			
-			for (Swap swap: swapsOfAStudent.values()) {
-				
-				if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
-					
-					swaps.put(swap.getID(), swap.clone());
-				}
-			}
-		}
-		
-		return swaps;
-    }
-    
-    // Auxiliary function
-    // Returns open swaps of a student if parameter is true,
-    // closed swaps if parameter is false
-    private HashMap<String, Swap> getSwapsOfStudent(String studentID, boolean openSwaps) {
-        
-    	HashMap<String, Swap> swaps = new HashMap<String, Swap>();
-		
-		for (Swap swap: this.swapsByStudentDAO.get(studentID).values()) {
-			
-			if ((openSwaps && !swap.isClosed()) || (!openSwaps && swap.isClosed())) {
-				
-				swaps.put(swap.getID(), swap.clone());
-			}
-		}
-		
-		return swaps;
-    }
     
     // Removes all shift offers of a student that offer a given shift
     private void removeSwapOffers(Student student, String shiftID) {
     	
-    	SwapDAO studentSwaps = this.swapsByStudentDAO.get(student.getID());
-    	
-        if (studentSwaps == null) return;
-        
-    	for(Swap s: studentSwaps.values()) {
-    	
-    		if (s.getShiftOfferedID().equals(shiftID)) {
-    			
-    			this.swapsByStudentDAO.remove(s.getID());
-    		}
-    	}
+    	this.swapDAO.removeSwapOffers(student.getID(), shiftID);
     }
 	
     public HashMap<String, Swap> getAllSwaps() {
     	
-    	HashMap<String, Swap> allSwaps = new HashMap<String, Swap>();
-    	
-    	for (SwapDAO swapsOfAStudent: this.swapsByStudentDAO.values()) {
-    		
-    		HashMap<String, Swap> clone = new HashMap<String, Swap>(swapsOfAStudent);
-    		
-    		allSwaps.putAll(clone);
-    	}
-    	
-    	return allSwaps;
+    	return this.swapDAO.getSwapsMap();
     }
     
     public HashMap<String, Swap> getAllSwapsOfStudent(String studentID) {
     	
-    	return new HashMap<String, Swap>(this.swapsByStudentDAO.get(studentID));
+    	return this.swapDAO.getSwapsOfStudent(studentID);
     }
     
     public HashMap<String, Swap> getOpenSwaps() {
     	 
-    	return new HashMap<String, Swap>(this.getSwapsWithCondition(true));
+    	return this.swapDAO.getOpenSwaps();
 	}
     
     public HashMap<String, Swap> getClosedSwaps() {
         
-    	return new HashMap<String, Swap>(this.getSwapsWithCondition(false));
+    	return this.swapDAO.getClosedSwaps();
     }
     
     public HashMap<String, Swap> getOpenSwapsOfStudent(String studentID) {
     	
-    	return new HashMap<String, Swap>(this.getSwapsOfStudent(studentID, true));
+    	return this.swapDAO.getOpenSwapsOfStudent(studentID);
 	}
     
     public HashMap<String, Swap> getClosedSwapsOfStudent(String studentID) {
     	
-    	return new HashMap<String, Swap>(this.getSwapsOfStudent(studentID, false));
+    	return this.swapDAO.getClosedSwapsOfStudent(studentID);
     }
 	
 	public void lockSwaps() {
@@ -189,12 +111,9 @@ public class SwapManager implements Serializable{
 			System.out.println("Swaps are locked or attempted swap offer is not allowed.");
 			return false;
 		}
-		
-		// Create this student's swaps HashMap if it doesn't exist yet
-		this.createStudentSwapsMapIfNotExists(bidderID);
-		
+
 		// Get bidder's swaps
-		SwapDAO bidderSwaps = this.swapsByStudentDAO.get(bidderID);
+		HashMap<String, Swap> bidderSwaps = this.swapDAO.getOpenSwapsOfStudent(bidderID);
 		
 		if (bidderSwaps == null) {
 			System.out.println("swapsByStudentID does not contain a student with ID " + bidderID);
@@ -211,7 +130,7 @@ public class SwapManager implements Serializable{
 		
 		} else {
 		
-			bidderSwaps.put(newSwap.getID(), newSwap);
+			this.swapDAO.put(newSwap.getID(), newSwap);
 			
 			return true;
 		}
@@ -225,14 +144,13 @@ public class SwapManager implements Serializable{
 			return false;
 		}
 		
-		SwapDAO swaps = this.swapsByStudentDAO.get(studentID);
-		
-		if (swaps == null || !swaps.containsKey(swapID)) {
+		if (!this.swapDAO.containsKey(swapID)) {
 			System.out.println("Attempted to create a swap but either swapsByStudentID does not contain a student with ID " + studentID + ", or swap " + swapID + " does not exist there.");
 			return false;
 		}
 		
-		swaps.remove(swapID);
+		this.swapDAO.remove(swapID);
+		
 		return true;
 	}
 	
@@ -241,22 +159,12 @@ public class SwapManager implements Serializable{
 	// Returns true if successful, false otherwise
 	public boolean takeSwapOffer(String takerID, String swapID, CourseDAO courses) {
 		
-		// Find the swap
-		Swap swap = null;
-		
-		for (SwapDAO swaps: this.swapsByStudentDAO.values()) { // Loop through each student's swap offers
-			
-			swap = swaps.get(swapID);
-			
-			if (swap != null) {
-				break;
-			}
-		}
-		
-		if (swap == null) {
+		if (!this.swapDAO.containsKey(swapID)) {
 			System.out.println("Tried to take a swap offer but couldn't find a swap with ID " + swapID + "\n");
 			return false;
 		}
+		
+		Swap swap = this.swapDAO.get(swapID);
 		
 		if (!this.isSwapTakeable(takerID, swap)) {
 			return false;
@@ -283,6 +191,10 @@ public class SwapManager implements Serializable{
 		// Remove any swap offers by the bidder/taker that offer the shift they just exchanged
 		this.removeSwapOffers(bidder, swap.getShiftOfferedID());
 		this.removeSwapOffers(taker, swap.getShiftWantedID());
+		
+		// Update swap on database
+		this.swapDAO.remove(swapID); // Should have already been removed above, double check
+		this.swapDAO.put(swapID, swap);
 		
 		return true;
 	}
@@ -320,12 +232,12 @@ public class SwapManager implements Serializable{
 			//System.out.println("Swap not takeable: Couldn't find logged in student to be the swap taker\n");
 			return false;
 			
-		} else if (!bidder.hasShift(swap.getCourseID(), swap.getShiftOfferedID())) {
+		} else if (!bidder.hasShift(swap.getShiftOfferedID())) {
 			
 			//System.out.println("Swap not takeable: Bidder doesn't have shift " + swap.getShiftOfferedID() + " in course " + swap.getCourseID() + "\n");
 			return false;
 		
-		} else if (!taker.hasShift(swap.getCourseID(), swap.getShiftWantedID())) {
+		} else if (!taker.hasShift(swap.getShiftWantedID())) {
 		
 			//System.out.println("Swap not takeable: Taker doesn't have shift " + swap.getShiftWantedID() + " in course " + swap.getCourseID() + "\n");
 			return false;
@@ -372,7 +284,7 @@ public class SwapManager implements Serializable{
 		}
 		
 		Student student = (Student) this.authManager.getStudentByID(studentID);
-		
+
 		Shift from = courses.get(courseID).getShift(fromShiftID);
 		Shift to = courses.get(courseID).getShift(toShiftID);
 		
@@ -381,17 +293,4 @@ public class SwapManager implements Serializable{
 		
 		return true;
 	}
-        
-        public SwapsByStudentDAO getSwapsByStudentID() {
-            
-            return this.swapsByStudentDAO;
-        }
-        
-        /*
-        public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
-                
-            this.swapsByStudentID = newMap;
-        } 
-        
-        */
 }

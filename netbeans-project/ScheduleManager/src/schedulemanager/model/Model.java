@@ -12,19 +12,21 @@ public class Model {
     private SwapManager swapManager;
     private IO IO;
     private CourseDAO courseDAO;
+    private ShiftDAO shiftDAO;
 
     public Model() {
         this.authManager = new AuthManager();
         this.swapManager = new SwapManager(authManager);
         this.IO = new IO(this);
         this.courseDAO = new CourseDAO();
+        this.shiftDAO = new ShiftDAO();
     }
     
     public LinkedHashMap<String, Course> getCourses() {
         
         LinkedHashMap<String, Course> ret = new LinkedHashMap<String, Course>();
         for(Course c : this.courseDAO.values())
-            ret.put(c.getId(), c.clone());
+            ret.put(c.getID(), c.clone());
         
         return ret;
     }
@@ -207,7 +209,7 @@ public class Model {
         
         this.courseDAO = newMap;
     }
-*/
+    */
     
     public StudentDAO getStudents() {
         
@@ -219,9 +221,14 @@ public class Model {
         return this.authManager.getRegisteredTeachers();
     }
     
-    public SwapsByStudentDAO getSwapsByStudentID() {
+    public HashMap<String, Swap> getSwaps() {
         
-        return this.swapManager.getSwapsByStudentID();
+        return this.swapManager.getAllSwaps();
+    }
+    
+    public void assignStudentToShift(String studentID, String shiftID) {
+    	
+    	this.shiftDAO.assignStudentToShift(studentID, shiftID);
     }
     
 }

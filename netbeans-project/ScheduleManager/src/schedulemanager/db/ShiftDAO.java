@@ -153,7 +153,7 @@ public class ShiftDAO implements Map<String, Shift> {
             stm.setString(2, String.valueOf(value.getOccupationLimit()));
             stm.setString(3, value.getTeacher());
             stm.setString(4, value.getClassroom());
-            stm.setString(5, value.getCourseId());
+            stm.setString(5, value.getCourseID());
 
             stm.executeUpdate();
             

@@ -18,8 +18,8 @@ public class Controller {
     private Model model;
     private View view;
     private LinkedHashMap<String, String> ucs = new LinkedHashMap<>(); // nameUC -> idUC
-    private Student userS = null;
-    private Teacher userT = null;
+    private Student userStudent = null;
+    private Teacher userTeacher = null;
     
     public void setModel(Model model) {
         this.model = model;
@@ -137,7 +137,7 @@ public class Controller {
             //ou simplesmente por nulls e preparar o programa para nulls
             
             //ArrayList<String> newCourses = new ArrayList<>();
-            userS = model.registerStudent(newID, newName, newPassword, newStatus);
+            userStudent = model.registerStudent(newID, newName, newPassword, newStatus);
             
             for (int i = 4; i < data.size(); i++) {
                 
@@ -146,7 +146,7 @@ public class Controller {
                 model.createShift("PL1", courseID, 30, "Caiado", "A5");
                 
                 //newCourses.add(courseID);
-                userS.assignShift(newShift0);
+                userStudent.assignShift(newShift0);
             }
             
             view.showRegisterSuccess();
@@ -175,16 +175,16 @@ public class Controller {
                 
                 if (model.isStudentLoggedIn()) {
                     
-                    this.userS = (Student) model.getLoggedInUser();
-                    this.userT = null;
+                    this.userStudent = (Student) model.getLoggedInUser();
+                    this.userTeacher = null;
                     view.studentInterface();
                     showStudentInterface();
                 }
                 
                 if (model.isTeacherLoggedIn()) {
                     
-                    this.userS = null;
-                    this.userT = (Teacher) model.getLoggedInUser();
+                    this.userStudent = null;
+                    this.userTeacher = (Teacher) model.getLoggedInUser();
                     showTeacherInterface();
                 }
         }
@@ -201,9 +201,9 @@ public class Controller {
     
     private void showTeacherInterface() {
         
-        String course = model.getCourses().get(userT.getCourseManagedID()).getName();
+        String course = model.getCourses().get(userTeacher.getCourseManagedID()).getName();
         
-        view.teacherInterface(userT.getName(), course);
+        view.teacherInterface(userTeacher.getName(), course);
     }
         
     private void saveButton(ArrayList<String> data) {
@@ -221,7 +221,7 @@ public class Controller {
             } 
             
             else {
-                ucs.put(c.getName(), c.getId());
+                ucs.put(c.getName(), c.getID());
             }
         }
     }
@@ -232,7 +232,7 @@ public class Controller {
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
 
-        for (Map.Entry<String, ShiftDAO> entry: userS.getShiftsByCourse().entrySet()) {
+        for (Map.Entry<String, ShiftDAO> entry: userStudent.getShiftsByCourse().entrySet()) {
             
             String teacher = null;
             String classroom = null;
@@ -264,19 +264,19 @@ public class Controller {
         ArrayList<String> courses = new ArrayList<>();
         
         // Get UCs name of user
-        Set<String> coursesSet = userS.getShiftsByCourse().keySet();
+        Set<String> coursesSet = userStudent.getShiftsByCourse().keySet();
         
         for (String s : coursesSet) {
             courses.add(model.getCourses().get(s).getName());
         }
         
         view.setCoursesList(courses);
-        view.setUserData(userS.getName(), userS.getID(), userS.getRegimen());
+        view.setUserData(userStudent.getName(), userStudent.getID(), userStudent.getRegimen());
        
-        view.showUserUCs(getShiftsofUser(userS.getID()));
+        view.showUserUCs(getShiftsofUser(userStudent.getID()));
         
         this.showPendingOffers();
-        if (model.getSwapsByStudentID().containsKey(userS.getID())) {
+        if (model.getSwapsByStudentID().containsKey(userStudent.getID())) {
             this.showActiveOffers();
             this.showStudentOffersHistory();
         } 
@@ -289,7 +289,7 @@ public class Controller {
         String courseName = data.get(0);
         String courseID = ucs.get(courseName);
         
-        Set<String> shift = userS.getShiftsByCourse().get(courseID).keySet();
+        Set<String> shift = userStudent.getShiftsByCourse().get(courseID).keySet();
         
         ArrayList<String> myShifts = new ArrayList<>();  
         
@@ -321,7 +321,7 @@ public class Controller {
     
     private void swapOffer(ArrayList<String> data) {
         
-        String bidderID = userS.getID();
+        String bidderID = userStudent.getID();
         String courseID = ucs.get(data.get(0));
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
@@ -331,7 +331,7 @@ public class Controller {
             return;
         }
         
-        if (userS.getRegimen().equals("WORKERSTUDENT")) {
+        if (userStudent.getRegimen().equals("WORKERSTUDENT")) {
             model.directSwap(bidderID, courseID, offeredShiftID, wantedShiftID);
             this.showStudentInterface();
             view.showSucessMessage();
@@ -368,7 +368,7 @@ public class Controller {
             
             swapList.add(5, date);      
             
-            String takeable = String.valueOf(model.isSwapTakeable(userS.getID(), swap.getID()));
+            String takeable = String.valueOf(model.isSwapTakeable(userStudent.getID(), swap.getID()));
             
             swapList.add(6, takeable);
             
@@ -381,7 +381,7 @@ public class Controller {
     private void showActiveOffers() {
         
         ArrayList<ArrayList<String>> pendingSwapsofStudent = new ArrayList<>();
-        for (Swap swap: model.getOpenSwapsOfStudent(userS.getID()).values()) {
+        for (Swap swap: model.getOpenSwapsOfStudent(userStudent.getID()).values()) {
             
             String UC = model.getCourses().get(swap.getCourseID()).getName();
             
@@ -401,7 +401,7 @@ public class Controller {
     private void showStudentOffersHistory() {
         ArrayList<String> studentOffersHistory = new ArrayList<>();
 
-        for (Swap s: model.getClosedSwapsOfStudent(userS.getID()).values()) {
+        for (Swap s: model.getClosedSwapsOfStudent(userStudent.getID()).values()) {
             String UC = model.getCourses().get(s.getCourseID()).getName();
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
@@ -635,7 +635,7 @@ public class Controller {
         
         Course c = model.createCourse(newID, newName, newTeacher);
 
-        this.ucs.put(c.getName(), c.getId());
+        this.ucs.put(c.getName(), c.getID());
         this.showAllCourses();
         
         model.assignTeacherToCourse(newTeacher, newID);
@@ -653,7 +653,7 @@ public class Controller {
         
         String swapID = data.get(0);
         
-        model.cancelSwapOffer(userS.getID(), swapID);
+        model.cancelSwapOffer(userStudent.getID(), swapID);
         
         this.showStudentInterface();
         this.update();
@@ -663,7 +663,7 @@ public class Controller {
         
         String swapID = data.get(0);
         
-        model.takeSwapOffer(userS.getID(), swapID);
+        model.takeSwapOffer(userStudent.getID(), swapID);
         
         this.showStudentInterface();
         this.update();

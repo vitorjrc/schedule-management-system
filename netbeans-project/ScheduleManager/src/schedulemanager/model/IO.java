@@ -29,7 +29,7 @@ public class IO {
             oos.writeObject(model.getCourses());
             oos.writeObject(model.getStudents());
             oos.writeObject(model.getTeachers());
-            oos.writeObject(model.getSwapsByStudentID());
+            oos.writeObject(model.getSwaps());
             
             oos.close();
         }
@@ -60,8 +60,8 @@ public class IO {
 
             // reading object's value
             
-            HashMap<String, HashMap<String, Swap>> newMapSwaps = new HashMap<String, HashMap<String, Swap>>();
-            newMapSwaps = (HashMap<String, HashMap<String, Swap>>) ois.readObject();
+            HashMap<String, Swap> newMapSwaps = new HashMap<String, Swap>();
+            newMapSwaps = (HashMap<String, Swap>) ois.readObject();
 
             ois.close();
         

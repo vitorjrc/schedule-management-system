@@ -28,7 +28,7 @@ public class Course implements Serializable {
         this.name = c.getName();
         this.teacherID = c.getTeacherID();
         for (Shift s: c.getShifts().values()) {
-            shiftDAO.put(s.getId(), s.clone());
+            shiftDAO.put(s.getID(), s.clone());
         }
     }
     
@@ -49,7 +49,7 @@ public class Course implements Serializable {
     public HashMap<String, Shift> getShifts() { 
         HashMap<String, Shift> ret = new HashMap<String, Shift>();
         for(Shift s : this.shiftDAO.values()){
-            ret.put(s.getId(), s.clone());
+            ret.put(s.getID(), s.clone());
         }
         
         return ret; 

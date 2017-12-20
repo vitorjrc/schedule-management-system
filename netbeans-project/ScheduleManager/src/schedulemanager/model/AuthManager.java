@@ -1,7 +1,6 @@
 package schedulemanager.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import schedulemanager.db.TeacherDAO;
 import schedulemanager.db.StudentDAO;
 
@@ -14,9 +13,9 @@ public class AuthManager implements Serializable{
 	private boolean isAdminLoggedIn = false;
 	private boolean isTeacherLoggedIn = false;
 	private User loggedInUser = null;
-        private static final long serialVersionUID = 7526472295622776147L;
-        private StudentDAO studentDAO;
-        private TeacherDAO teacherDAO;
+    private static final long serialVersionUID = 7526472295622776147L;
+    private StudentDAO studentDAO;
+    private TeacherDAO teacherDAO;
         
 	
 	//private HashMap<String, Student> studentDAO; // StudentID -> Student
@@ -102,10 +101,10 @@ public class AuthManager implements Serializable{
 		if (loginUser.getPassword().equals(password)) {
 			
 			if (loginUser.getClass().equals(Student.class)) {
-			
-                            this.isStudentLoggedIn = true;
-			    this.isAdminLoggedIn = false;
-			    this.isTeacherLoggedIn = false;
+
+				this.isStudentLoggedIn = true;
+				this.isAdminLoggedIn = false;
+				this.isTeacherLoggedIn = false;
 			
 			} else if (loginUser.getClass().equals(Teacher.class)) {
 			
@@ -149,15 +148,15 @@ public class AuthManager implements Serializable{
 		return this.isTeacherLoggedIn;
 	}
         
-        public StudentDAO getRegisteredStudents() {
+	public StudentDAO getRegisteredStudents() {
             
-            return studentDAO;
-        }
+		return studentDAO;
+	}
         
-        public TeacherDAO getRegisteredTeachers() {
+	public TeacherDAO getRegisteredTeachers() {
             
-            return teacherDAO;
-        }
+        return teacherDAO;
+    }
 	
 	public User getLoggedInUser() {
 		
@@ -175,9 +174,8 @@ public class AuthManager implements Serializable{
 		}
 	}
         
-        public void assignTeacherToCourse(String teacherID, String courseID) {
+	public void assignTeacherToCourse(String teacherID, String courseID) {
             
-            this.teacherDAO.get(teacherID).setManagedCourseID(courseID);
-        }
-        
+		this.teacherDAO.get(teacherID).setManagedCourseID(courseID);
+	}    
 }

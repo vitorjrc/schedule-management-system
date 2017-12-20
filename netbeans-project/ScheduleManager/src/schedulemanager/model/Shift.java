@@ -27,7 +27,7 @@ public class Shift implements Serializable {
     
     public Shift(Shift s) {
         this.id = s.getID();
-        this.courseId = s.getCourseId();
+        this.courseId = s.getCourseID();
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
         this.classroom = s.getClassroom();
@@ -38,7 +38,7 @@ public class Shift implements Serializable {
         return this.id;
     }
     
-    public String getCourseId() {
+    public String getCourseID() {
         return this.courseId;
     }
     

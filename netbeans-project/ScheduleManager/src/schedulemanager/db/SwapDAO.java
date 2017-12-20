@@ -113,6 +113,166 @@ public class SwapDAO implements Map<String, Swap> {
         return s;
     }
     
+    /**
+     * Get all swaps of a given student
+     */
+    public HashMap<String, Swap> getSwapsOfStudent(String studentID) {
+    	
+        HashMap<String, Swap> s = new HashMap<String, Swap>();
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM swap WHERE bidder_id=?");
+            stm.setString(1, studentID);
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+            	
+                Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
+                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                s.put(rs.getString("id"), new Swap(
+                	rs.getString("id"),
+                	rs.getString("bidder_id"),
+                	rs.getString("taker_id"),
+                	rs.getString("shift_offered_id"),
+                	rs.getString("shift_wanted_id"),
+                	dateCreated,
+                	dateTaken,
+                	rs.getBoolean("is_closed")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return s;
+    }
+    
+    /**
+     * Auxiliary: Get all open or closed swaps - open if open is true, closed if false
+     */
+    private HashMap<String, Swap> getOpenOrClosedSwaps(boolean open) {
+    	
+    	HashMap<String, Swap> s = new HashMap<String, Swap>();
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM swap WHERE is_closed = ?");
+
+            if (open) {
+            	stm.setInt(1, 0);
+            } else {
+            	stm.setInt(1, 1);
+            }
+            
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+            	
+                Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
+                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                s.put(rs.getString("id"), new Swap(
+                	rs.getString("id"),
+                	rs.getString("bidder_id"),
+                	rs.getString("taker_id"),
+                	rs.getString("shift_offered_id"),
+                	rs.getString("shift_wanted_id"),
+                	dateCreated,
+                	dateTaken,
+                	rs.getBoolean("is_closed")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return s;
+    }
+    
+    public HashMap<String, Swap> getOpenSwaps() {
+    	return this.getOpenOrClosedSwaps(true);
+    }
+    
+    public HashMap<String, Swap> getClosedSwaps() {
+    	return this.getOpenOrClosedSwaps(false);
+    }
+    
+    /**
+     * Auxiliary - if open is true, returns all open swaps of a student, else returns all closed swaps
+     */
+    private HashMap<String, Swap> getOpenOrClosedSwapsOfStudent(String studentID, boolean open) {
+    	
+        HashMap<String, Swap> s = new HashMap<String, Swap>();
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM swap WHERE bidder_id = ? AND is_closed = ?");
+            stm.setString(1, studentID);
+            
+            if (open) {
+            	stm.setInt(2, 0);
+            } else {
+            	stm.setInt(2, 1);
+            }
+            
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+            	
+                Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
+                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                s.put(rs.getString("id"), new Swap(
+                	rs.getString("id"),
+                	rs.getString("bidder_id"),
+                	rs.getString("taker_id"),
+                	rs.getString("shift_offered_id"),
+                	rs.getString("shift_wanted_id"),
+                	dateCreated,
+                	dateTaken,
+                	rs.getBoolean("is_closed")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return s;
+    }
+    
+    public HashMap<String, Swap> getOpenSwapsOfStudent(String studentID) {
+    	return this.getOpenOrClosedSwapsOfStudent(studentID, true);
+    }
+    
+    public HashMap<String, Swap> getClosedSwapsOfStudent(String studentID) {
+    	return this.getOpenOrClosedSwapsOfStudent(studentID, false);
+    }
+    
+    /**
+     * Remove all open swap offers from a student that offer a given shift
+     */
+    public void removeSwapOffers(String studentID, String shiftID) {
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM swap WHERE bidder_id = ? AND shift_offered_id = ? AND is_closed = 0");
+            stm.setString(1, studentID);
+            stm.setString(2, shiftID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage()); 
+        } finally {
+            Connect.close(conn);
+        }
+    }
     
     /**
      * hashCode
@@ -165,7 +325,12 @@ public class SwapDAO implements Map<String, Swap> {
             stm.setString(5, value.getShiftWantedID());
             stm.setString(6, String.valueOf(value.getDateCreated().toEpochMilli()));
             stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
-            stm.setBoolean(8, value.isClosed());
+            
+            if (value.isClosed()) {
+            	stm.setInt(8, 1);
+            } else {
+            	stm.setInt(8, 0);
+            }
 
             stm.executeUpdate();
             
@@ -267,6 +432,20 @@ public class SwapDAO implements Map<String, Swap> {
             Connect.close(conn);
         }
         return col;
+    }
+    
+    public HashMap<String, Swap> getSwapsMap() {
+    	
+    	Collection<Swap> swaps = this.values();
+    	
+    	HashMap<String, Swap> map = new HashMap<String, Swap>();
+    	
+    	for (Swap s : swaps) {
+    		
+    		map.put(s.getID(), s);
+    	}
+    	
+    	return map;
     }
     
 }
