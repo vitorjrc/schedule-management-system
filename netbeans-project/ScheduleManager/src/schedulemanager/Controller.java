@@ -41,14 +41,14 @@ public class Controller {
         view.checkedOfferedShift(this::checkedOfferedShift);
         view.swapOffer(this::swapOffer);
         
-        view.showCourseStudents(this::showAllStudents);
+        view.showCourseStudents(this::showStudentsOfSelectedCourse);
         view.StudentShifts(this::StudentShifts);
         view.possibleStudentShifts(this::possibleStudentShifts);
         view.enrollButton(this::enrollButton);
         
         view.createTeacher(this::createTeacher);
         
-        view.shiftsOfStudent(this::shiftsOfStudent);
+        view.shiftsOfStudent(this::shiftsOfCourse);
         view.getStudentToRemove(this::getStudentToRemove);
         view.removeButton(this::removeButton);
         
@@ -129,23 +129,14 @@ public class Controller {
         
         else { 
             
-            //apagar este teste e adicionar por default um aluno a um turno zero, por exemplo
-            //ou simplesmente por nulls e preparar o programa para nulls
-            
-            //ArrayList<String> newCourses = new ArrayList<>();
             userStudent = model.registerStudent(newID, newName, newPassword, newStatus);
-            /*
+            
             for (int i = 4; i < data.size(); i++) {
                 
                 String courseID = model.getIdOfCourse(data.get(i));
-                
-                Shift newShift0 = model.createShift("PL0", courseID, 30, "Elfrida", "A4");
-                model.createShift("PL1", courseID, 30, "Caiado", "A5");
-                
-                //newCourses.add(courseID);
-                userStudent.assignShift(newShift0);
+                model.assignStudentToCourse(userStudent.getID(), courseID);
             }
-            */
+            
             
             view.showRegisterSuccess();
         }
@@ -375,8 +366,8 @@ public class Controller {
         
         for (Swap swap: model.getOpenSwaps().values()) {
             
-            System.out.println(swap.getCourseID());
-            String UC = model.getNameOfCourse(swap.getCourseID());
+            Shift s = model.getShifts().get(swap.getShiftOfferedID());
+            String UC = model.getNameOfCourse(s.getCourseID());
             
             ArrayList<String> swapList = new ArrayList<>();
             
@@ -403,10 +394,13 @@ public class Controller {
     
     private void showActiveOffers() {
         
+        if (model.getOpenSwapsOfStudent(userStudent.getID()) == null || model.getOpenSwapsOfStudent(userStudent.getID()).isEmpty()) return;
+        
         ArrayList<ArrayList<String>> pendingSwapsofStudent = new ArrayList<>();
         for (Swap swap: model.getOpenSwapsOfStudent(userStudent.getID()).values()) {
             
-            String UC = model.getCourses().get(swap.getCourseID()).getName();
+            Shift s = model.getShifts().get(swap.getShiftOfferedID());
+            String UC = model.getNameOfCourse(s.getCourseID());
             
             ArrayList<String> swapInfo = new ArrayList<>();
             swapInfo.add(0, UC);
@@ -422,15 +416,20 @@ public class Controller {
     }
     
     private void showStudentOffersHistory() {
+        
+        if (model.getClosedSwapsOfStudent(userStudent.getID()) == null || model.getClosedSwapsOfStudent(userStudent.getID()).isEmpty()) return;
+        
         ArrayList<String> studentOffersHistory = new ArrayList<>();
 
-        for (Swap s: model.getClosedSwapsOfStudent(userStudent.getID()).values()) {
-            String UC = model.getCourses().get(s.getCourseID()).getName();
+        for (Swap swap: model.getClosedSwapsOfStudent(userStudent.getID()).values()) {
+            
+            Shift s = model.getShifts().get(swap.getShiftOfferedID());
+            String UC = model.getNameOfCourse(s.getCourseID());
             
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
-            String date = formatter.format(s.getDateTaken());
+            String date = formatter.format(swap.getDateTaken());
 
-            studentOffersHistory.add(UC + " -> mudei do turno " + s.getShiftOfferedID() + " para o " + s.getShiftWantedID() + " em " + date);
+            studentOffersHistory.add(UC + " -> mudei do turno " + swap.getShiftOfferedID() + " para o " + swap.getShiftWantedID() + " em " + date);
         }
 
         view.showStudentOffersHistory(studentOffersHistory);
@@ -461,32 +460,11 @@ public class Controller {
     }
     
     // retornar na view os turnos da uc
-    private void showAllStudents(ArrayList<String> data) {
-        /*
+    private void showStudentsOfSelectedCourse(ArrayList<String> data) {
+        
         String courseID = model.getIdOfCourse(data.get(0));
-        
-        ArrayList<String> studentsList = new ArrayList<>();
 
-        for (Shift s: model.getCourses().get(courseID).getShifts().values()) {
-            
-            for (Student st: s.getOccupants().values()) {
-                
-                // adding students to arrayList...
-                studentsList.add(st.getID());
-            }
-                
-        }
-        
-        // removing duplicates students
-        Set<String> noDuplications = new HashSet<>();
-        noDuplications.addAll(studentsList);
-        studentsList.clear();
-        studentsList.addAll(noDuplications);
-        */
-        ArrayList<String> studentsList = new ArrayList<>();
-        
-        for(Student s: model.getStudents().values())
-            studentsList.add(s.getID());
+        ArrayList<String> studentsList = new ArrayList<>(model.getStudentsInCourse(courseID)); 
         
         view.showCourseStudents(studentsList);
     }
@@ -571,36 +549,28 @@ public class Controller {
         
     }
     
-    private void shiftsOfStudent(ArrayList<String> data) {
+    private void shiftsOfCourse(ArrayList<String> data) {
         
         String selectedCourse = model.getIdOfCourse(data.get(0));
         
-        ArrayList<String> shiftsList = new ArrayList<>();
+        ArrayList<Shift> shiftsList = new ArrayList<>(model.getShiftsOfCourse(selectedCourse));
+        ArrayList<String> ucShifts = new ArrayList<>();
         
-        Set<String> ucShifts = model.getCourses().get(selectedCourse).getShifts().keySet();
-        
-        for (String s: ucShifts) {
+        for (Shift s: shiftsList) {
             
-            shiftsList.add(s);
+            ucShifts.add(s.getID());
         }
         
-        view.showShiftsofCourse(shiftsList);
+        view.showShiftsofCourse(ucShifts);
         
     }
     
     private void getStudentToRemove(ArrayList<String> data) {
         
-        String selectedCourse = model.getIdOfCourse(data.get(0));
+        // String selectedCourse = model.getIdOfCourse(data.get(0));
         String selectedShift = data.get(1);
         
-        ArrayList<String> shiftStudentsList = new ArrayList<>();
-        
-        Set<String> shiftStudents = model.getCourses().get(selectedCourse).getShifts().get(selectedShift).getOccupants().keySet();
-        
-        for (String s: shiftStudents) {
-            
-            shiftStudentsList.add(s);
-        }
+        ArrayList<String> shiftStudentsList = new ArrayList<>(model.getStudentsInShift(selectedShift));
         
         view.showStudentToRemove(shiftStudentsList);
     }

@@ -113,7 +113,7 @@ public class Model {
     
     public boolean takeSwapOffer(String takerID, String swapID) {
     	
-    	return this.swapManager.takeSwapOffer(takerID, swapID, this.courseDAO);
+    	return this.swapManager.takeSwapOffer(takerID, swapID, this.courseDAO, this.shiftDAO);
     }
     
     public boolean isSwapTakeable(String takerID, Swap swap) {
@@ -239,4 +239,23 @@ public class Model {
         return courseDAO.getIdOfCourse(name);
     }
     
+    public ShiftDAO getShifts() {
+        return this.shiftDAO;
+    }
+    
+    public Collection<String> getStudentsInCourse(String courseID) {
+        return courseDAO.getStudentsInCourse(courseID);
+    }
+    
+    public void assignStudentToCourse(String studentID, String courseID) {
+        this.courseDAO.assignStudentToCourse(studentID, courseID);
+    }
+    
+    public Collection<Shift> getShiftsOfCourse(String courseID) {
+        return shiftDAO.getShiftsOfCourse(courseID);
+    }
+    
+    public Collection<String> getStudentsInShift(String shiftID) {
+        return shiftDAO.getStudentsInShift(shiftID);
+    }
 }

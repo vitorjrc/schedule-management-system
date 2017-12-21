@@ -135,6 +135,27 @@ CREATE TABLE IF NOT EXISTS `mydb`.`student_shift` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `mydb`.`student_course`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`student_course` (
+  `student_id` VARCHAR(45) NOT NULL,
+  `course_id` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`student_id`, `course_id`),
+  INDEX `fk_student_course_course1_idx` (`course_id` ASC),
+  CONSTRAINT `fk_student_course_student1`
+    FOREIGN KEY (`student_id`)
+    REFERENCES `mydb`.`student` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_student_course_course1`
+    FOREIGN KEY (`course_id`)
+    REFERENCES `mydb`.`course` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

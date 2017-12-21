@@ -157,7 +157,7 @@ public class SwapManager implements Serializable{
 	// Registers a swap offer as taken, and deals with assigning the shifts to the students
 	// courses parameter is needed to get Shift from shiftID in a Swap
 	// Returns true if successful, false otherwise
-	public boolean takeSwapOffer(String takerID, String swapID, CourseDAO courses) {
+	public boolean takeSwapOffer(String takerID, String swapID, CourseDAO courses, ShiftDAO shifts) {
 		
 		if (!this.swapDAO.containsKey(swapID)) {
 			System.out.println("Tried to take a swap offer but couldn't find a swap with ID " + swapID + "\n");
@@ -177,7 +177,8 @@ public class SwapManager implements Serializable{
 		Student taker = (Student) this.authManager.getLoggedInUser(); // isSwapTakeable should have checked that bidder is logged in user already
 		Student bidder = this.authManager.getStudentByID(swap.getBidderID());
 		
-		String courseID = swap.getCourseID();
+                Shift s = shifts.get(swap.getShiftOfferedID());
+                String courseID = s.getCourseID();
 
 		Shift offered = courses.get(courseID).getShift(swap.getShiftOfferedID());
 		Shift wanted = courses.get(courseID).getShift(swap.getShiftWantedID());

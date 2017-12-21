@@ -241,7 +241,12 @@ public class SwapDAO implements Map<String, Swap> {
             if (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
-                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                Instant dateTaken = null;
+                if (rs.getString("date_taken") != null)
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
                 
                 s.put(rs.getString("id"), new Swap(
                 	rs.getString("id"),
@@ -385,8 +390,8 @@ public class SwapDAO implements Map<String, Swap> {
         
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("delete from swap where Id = ?");
-            stm.setInt(1, (Integer)key);
+            PreparedStatement stm = conn.prepareStatement("delete from swap where id = ?");
+            stm.setString(1, key.toString());
             stm.executeUpdate();
         } catch (Exception e) {
             throw new NullPointerException(e.getMessage());
