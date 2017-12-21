@@ -290,4 +290,125 @@ public class CourseDAO implements Map<String, Course> {
         return name;
     }
     
+    public Collection<String> getStudentsInCourse(String courseID) {
+    	
+    	Collection<String> col = new HashSet<String>();
+        
+        try {
+            conn = Connect.connect();
+
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_course WHERE course_id = ?");
+            stm.setString(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+            	
+                col.add(rs.getString("student_id"));
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return col;
+    }
+    
+    public Collection<Course> getCoursesOfStudent(String studentID) {
+    	
+    	Collection<Course> col = new HashSet<Course>();
+        
+        try {
+            conn = Connect.connect();
+
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_course WHERE student_id = ?");
+            stm.setString(1, studentID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+            	
+            	Course c = this.get(rs.getString("student_id"));
+            	
+                col.add(c);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return col;
+    }
+    
+    /**
+     * Add a student to a course
+     */
+    public void assignStudentToCourse(String studentID, String courseID) {
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO student_course\n" +
+                "VALUES (?, ?)");
+            stm.setString(1, studentID);
+            stm.setString(2, courseID);
+
+            stm.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+    }
+    
+    /**
+     * Remove a student from a course
+     * 
+     * Returns true if the removal was successful, false otherwise
+     */
+    public boolean removeStudentFromCourse(String studentID, String courseID) {
+    	
+    	if (!this.isStudentInCourse(studentID, courseID)) {
+    		return false;
+    	}
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("DELETE FROM student_course WHERE student_id = ? AND course_id = ?");
+            stm.setString(1, studentID);
+            stm.setString(2, courseID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+    	
+    	return true;
+    }
+    
+    /**
+     * Check if a student is in a certain course
+     */
+    public boolean isStudentInCourse(String studentID, String courseID) {
+    	
+    	boolean r = false;
+        try {
+            conn = Connect.connect();
+            String sql = "SELECT student_id FROM student_course WHERE student_id = ? AND course_id = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, studentID);
+            stm.setString(2, courseID);
+            ResultSet rs = stm.executeQuery();
+            r = rs.next();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        return r;
+    }
+    
 }
