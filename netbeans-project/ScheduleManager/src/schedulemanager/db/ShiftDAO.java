@@ -389,6 +389,7 @@ public class ShiftDAO implements Map<String, Shift> {
     /**
      * Get the IDs of all students in a given shift
      */
+    public Collection<String> getStudentsInShift(String shiftID) {
     
     	Collection<String> col = new HashSet<String>();
         
