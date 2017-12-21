@@ -133,7 +133,7 @@ public class Controller {
             
             for (int i = 4; i < data.size(); i++) {
                 
-                String courseID = model.getIdOfCourse(data.get(i));
+                String courseID = model.getIDOfCourse(data.get(i));
                 model.assignStudentToCourse(userStudent.getID(), courseID);
             }
             
@@ -286,7 +286,7 @@ public class Controller {
     private void ShiftOfCourseSelected(ArrayList<String> data) {
         
         String courseName = data.get(0);
-        String courseID = model.getIdOfCourse(courseName);
+        String courseID = model.getIDOfCourse(courseName);
         
         ArrayList<String> myShifts = new ArrayList<>();  
         ArrayList<Shift> shifts = new ArrayList<>(userStudent.getShifts());
@@ -304,7 +304,7 @@ public class Controller {
     private void checkedOfferedShift(ArrayList<String> data) {
         
         String courseName = data.get(0);
-        String courseID = model.getIdOfCourse(courseName);
+        String courseID = model.getIDOfCourse(courseName);
         
         String offeredShift = data.get(1);
         
@@ -323,7 +323,7 @@ public class Controller {
     private void swapOffer(ArrayList<String> data) {
         
         String bidderID = userStudent.getID();
-        String courseID = model.getIdOfCourse(data.get(0));
+        String courseID = model.getIDOfCourse(data.get(0));
         String wantedShiftID = data.get(2);
         String offeredShiftID = data.get(1);
         
@@ -452,7 +452,7 @@ public class Controller {
     // retornar na view os turnos da uc
     private void showStudentsOfSelectedCourse(ArrayList<String> data) {
         
-        String courseID = model.getIdOfCourse(data.get(0));
+        String courseID = model.getIDOfCourse(data.get(0));
 
         ArrayList<String> studentsList = new ArrayList<>(model.getStudentsInCourse(courseID)); 
         
@@ -461,7 +461,7 @@ public class Controller {
     
     private void StudentShifts(ArrayList<String> data) {
         
-        String courseID = model.getIdOfCourse(data.get(0));
+        String courseID = model.getIDOfCourse(data.get(0));
         String studentID = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
@@ -479,7 +479,7 @@ public class Controller {
     
     private void possibleStudentShifts(ArrayList<String> data) {
         
-        String courseID = model.getIdOfCourse(data.get(0));
+        String courseID = model.getIDOfCourse(data.get(0));
         String originShift = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
@@ -495,7 +495,7 @@ public class Controller {
     
     private void enrollButton(ArrayList<String> data) {
         
-        String selectedCourse = model.getIdOfCourse(data.get(0));
+        String selectedCourse = model.getIDOfCourse(data.get(0));
         String selectedStudent = data.get(1);
         String originShift = data.get(2);
         String destinationShift = data.get(3);
@@ -538,7 +538,7 @@ public class Controller {
     
     private void shiftsOfCourse(ArrayList<String> data) {
         
-        String selectedCourse = model.getIdOfCourse(data.get(0));
+        String selectedCourse = model.getIDOfCourse(data.get(0));
         
         ArrayList<Shift> shiftsList = new ArrayList<>(model.getShiftsOfCourse(selectedCourse));
         ArrayList<String> ucShifts = new ArrayList<>();
@@ -554,7 +554,7 @@ public class Controller {
     
     private void getStudentToRemove(ArrayList<String> data) {
         
-        // String selectedCourse = model.getIdOfCourse(data.get(0));
+        // String selectedCourse = model.getIDOfCourse(data.get(0));
         String selectedShift = data.get(1);
         
         ArrayList<String> shiftStudentsList = new ArrayList<>(model.getStudentsInShift(selectedShift));
@@ -564,7 +564,7 @@ public class Controller {
         
     private void removeButton(ArrayList<String> data) {
         
-        String selectedCourse = model.getIdOfCourse(data.get(0));
+        String selectedCourse = model.getIDOfCourse(data.get(0));
         String selectedShift = data.get(1);
         String selectedStudent = data.get(2);
         
@@ -583,7 +583,7 @@ public class Controller {
     
     private void createShift(ArrayList<String> data) {
             
-        String selectedCourse = model.getIdOfCourse(data.get(0));
+        String selectedCourse = model.getIDOfCourse(data.get(0));
         String newID = data.get(1);
         String newLimit = data.get(2);
         String newTeacher = data.get(3);
@@ -621,7 +621,7 @@ public class Controller {
             return;
         }
         
-        Course c = model.createCourse(newID, newName, newTeacher);
+        //Course c = model.createCourse(newID, newName, newTeacher);
 
         this.showAllCourses();
         

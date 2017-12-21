@@ -235,8 +235,8 @@ public class Model {
         return courseDAO.getNameOfCourse(id);
     }
     
-    public String getIdOfCourse(String name) {
-        return courseDAO.getIdOfCourse(name);
+    public String getIDOfCourse(String name) {
+        return courseDAO.getIDOfCourse(name);
     }
     
     public ShiftDAO getShifts() {

@@ -240,7 +240,7 @@ public class CourseDAO implements Map<String, Course> {
         return col;
     }
     
-    public String getIdOfCourse(String name) {
+    public String getIDOfCourse(String name) {
         
         String ID = null;
         
@@ -263,7 +263,6 @@ public class CourseDAO implements Map<String, Course> {
         
         return ID;
     }
-    
     
     public String getNameOfCourse(String id) {
         
@@ -408,6 +407,78 @@ public class CourseDAO implements Map<String, Course> {
             Connect.close(conn);
         }
         return r;
+    }
+    
+    /**
+     * Assigns a teacher as the manager of a course
+     */
+    public void setCourseManager(String teacherID, String courseID) {
+    	
+    	try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("UPDATE course SET teacher_id=? WHERE id=?");
+            stm.setString(1, teacherID);
+            stm.setString(2, courseID);
+
+            stm.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+    }
+    
+    /**
+     * Get the manager of a given course
+     */
+    public String getManagerOfCourse(String courseID) {
+        
+        String name = null;
+        
+        try {
+            
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT teacher_id from course where id = ?");
+            stm.setString(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("teacher_id");
+            }
+            
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return name;
+    }
+    
+    /**
+     * Get the course managed by a given teacher
+     */
+    public String getCourseManaged(String teacherID) {
+        
+        String name = null;
+        
+        try {
+            
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT id from course where teacher_id = ?");
+            stm.setString(1, teacherID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("id");
+            }
+            
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return name;
     }
     
 }

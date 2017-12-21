@@ -177,5 +177,5 @@ public class AuthManager implements Serializable{
 	public void assignTeacherToCourse(String teacherID, String courseID) {
             
 		this.teacherDAO.get(teacherID).setManagedCourseID(courseID);
-	}    
+	}
 }
