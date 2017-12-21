@@ -338,14 +338,15 @@ public class SwapDAO implements Map<String, Swap> {
             stm.setString(3, value.getTakerID());
             stm.setString(4, value.getShiftOfferedID());
             stm.setString(5, value.getShiftWantedID());
+            stm.setString(6, String.valueOf(value.getDateCreated().toEpochMilli()));
             
             Instant dateTaken = value.getDateTaken();
             
-            if (dateTaken == null) stm.setString(7, null);
-            else stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
-            
-            stm.setString(6, String.valueOf(value.getDateCreated().toEpochMilli()));
-            // stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
+            if (dateTaken == null) {
+            	stm.setString(7, null);
+            } else {
+            	stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
+            }
             
             if (value.isClosed()) {
             	stm.setInt(8, 1);
