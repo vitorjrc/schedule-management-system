@@ -145,7 +145,12 @@ public class CourseDAO implements Map<String, Course> {
                 "VALUES (?, ?, ?)");
             stm.setString(1, value.getID());
             stm.setString(2, value.getName());
-            stm.setString(3, value.getTeacherID());
+            
+            if (value.getTeacherID() != null) {
+            	stm.setString(3, value.getTeacherID());
+            } else {
+            	stm.setString(3, null);
+            }
 
             stm.executeUpdate();
             
