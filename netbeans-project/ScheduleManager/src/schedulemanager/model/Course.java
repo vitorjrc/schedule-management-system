@@ -14,8 +14,7 @@ public class Course implements Serializable {
     private String name;
     private String teacherID; // ID of teacher that runs this course
     private ShiftDAO shiftDAO;
-    
-    // Constructors
+
     public Course(String id, String name, String teacherID) {
         this.id = id;
         this.name = name;
@@ -23,16 +22,19 @@ public class Course implements Serializable {
         this.shiftDAO = new ShiftDAO();
     }
     
+    public Course(String id, String name) {
+        this.id = id;
+        this.name = name;
+        this.teacherID = null;
+        this.shiftDAO = new ShiftDAO();
+    }
+    
     public Course(Course c) {
         this.id = c.getID();
         this.name = c.getName();
         this.teacherID = c.getTeacherID();
-        /*
-        for (Shift s: c.getShifts().values()) {
-            shiftDAO.put(s.getID(), s.clone());
-        }
-        */
-        this.shiftDAO = c.getShiftsDAO();
+
+        this.shiftDAO = new ShiftDAO();
     }
     
     // Getters

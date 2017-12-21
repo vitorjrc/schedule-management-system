@@ -59,5 +59,36 @@ public class CustomJSONParser {
 	
 	public void loadCoursesToDB() {
 		
+		JSONParser parser = new JSONParser();
+		
+		try {
+
+            Object obj = parser.parse(new FileReader("json/courses.json"));
+
+            JSONObject jsonObject = (JSONObject) obj;
+            System.out.println(jsonObject);
+
+            for (Iterator<?> iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
+                
+            	String key = (String) iterator.next();
+                
+                JSONObject course = (JSONObject) jsonObject.get(key);
+                
+                Course c =  new Course(
+                	(String) course.get("shortname"),
+                	(String) course.get("fullname")
+                );
+                
+                this.courseDAO.put(c.getID(), c);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		
 	}
 }
