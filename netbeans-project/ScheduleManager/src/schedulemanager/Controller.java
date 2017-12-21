@@ -225,44 +225,34 @@ public class Controller {
         */
     }       
     
-    private HashMap<String, ArrayList<String>> getShiftsofUser(String userID) {
+    private HashMap<String, ArrayList<String>> getShiftsofUser() {
             
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
         
-        //for (Map.Entry<String, ShiftDAO> entry: userStudent.getShifts().entrySet()) {
+        for (Course c: model.getCoursesOfStudent(userStudent.getID())) {
             
-            String teacher = null;
-            String classroom = null;
+            ArrayList<String> info = new ArrayList<>();
+            String shifts = "N/D";
+            String teacher = "N/D";
+            String classroom = "N/D";
             
-            // String course = model.getCourses().get(entry.getKey()).getName();
-            String course = null;
-            // Set shift = entry.getValue().keySet();
-            // String joinedShifts = String.join("-", shift);
-            /*
-            for (Shift s: entry.getValue().values()) {
-                teacher = s.getTeacher();
-                classroom = s.getClassroom();
-            }
-            */
-            
-            for(Shift s: userStudent.getShifts()) {
-            
-                String joinedShifts = s.getID();
-                ArrayList<String> info = new ArrayList<>();
+            for (Shift s: model.getShiftsOfStudent(userStudent.getID())) {
                 
-                teacher = s.getTeacher();
-                classroom = s.getClassroom();
-                course = model.getNameOfCourse(s.getCourseID());
+                if (s.getCourseID().equals(c.getID())) {   
                 
-                info.add(joinedShifts);
-                info.add(classroom);
-                info.add(teacher);
-
-                userInfo.put(course,info);
-            
+                    shifts = s.getID();
+                    teacher = s.getTeacher();
+                    classroom = s.getClassroom();
+                }
             }
-        //}
+            
+            info.add(shifts);
+            info.add(classroom);
+            info.add(teacher);
+            
+            userInfo.put(model.getNameOfCourse(c.getID()), info);
+        }
         
         return userInfo;
     }
@@ -282,7 +272,7 @@ public class Controller {
         view.setCoursesList(courses);
         view.setUserData(userStudent.getName(), userStudent.getID(), userStudent.getRegimen());
        
-        view.showUserUCs(getShiftsofUser(userStudent.getID()));
+        view.showUserUCs(getShiftsofUser());
         
         this.showPendingOffers();
         if (model.getSwaps().containsKey(userStudent.getID())) {
@@ -475,13 +465,14 @@ public class Controller {
         String studentID = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
-        
-        shiftsList.add("N/D");
 
         for (Shift s: model.getStudents().get(studentID).getShifts()) {
             if (s.getCourseID().equals(courseID)) 
                 shiftsList.add(s.getID());
         }
+        
+        if (shiftsList.isEmpty())
+            shiftsList.add("N/D");
         
         view.originShift(shiftsList);
     }
@@ -492,16 +483,12 @@ public class Controller {
         String originShift = data.get(1);
         
         ArrayList<String> shiftsList = new ArrayList<>();
-        
-        Set<String> ucShifts = model.getCourses().get(courseID).getShifts().keySet();
-        
-        for (String s: ucShifts) {
-            shiftsList.add(s);
+
+        for (Shift s: model.getShiftsOfCourse(courseID)) {
+            shiftsList.add(s.getID());
         }
         
-        for (String s: shiftsList) {
-            shiftsList.remove(originShift);
-        }
+        shiftsList.remove(originShift);
         
         view.destinationShift(shiftsList);
     }

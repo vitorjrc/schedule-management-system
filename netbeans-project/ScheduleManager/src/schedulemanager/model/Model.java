@@ -258,4 +258,13 @@ public class Model {
     public Collection<String> getStudentsInShift(String shiftID) {
         return shiftDAO.getStudentsInShift(shiftID);
     }
+    
+    public Collection<Course> getCoursesOfStudent(String studentID) {
+        return courseDAO.getCoursesOfStudent(studentID);
+    }
+    
+    public Collection<Shift> getShiftsOfStudent(String studentID) {
+        return shiftDAO.getShiftsOfStudent(studentID);
+    }
+    
 }

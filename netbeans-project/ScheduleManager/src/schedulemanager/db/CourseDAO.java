@@ -251,8 +251,7 @@ public class CourseDAO implements Map<String, Course> {
             stm.setString(1, (String) name);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                int tempID = rs.getInt("id");
-                ID = Integer.toString(tempID);
+                ID = rs.getString("id");
             }
             
             
@@ -322,13 +321,13 @@ public class CourseDAO implements Map<String, Course> {
         try {
             conn = Connect.connect();
 
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_course WHERE student_id = ?");
+            PreparedStatement stm = conn.prepareStatement("SELECT course_id FROM student_course WHERE student_id = ?");
             stm.setString(1, studentID);
             ResultSet rs = stm.executeQuery();
             
             while (rs.next()) {
             	
-            	Course c = this.get(rs.getString("student_id"));
+            	Course c = this.get(rs.getString("course_id"));
             	
                 col.add(c);
             }
