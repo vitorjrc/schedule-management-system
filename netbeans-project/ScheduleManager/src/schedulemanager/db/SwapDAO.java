@@ -92,7 +92,12 @@ public class SwapDAO implements Map<String, Swap> {
             if (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
-                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                Instant dateTaken = null;
+                if (rs.getString("date_taken") != null) 
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                    // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
                 
                 s = new Swap(
                 		rs.getString("id"),
@@ -129,7 +134,12 @@ public class SwapDAO implements Map<String, Swap> {
             if (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
-                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                Instant dateTaken = null;
+                if (rs.getString("date_taken") != null) 
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                    // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
                 
                 s.put(rs.getString("id"), new Swap(
                 	rs.getString("id"),

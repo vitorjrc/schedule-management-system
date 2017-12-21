@@ -42,7 +42,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`course` (
   `id` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(90) NOT NULL,
   `teacher_id` VARCHAR(45) NOT NULL,
   INDEX `fk_Courses_Teachers1_idx` (`teacher_id` ASC),
   PRIMARY KEY (`id`),
