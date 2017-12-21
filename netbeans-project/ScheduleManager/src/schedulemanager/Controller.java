@@ -207,7 +207,7 @@ public class Controller {
         model.loadStudentsToDB();
     }       
     
-    private HashMap<String, ArrayList<String>> getShiftsofUser() {
+    private HashMap<String, ArrayList<String>> getShiftsOfUser() {
             
         // UC e turno
         HashMap<String, ArrayList<String>> userInfo = new HashMap<>();
@@ -253,15 +253,11 @@ public class Controller {
         
         view.setCoursesList(courses);
         view.setUserData(userStudent.getName(), userStudent.getID(), userStudent.getRegimen());
-       
-        view.showUserUCs(getShiftsofUser());
+      
+        view.showUserUCs(getShiftsOfUser());
         
-        this.showPendingOffers();
-        if (model.getSwaps().containsKey(userStudent.getID())) {
-            this.showActiveOffers();
-            this.showStudentOffersHistory();
-        } 
         
+        this.update();
     }
     
     // metodo que devolve os turnos onde o aluno está inscrito na disciplina escolhida
@@ -624,7 +620,6 @@ public class Controller {
         model.cancelSwapOffer(userStudent.getID(), swapID);
         
         this.showStudentInterface();
-        this.update();
     }
     
     private void acceptOffer(ArrayList<String> data) {
@@ -634,7 +629,6 @@ public class Controller {
         model.takeSwapOffer(userStudent.getID(), swapID);
         
         this.showStudentInterface();
-        this.update();
     }
     
     private void update() {
