@@ -13,6 +13,7 @@ public class Model {
     private IO IO;
     private CourseDAO courseDAO;
     private ShiftDAO shiftDAO;
+    private CustomJSONParser jsonParser;
 
     public Model() {
         this.authManager = new AuthManager();
@@ -20,6 +21,7 @@ public class Model {
         this.IO = new IO(this);
         this.courseDAO = new CourseDAO();
         this.shiftDAO = new ShiftDAO();
+        this.jsonParser = new CustomJSONParser();
     }
     
     public LinkedHashMap<String, Course> getCourses() {
@@ -31,9 +33,9 @@ public class Model {
         return ret;
     }
     
-    public Course createCourse(String courseID, String courseName, String teacherID) {
+    public Course createCourse(String courseID, String courseName) {
     	
-    	Course newCourse = new Course(courseID, courseName, teacherID);
+    	Course newCourse = new Course(courseID, courseName);
     	
     	this.courseDAO.put(courseID, newCourse);
     	
@@ -187,30 +189,6 @@ public class Model {
         return this.authManager.getStudentByID(id);
     }
     
-    /*
-    public void setSwaps(HashMap<String, HashMap<String, Swap>> newMap) {
-        
-        this.swapManager.setSwaps(newMap);
-    }
-    */
-    /*
-    public void setStudents(HashMap<String, Student> newMap) {
-        
-        this.authManager.setStudents(newMap);
-    }
-        
-    public void setTeachers(HashMap<String, Teacher> newMap) {
-        
-        this.authManager.setTeachers(newMap);
-    }
-
-    
-    public void setCourses(LinkedHashMap<String, Course> newMap) {
-        
-        this.courseDAO = newMap;
-    }
-    */
-    
     public StudentDAO getStudents() {
         
         return this.authManager.getRegisteredStudents();
@@ -265,6 +243,14 @@ public class Model {
     
     public Collection<Shift> getShiftsOfStudent(String studentID) {
         return shiftDAO.getShiftsOfStudent(studentID);
+    }
+    
+    public void loadCoursesToDB() {
+        this.jsonParser.loadCoursesToDB();
+    }
+    
+    public void loadStudentsToDB() {
+        this.jsonParser.loadStudentsToDB();
     }
     
 }

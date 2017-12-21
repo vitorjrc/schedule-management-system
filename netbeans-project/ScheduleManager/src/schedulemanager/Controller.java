@@ -34,11 +34,10 @@ public class Controller {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
-        view.saveButton(this::saveButton);
-        view.saveButton(this::loadButton);
+        view.loadButton(this::loadButton);
         
         view.checkedCourse(this::ShiftOfCourseSelected);
-        view.checkedOfferedShift(this::checkedOfferedShift);
+        view.checkedOfferedShift(this::destinationShiftPossible);
         view.swapOffer(this::swapOffer);
         
         view.showCourseStudents(this::showStudentsOfSelectedCourse);
@@ -47,6 +46,7 @@ public class Controller {
         view.enrollButton(this::enrollButton);
         
         view.createTeacher(this::createTeacher);
+        view.assignTeacher(this::assignTeacherToCourse);
         
         view.shiftsOfStudent(this::shiftsOfCourse);
         view.getStudentToRemove(this::getStudentToRemove);
@@ -200,29 +200,11 @@ public class Controller {
         
         view.teacherInterface(userTeacher.getName(), course);
     }
-        
-    
-    private void saveButton(ArrayList<String> data) {
-        
-        //model.save();
-    }
     
     private void loadButton(ArrayList<String> data) {
-        /*
-        model.load();
-        for (Course c: model.getCourses().values()) {
-            
-            if (ucs.containsKey(c.getName())) {
-                continue;
-            } 
-            
-            else {
-                ucs.put(c.getName(), c.getID());
-            }
-        }
-        
-    }
-        */
+
+        model.loadCoursesToDB();
+        model.loadStudentsToDB();
     }       
     
     private HashMap<String, ArrayList<String>> getShiftsofUser() {
@@ -301,21 +283,20 @@ public class Controller {
         
     }
     
-    private void checkedOfferedShift(ArrayList<String> data) {
+    private void destinationShiftPossible(ArrayList<String> data) {
         
         String courseName = data.get(0);
         String courseID = model.getIDOfCourse(courseName);
         
         String offeredShift = data.get(1);
         
-        ArrayList<String> shiftsList = new ArrayList<>();        
-        
-        Set<String> shiftIDs = model.getCourses().get(courseID).getShifts().keySet();
-        
-        for (String s: shiftIDs) {
-            if (!offeredShift.equals(s))
-                shiftsList.add(s);
+        ArrayList<String> shiftsList = new ArrayList<>();
+
+        for (Shift s: model.getShiftsOfCourse(courseID)) {
+            shiftsList.add(s.getID());
         }
+        
+        shiftsList.remove(offeredShift);
         
         view.setShiftsList(shiftsList);
     }
@@ -609,9 +590,8 @@ public class Controller {
             
         String newID = data.get(0);
         String newName = data.get(1);
-        String newTeacher = data.get(2);
         
-        if (newID == null || newName == null || newTeacher == null) {
+        if (newID == null || newName == null) {
             view.showError();
             return;
         }
@@ -621,17 +601,18 @@ public class Controller {
             return;
         }
         
-        //Course c = model.createCourse(newID, newName, newTeacher);
+        model.createCourse(newID, newName);
 
         this.showAllCourses();
-        
-        model.assignTeacherToCourse(newTeacher, newID);
         
         view.showSucessMessage();
         
     }
     
     private void Logout(ArrayList<String> data) {
+        
+        this.userStudent = null;
+        this.userTeacher = null;
         
         model.logout();
     }
@@ -677,4 +658,12 @@ public class Controller {
         view.showSucessMessage();
     }
     
+    private void assignTeacherToCourse(ArrayList<String> data) {
+        
+        String courseID = data.get(0);
+        String teacherID = data.get(1);
+        
+        model.assignTeacherToCourse(teacherID, courseID);
+        view.showSucessMessage();
+    }
 }

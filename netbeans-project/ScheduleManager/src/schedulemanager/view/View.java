@@ -29,7 +29,7 @@ public class View extends javax.swing.JFrame {
     private ArrayList<Consumer<ArrayList<String>>> swapOffer = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> IO = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> enrollStudent = new ArrayList<Consumer<ArrayList<String>>>();
-    private ArrayList<Consumer<ArrayList<String>>> createTeacher = new ArrayList<Consumer<ArrayList<String>>>();
+    private ArrayList<Consumer<ArrayList<String>>> teacherManagement = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> removeStudentFromShift = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> createShift = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> createCourse = new ArrayList<Consumer<ArrayList<String>>>();
@@ -104,7 +104,7 @@ public class View extends javax.swing.JFrame {
         swapOffer.add(2, callback);
     }
     
-    public void saveButton(Consumer<ArrayList<String>> callback) {
+    public void loadButton(Consumer<ArrayList<String>> callback) {
         
         IO.add(0, callback);
     }
@@ -131,7 +131,12 @@ public class View extends javax.swing.JFrame {
     
     public void createTeacher(Consumer<ArrayList<String>> callback) {
         
-        createTeacher.add(0, callback);
+        teacherManagement.add(0, callback);
+    }
+    
+    public void assignTeacher(Consumer<ArrayList<String>> callback) {
+        
+        teacherManagement.add(1, callback);
     }
     
     public void shiftsOfStudent(Consumer<ArrayList<String>> callback) {
@@ -216,7 +221,7 @@ public class View extends javax.swing.JFrame {
         // show admin tabs
         jTabbedPane1.addTab("Criar UCs e Turnos", jPanel6);
         jTabbedPane1.addTab("Gestão", jPanel9);
-        jTabbedPane1.addTab("Criar Docentes", jPanel5);
+        jTabbedPane1.addTab("Docentes", jPanel5);
         jTabbedPane1.remove(jPanel10);
         
         // show "Logado como Administrador"
@@ -302,10 +307,8 @@ public class View extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jComboBox5 = new javax.swing.JComboBox<>();
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
@@ -330,6 +333,12 @@ public class View extends javax.swing.JFrame {
         jTextField22 = new javax.swing.JTextField();
         jButton12 = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jComboBox14 = new javax.swing.JComboBox<>();
+        jLabel41 = new javax.swing.JLabel();
+        jComboBox15 = new javax.swing.JComboBox<>();
+        jButton13 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -364,7 +373,6 @@ public class View extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -685,8 +693,6 @@ public class View extends javax.swing.JFrame {
 
         jLabel23.setText("Número máximo:");
 
-        jLabel24.setText("Docente:");
-
         jLabel25.setText("Unidade Curricular:");
 
         jButton7.setText("Criar UC");
@@ -734,7 +740,6 @@ public class View extends javax.swing.JFrame {
                                     .addComponent(jLabel46, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addComponent(jLabel21)
                             .addComponent(jLabel38, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel25, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -746,8 +751,7 @@ public class View extends javax.swing.JFrame {
                             .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel39))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
@@ -797,13 +801,9 @@ public class View extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
                     .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Criar Turnos e UCs", jPanel6);
@@ -828,19 +828,26 @@ public class View extends javax.swing.JFrame {
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
 
+        jLabel51.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel51.setText("Associar Docente a UC:");
+
+        jLabel40.setText("Docente:");
+
+        jLabel41.setText("Unidade Curricular:");
+
+        jButton13.setText("Associar Docente");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(370, 370, 370)
-                .addComponent(jButton12)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel44))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -851,9 +858,31 @@ public class View extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel51)
+                            .addComponent(jLabel44))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 400, Short.MAX_VALUE)
                 .addComponent(jLabel16))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel41)
+                            .addComponent(jLabel40))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(370, 370, 370)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton13)
+                            .addComponent(jButton12))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -877,7 +906,19 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton12)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addGap(75, 75, 75)
+                .addComponent(jLabel51)
+                .addGap(24, 24, 24)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(jComboBox14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(jComboBox15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton13)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Criar Docente", jPanel5);
@@ -1130,14 +1171,6 @@ public class View extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Guardar");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Autenticação");
@@ -1261,14 +1294,12 @@ public class View extends javax.swing.JFrame {
         
         String newID = jTextField13.getText();
         String newName = jTextField14.getText();
-        String selectedTeacher = jComboBox5.getItemAt(jComboBox5.getSelectedIndex());
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createCourse.get(0);
         
         sc.add(0, newID);
         sc.add(1, newName);
-        sc.add(2, selectedTeacher);
         
         method.accept(sc);
         
@@ -1421,13 +1452,6 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
     }//GEN-LAST:event_jComboBox11ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
-        ArrayList<String> sc = new ArrayList<String>(); 
-        Consumer method = IO.get(1);
-        method.accept(sc);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         
         ArrayList<String> sc = new ArrayList<String>(); 
@@ -1454,7 +1478,7 @@ public class View extends javax.swing.JFrame {
         String teacherPassword = jTextField22.getText();
         
         ArrayList<String> sc = new ArrayList<String>(); 
-        Consumer method = createTeacher.get(0);
+        Consumer method = teacherManagement.get(0);
         
         sc.add(0, teacherName);
         sc.add(1, teacherID);
@@ -1481,6 +1505,21 @@ public class View extends javax.swing.JFrame {
         Consumer method = lockSwaps.get(0);
         method.accept(sc);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        
+        String selectedCourse = jComboBox15.getItemAt(jComboBox15.getSelectedIndex());
+        String selectedTeacher = jComboBox14.getItemAt(jComboBox14.getSelectedIndex());
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = teacherManagement.get(1);
+        
+        sc.add(0, selectedCourse);
+        sc.add(1, selectedTeacher);
+
+        method.accept(sc);
+        
+    }//GEN-LAST:event_jButton13ActionPerformed
 
     // method that fills fields where the list of user courses is required
     public void setCoursesList(ArrayList<String> userCourses) {
@@ -1722,7 +1761,7 @@ public class View extends javax.swing.JFrame {
             teachersList[i] = teachers.get(i);
         }
         
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(teachersList));
+        jComboBox14.setModel(new javax.swing.DefaultComboBoxModel(teachersList));
     }
     
     public void showCourses(ArrayList<String> courses) {
@@ -1735,6 +1774,7 @@ public class View extends javax.swing.JFrame {
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+        jComboBox15.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         
     }
     
@@ -1825,6 +1865,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1836,10 +1877,11 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox11;
     private javax.swing.JComboBox<String> jComboBox12;
     private javax.swing.JComboBox<String> jComboBox13;
+    private javax.swing.JComboBox<String> jComboBox14;
+    private javax.swing.JComboBox<String> jComboBox15;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JComboBox<String> jComboBox7;
     private javax.swing.JComboBox<String> jComboBox8;
@@ -1860,7 +1902,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -1878,6 +1919,8 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
@@ -1888,6 +1931,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1897,7 +1941,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
