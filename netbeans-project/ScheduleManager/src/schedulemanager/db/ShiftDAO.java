@@ -396,13 +396,13 @@ public class ShiftDAO implements Map<String, Shift> {
         try {
             conn = Connect.connect();
 
-            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_shift WHERE shift_id = ?");
+            PreparedStatement stm = conn.prepareStatement("SELECT student_id FROM student_shift WHERE shift_id = ?");
             stm.setString(1, shiftID);
             ResultSet rs = stm.executeQuery();
             
             while (rs.next()) {
             	
-                col.add(rs.getString("shift_id"));
+                col.add(rs.getString("student_id"));
             }
             
         } catch (Exception e) {
