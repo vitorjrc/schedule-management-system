@@ -245,7 +245,7 @@ public class Controller {
             String classroom = null;
             
             // String course = model.getCourses().get(entry.getKey()).getName();
-            String course = "teste";
+            String course = null;
             // Set shift = entry.getValue().keySet();
             // String joinedShifts = String.join("-", shift);
             /*
@@ -257,14 +257,18 @@ public class Controller {
             
             for(Shift s: userStudent.getShifts()) {
             
-            String joinedShifts = s.getID();
-            ArrayList<String> info = new ArrayList<>();
-            
-            info.add(joinedShifts);
-            info.add(classroom);
-            info.add(teacher);
-            
-            userInfo.put(course,info);
+                String joinedShifts = s.getID();
+                ArrayList<String> info = new ArrayList<>();
+                
+                teacher = s.getTeacher();
+                classroom = s.getClassroom();
+                course = model.getNameOfCourse(s.getCourseID());
+                
+                info.add(joinedShifts);
+                info.add(classroom);
+                info.add(teacher);
+
+                userInfo.put(course,info);
             
             }
         //}
@@ -281,7 +285,7 @@ public class Controller {
         ArrayList<Shift> coursesSet = new ArrayList<>(userStudent.getShifts());
         
         for (Shift s : coursesSet) {
-            courses.add(s.getCourseID());
+            courses.add(model.getNameOfCourse(s.getCourseID()));
         }
         
         view.setCoursesList(courses);
@@ -307,7 +311,7 @@ public class Controller {
         ArrayList<Shift> shifts = new ArrayList<>(userStudent.getShifts());
         
         for (Shift s: shifts) {
-            if (s.getCourseID() == courseID) {
+            if (s.getCourseID().equals(courseID)) {
                 myShifts.add(s.getID());
             }
         } 
@@ -367,9 +371,12 @@ public class Controller {
         
         ArrayList<ArrayList<String>> pendingSwaps = new ArrayList<>();
         
+        if (model.getOpenSwaps() == null || model.getOpenSwaps().isEmpty()) return;
+        
         for (Swap swap: model.getOpenSwaps().values()) {
             
-            String UC = model.getCourses().get(swap.getCourseID()).getName();
+            System.out.println(swap.getCourseID());
+            String UC = model.getNameOfCourse(swap.getCourseID());
             
             ArrayList<String> swapList = new ArrayList<>();
             
@@ -491,7 +498,7 @@ public class Controller {
         
         ArrayList<String> shiftsList = new ArrayList<>();
         
-        shiftsList.add("Sem turno");
+        shiftsList.add("N/D");
 
         for (Shift s: model.getStudents().get(studentID).getShifts()) {
             if (s.getCourseID().equals(courseID)) 
@@ -533,7 +540,7 @@ public class Controller {
             return;
         }
         
-        if (originShift.equals("Sem Turno")) model.assignStudentToShift(selectedStudent, destinationShift);
+        if (originShift.equals("N/D")) model.assignStudentToShift(selectedStudent, destinationShift);
         
         else model.directSwap(selectedStudent, selectedCourse, originShift, destinationShift);
         

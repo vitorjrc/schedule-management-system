@@ -42,7 +42,7 @@ public class Student extends User implements Serializable {
         this.regimen = StudentRegimen.valueOf(s.getRegimen());
         this.shiftDAO = new ShiftDAO();
         
-        this.setShifts(s.getShifts());
+        // this.setShifts(s.getShifts());
     }
     
     public String getRegimen() { return this.regimen.name(); }

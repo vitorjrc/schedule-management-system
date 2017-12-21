@@ -173,7 +173,12 @@ public class SwapDAO implements Map<String, Swap> {
             if (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
-                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                Instant dateTaken = null;
+                if (rs.getString("date_taken") != null) 
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                    // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
                 
                 s.put(rs.getString("id"), new Swap(
                 	rs.getString("id"),
@@ -323,8 +328,14 @@ public class SwapDAO implements Map<String, Swap> {
             stm.setString(3, value.getTakerID());
             stm.setString(4, value.getShiftOfferedID());
             stm.setString(5, value.getShiftWantedID());
+            
+            Instant dateTaken = value.getDateTaken();
+            
+            if (dateTaken == null) stm.setString(7, null);
+            else stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
+            
             stm.setString(6, String.valueOf(value.getDateCreated().toEpochMilli()));
-            stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
+            // stm.setString(7, String.valueOf(value.getDateTaken().toEpochMilli()));
             
             if (value.isClosed()) {
             	stm.setInt(8, 1);
@@ -411,7 +422,12 @@ public class SwapDAO implements Map<String, Swap> {
             while (rs.next()) {
                 
             	Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
-                Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                Instant dateTaken = null;
+                if (rs.getString("date_taken") != null) 
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                
+                //Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
                 
                 col.add(new Swap(
                 		rs.getString("id"),
