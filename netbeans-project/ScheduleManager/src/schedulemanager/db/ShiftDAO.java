@@ -315,7 +315,6 @@ public class ShiftDAO implements Map<String, Shift> {
         }
         
         return col;
-    	
     }
     
     /**
@@ -385,5 +384,32 @@ public class ShiftDAO implements Map<String, Shift> {
             Connect.close(conn);
         }
         return r;
+    }
+    
+    /**
+     * Get the IDs of all students in a given shift
+     */
+    
+    	Collection<String> col = new HashSet<String>();
+        
+        try {
+            conn = Connect.connect();
+
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM student_shift WHERE shift_id = ?");
+            stm.setString(1, shiftID);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+            	
+                col.add(rs.getString("shift_id"));
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return col;
     }
 }
