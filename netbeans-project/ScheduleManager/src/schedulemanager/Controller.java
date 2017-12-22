@@ -254,10 +254,9 @@ public class Controller {
         ArrayList<String> courses = new ArrayList<>();
         
         // Get UCs name of user
-        ArrayList<Shift> coursesSet = new ArrayList<>(userStudent.getShifts());
         
-        for (Shift s : coursesSet) {
-            courses.add(model.getNameOfCourse(s.getCourseID()));
+        for (Course c : model.getCoursesOfStudent(userStudent.getID())) {
+            courses.add(c.getName());
         }
         
         view.setCoursesList(courses);
