@@ -4,7 +4,6 @@ import schedulemanager.model.Student;
 import schedulemanager.model.Course;
 
 import java.io.*;
-import java.util.Iterator;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -28,14 +27,11 @@ public class CustomJSONParser {
 
             Object obj = parser.parse(new FileReader("json/students.json"));
 
-            JSONObject jsonObject = (JSONObject) obj;
-            System.out.println(jsonObject);
-
-            for (Iterator<?> iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
+            JSONArray jsonArray = (JSONArray) obj;
+            
+            for (int i = 0; i < jsonArray.size(); i++) {
                 
-            	String key = (String) iterator.next();
-                
-                JSONObject student = (JSONObject) jsonObject.get(key);
+                JSONObject student = (JSONObject) jsonArray.get(i);
                 
                 Student s =  new Student(
                 	(String) student.get("student_id"),
@@ -65,14 +61,11 @@ public class CustomJSONParser {
 
             Object obj = parser.parse(new FileReader("json/courses.json"));
 
-            JSONObject jsonObject = (JSONObject) obj;
-            System.out.println(jsonObject);
-
-            for (Iterator<?> iterator = jsonObject.keySet().iterator(); iterator.hasNext();) {
+            JSONArray jsonArray = (JSONArray) obj;
+            
+            for (int i = 0; i < jsonArray.size(); i++) {
                 
-            	String key = (String) iterator.next();
-                
-                JSONObject course = (JSONObject) jsonObject.get(key);
+                JSONObject course = (JSONObject) jsonArray.get(i);
                 
                 Course c =  new Course(
                 	(String) course.get("shortname"),
