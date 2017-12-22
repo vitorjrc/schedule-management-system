@@ -40,7 +40,9 @@ public class CustomJSONParser {
                 	(String) student.get("regimen")
                 );
                 
-                this.studentDAO.put(s.getID(), s);
+                if (!this.studentDAO.containsKey(s.getID())) {                	
+                	this.studentDAO.put(s.getID(), s);
+                }
             }
 
         } catch (FileNotFoundException e) {
@@ -72,7 +74,9 @@ public class CustomJSONParser {
                 	(String) course.get("fullname")
                 );
                 
-                this.courseDAO.put(c.getID(), c);
+                if (!this.courseDAO.containsKey(c.getID())) {                	
+                	this.courseDAO.put(c.getID(), c);
+                }
             }
 
         } catch (FileNotFoundException e) {
