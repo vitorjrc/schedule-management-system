@@ -155,6 +155,7 @@ public class CustomJSONParser {
 						
 					} else {
 						
+						// This should fire for H504N4: that's uminho opcion
 						System.out.println("CustomJSONParser > enrollStudentsInCourses: Couldn't find course with id:");
 						
 						System.out.println(key2 + String.valueOf(i));
@@ -205,7 +206,30 @@ public class CustomJSONParser {
 					}
 				}
 			}
+		}
+	}
+	
+	public void createDefaultShifts() {
+		
+		Collection<Course> courses = this.courseDAO.values();
+		
+		for (Course c : courses) {
 			
+			if (this.shiftDAO.getShiftsOfCourse(c.getID()).size() < 1) {
+				
+				for (int i = 1; i <= 5; i++) {
+					
+					Shift newShift = new Shift(
+						"PL" + String.valueOf(i),
+						c.getID(),
+						30,
+						null,
+						null
+					);
+					
+					this.shiftDAO.put(newShift.getID(), newShift);
+				}
+			}
 		}
 	}
 }
