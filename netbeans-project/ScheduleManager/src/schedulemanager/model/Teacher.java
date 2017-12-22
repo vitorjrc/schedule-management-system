@@ -1,5 +1,7 @@
 package schedulemanager.model;
 
+import java.util.Collection;
+
 import schedulemanager.db.CourseDAO;
 
 /*
@@ -25,8 +27,8 @@ public class Teacher extends User {
 		this.courseDAO = new CourseDAO();
 	}
 	
-	public String getCourseManagedID() {
-		return this.courseDAO.getCourseManaged(this.id);
+	public Collection<String> getCoursesManagedID() {
+		return this.courseDAO.getCoursesManaged(this.id);
 	}
         
     public void setManagedCourseID (String courseID) {

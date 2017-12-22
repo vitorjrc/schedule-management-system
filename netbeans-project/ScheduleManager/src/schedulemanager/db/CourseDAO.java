@@ -484,27 +484,29 @@ public class CourseDAO implements Map<String, Course> {
     /**
      * Get the course managed by a given teacher
      */
-    public String getCourseManaged(String teacherID) {
+    public Collection<String> getCoursesManaged(String teacherID) {
         
-        String name = null;
+    	Collection<String> col = new HashSet<String>();
         
         try {
-            
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT id from course where teacher_id = ?");
+
+            PreparedStatement stm = conn.prepareStatement("SELECT id FROM course WHERE teacher_id = ?");
             stm.setString(1, teacherID);
             ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                name = rs.getString("id");
+            
+            while (rs.next()) {
+            	
+                col.add(rs.getString("id"));
             }
             
         } catch (Exception e) {
-            throw new NullPointerException(e.getMessage());
+            e.printStackTrace();
         } finally {
             Connect.close(conn);
         }
         
-        return name;
+        return col;
     }
     
 }

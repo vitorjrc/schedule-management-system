@@ -276,7 +276,7 @@ public class SwapManager implements Serializable{
 			
 			Teacher teacher = (Teacher) this.authManager.getLoggedInUser();
 			
-			if (!teacher.getCourseManagedID().equals(courseID)) {
+			if (teacher.getCoursesManagedID().contains(courseID)) {
 				
 				return false;
 			}
