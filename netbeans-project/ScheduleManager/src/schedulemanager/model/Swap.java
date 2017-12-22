@@ -103,9 +103,7 @@ public class Swap implements Serializable {
     	this.isClosed = true;
     	this.dateTaken = Instant.now();
     	this.takerID = takerID;
-    	
-    	// Update id to avoid future (unlikely) repetitions
-    	this.id = bidderID + courseID + shiftOfferedID + shiftWantedID + takerID;
+        
     }
     
     public String toString() {
