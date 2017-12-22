@@ -34,7 +34,15 @@ public class Swap implements Serializable {
         this.dateTaken = null;
         this.isClosed = false;
         
-        this.id = bidderID + courseID + shiftOfferedID + shiftWantedID;
+        int idInt = new StringBuilder()
+        			.append(bidderID)
+        			.append(courseID)
+        			.append(shiftOfferedID)
+        			.append(shiftWantedID)
+        			.toString()
+        			.hashCode();
+
+        this.id = String.valueOf(idInt) + this.dateCreated.toString();
     }
    
     public Swap(String id, String bidderID, String takerID, String shiftOfferedID, String shiftWantedID, Instant dateCreated, Instant dateTaken, Boolean isClosed) {
