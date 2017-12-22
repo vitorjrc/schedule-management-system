@@ -277,7 +277,7 @@ public class Controller {
         if (courseID == null) return;
         
         ArrayList<String> myShifts = new ArrayList<>();  
-        ArrayList<Shift> shifts = new ArrayList<>(userStudent.getShifts());
+        ArrayList<Shift> shifts = new ArrayList<>(model.getShiftsOfStudent(userStudent.getID()));
         
         for (Shift s: shifts) {
             if (s.getCourseID().equals(courseID)) {
