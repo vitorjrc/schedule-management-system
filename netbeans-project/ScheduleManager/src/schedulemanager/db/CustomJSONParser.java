@@ -84,4 +84,12 @@ public class CustomJSONParser {
         }
 		
 	}
+	
+	public void clearDBStudents() {
+		this.studentDAO.clear();
+	}
+	
+	public void clearDBCourses() {
+		this.courseDAO.clear();
+	}
 }
