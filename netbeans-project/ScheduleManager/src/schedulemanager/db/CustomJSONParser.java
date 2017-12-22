@@ -75,7 +75,7 @@ public class CustomJSONParser {
                 JSONObject course = (JSONObject) jsonArray.get(i);
                 
                 Course c =  new Course(
-                	(String) course.get("shortname"),
+                	(String) course.get("id"),
                 	(String) course.get("fullname")
                 );
                 
