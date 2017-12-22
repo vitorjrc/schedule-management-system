@@ -480,4 +480,48 @@ public class SwapDAO implements Map<String, Swap> {
     	return map;
     }
     
+    /**
+     * Get swaps accepted by a given student
+     */
+    public HashMap<String, Swap> getAcceptedSwaps(String studentID) {
+
+    	HashMap<String, Swap> s = new HashMap<String, Swap>();
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT * FROM swap WHERE taker_id = ?");
+            stm.setString(1, studentID);
+            
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+            	
+                Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
+                
+                Instant dateTaken = null;
+                
+                if (rs.getString("date_taken") != null) {
+                    dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                }
+
+                s.put(rs.getString("id"), new Swap(
+                	rs.getString("id"),
+                	rs.getString("bidder_id"),
+                	rs.getString("taker_id"),
+                	rs.getString("shift_offered_id"),
+                	rs.getString("shift_wanted_id"),
+                	dateCreated,
+                	dateTaken,
+                	rs.getBoolean("is_closed")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+        
+        return s;
+    }
+    
 }
