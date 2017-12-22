@@ -202,6 +202,7 @@ public class CustomJSONParser {
 						if (shiftaroo.getOccupants().size() < shiftaroo.getOccupationLimit()) {
 							
 							this.shiftDAO.assignStudentToShift(s.getID(), shiftaroo.getID());
+                                                        break;
 						}
 					}
 				}
