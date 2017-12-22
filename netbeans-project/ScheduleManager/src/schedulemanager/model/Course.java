@@ -72,7 +72,7 @@ public class Course implements Serializable {
     // Attaches a previously created shift to this course
     public void addShift(String id, Shift shift) {
     	
-    	shift.setCourseId(this.id);
+    	shift.setCourseID(this.id);
 
         this.shiftDAO.put(id, shift);
     }

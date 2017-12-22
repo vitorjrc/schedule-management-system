@@ -10,7 +10,7 @@ public class Shift implements Serializable {
     
     private static final long serialVersionUID = 7526472295622776147L;
     private String id;           // The ID of this shift. Example: "PL1"
-    private String courseId;     // The ID of the course this shift belongs to. Example: "DSS"
+    private String courseID;     // The ID of the course this shift belongs to. Example: "DSS"
     private int occupationLimit; // The maximum number of students allowed in this shift  
     private String teacher;
     private String classroom;
@@ -18,7 +18,7 @@ public class Shift implements Serializable {
     
      public Shift(String id, String courseID, int occupationLimit, String teacher, String classroom) {
         this.id = id;
-        this.courseId = courseID;
+        this.courseID = courseID;
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
@@ -27,7 +27,7 @@ public class Shift implements Serializable {
     
     public Shift(Shift s) {
         this.id = s.getID();
-        this.courseId = s.getCourseID();
+        this.courseID = s.getCourseID();
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
         this.classroom = s.getClassroom();
@@ -35,15 +35,15 @@ public class Shift implements Serializable {
     }
     
     public String getID() {
-        return this.id;
+        return this.courseID + ":" + this.id;
     }
     
     public String getCourseID() {
-        return this.courseId;
+        return this.courseID;
     }
     
-    public void setCourseId(String id) {
-        this.courseId = id;
+    public void setCourseID(String id) {
+        this.courseID = id;
     }
     
     public int getOccupationLimit() {
@@ -70,7 +70,7 @@ public class Shift implements Serializable {
     
     public String toString() {
 
-        return ("UC: " + this.courseId + " Turno: " + this.id);
+        return ("UC: " + this.courseID + " Turno: " + this.id);
     }
     
     @Override
