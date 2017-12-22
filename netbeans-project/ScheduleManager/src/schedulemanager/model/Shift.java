@@ -1,6 +1,7 @@
 package schedulemanager.model;
 
-import java.util.HashMap;
+import java.util.Collection;
+import schedulemanager.db.ShiftDAO;
 import java.io.Serializable;
 
 /**
@@ -14,7 +15,7 @@ public class Shift implements Serializable {
     private int occupationLimit; // The maximum number of students allowed in this shift  
     private String teacher;
     private String classroom;
-    private HashMap<String, Student> occupants; // The students that frequent this shift - StudentID -> Student
+    private ShiftDAO shiftDAO;
     
     public Shift(String id, String courseID, int occupationLimit, String teacher, String classroom) {
     	 
@@ -33,7 +34,7 @@ public class Shift implements Serializable {
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
-        this.occupants = new HashMap<String, Student>();
+        this.shiftDAO = new ShiftDAO();
     }
     
     public Shift(Shift s) {
@@ -42,7 +43,7 @@ public class Shift implements Serializable {
         this.occupationLimit = s.getOccupationLimit();
         this.teacher = s.getTeacher();
         this.classroom = s.getClassroom();
-        this.occupants = new HashMap<String, Student>(s.getOccupants());
+        this.shiftDAO = new ShiftDAO();
     }
     
     public String getID() {
@@ -75,19 +76,19 @@ public class Shift implements Serializable {
         return this.classroom;
     }
 
-    public HashMap<String, Student> getOccupants() {
-        return new HashMap<String, Student>(this.occupants);
+    public Collection<String> getOccupants() {
+        return this.shiftDAO.getStudentsInShift(this.id);
     }
     
     public void addOccupant(Student s) {
-        
-    	this.occupants.put(s.getID(), new Student(s));
+
+    	this.shiftDAO.assignStudentToShift(s.getID(), this.id);
     }
    
     
     public String toString() {
 
-        return ("UC: " + this.courseID + " Turno: " + this.id);
+        return this.id;
     }
     
     @Override
