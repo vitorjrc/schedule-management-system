@@ -17,8 +17,17 @@ public class Shift implements Serializable {
     private HashMap<String, Student> occupants; // The students that frequent this shift - StudentID -> Student
     
      public Shift(String id, String courseID, int occupationLimit, String teacher, String classroom) {
-        this.id = id;
-        this.courseID = courseID;
+    	 
+    	if (id.contains(":")) {
+    		
+    		this.id = id;
+    	
+    	} else {
+    		    	
+    		this.id = courseID + ":" + id;
+    	}
+        
+    	this.courseID = courseID;
         this.occupationLimit = occupationLimit;
         this.teacher = teacher;
         this.classroom = classroom;
