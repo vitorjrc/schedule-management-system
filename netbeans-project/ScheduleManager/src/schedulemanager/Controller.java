@@ -408,7 +408,7 @@ public class Controller {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
             String date = formatter.format(swap.getDateTaken());
 
-            studentOffersHistory.add(UC + " -> mudei do turno " + swap.getShiftOfferedID() + " para o " + swap.getShiftWantedID() + " em " + date);
+            studentOffersHistory.add(UC + " -> mudei do turno " + swap.getShiftWantedID() + " para o " + swap.getShiftOfferedID() + " em " + date);
         }
 
         view.showStudentOffersHistory(studentOffersHistory);
