@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Shift implements Serializable {
     
     private static final long serialVersionUID = 7526472295622776147L;
-    private String id;           // The ID of this shift. Example: "PL1"
+    private String id;           // The ID of this shift. Example: "DSS:PL1"
     private String courseID;     // The ID of the course this shift belongs to. Example: "DSS"
     private int occupationLimit; // The maximum number of students allowed in this shift  
     private String teacher;
@@ -35,11 +35,17 @@ public class Shift implements Serializable {
     }
     
     public String getID() {
-        return this.courseID + ":" + this.id;
+        return this.id;
     }
     
     public String getCourseID() {
         return this.courseID;
+    }
+    
+    // Get a short ID
+    // Given an id of "DSS:PL1", returns PL1
+    public String getShortID() {
+    	return this.id.split(":")[1];
     }
     
     public void setCourseID(String id) {
