@@ -2,6 +2,7 @@ package schedulemanager.db;
 
 import schedulemanager.model.Student;
 import schedulemanager.model.Course;
+import schedulemanager.model.Shift;
 
 import java.io.*;
 import java.util.Collection;
@@ -14,11 +15,13 @@ public class CustomJSONParser {
 	
 	private StudentDAO studentDAO;
 	private CourseDAO courseDAO;
+	private ShiftDAO shiftDAO;
 	
 	public CustomJSONParser() {
 		
 		this.studentDAO = new StudentDAO();
 		this.courseDAO = new CourseDAO();
+		this.shiftDAO = new ShiftDAO();
 	}
 
 	public void loadStudentsToDB() {
@@ -152,5 +155,46 @@ public class CustomJSONParser {
 	
 	public void enrollStudentsInShifts() {
 		
+		// Shift allocation
+		// Loop through every student,
+		// if they are enrolled in a course but not in a shift of that course,
+		// enroll them in the first that is not full
+		
+		Collection<Student> students = this.studentDAO.values();
+		
+		// Loop through every student
+		for (Student s : students) {
+			
+			Collection<Course> courses = this.courseDAO.getCoursesOfStudent(s.getID());
+			
+			// Loop through every course of this student
+			for (Course c : courses) {
+				
+				Collection<Shift> shifts = this.shiftDAO.getShiftsOfCourse(c.getID());
+				
+				boolean studentIsInAShift = false;
+				
+				// Check if student is in any shift of this course
+				for (Shift shift : shifts) {
+					
+					if (this.shiftDAO.isStudentInShift(s.getID(), shift.getID())) {
+						studentIsInAShift = true;
+					}
+				}
+				
+				// If student is not in any shift, assign them to first that isn't full
+				if (!studentIsInAShift) {
+					
+					for (Shift shiftaroo : shifts) {
+						
+						if (shiftaroo.getOccupants().size() < shiftaroo.getOccupationLimit()) {
+							
+							this.shiftDAO.assignStudentToShift(s.getID(), shiftaroo.getID());
+						}
+					}
+				}
+			}
+			
+		}
 	}
 }
