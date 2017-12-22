@@ -88,6 +88,9 @@ public class View extends javax.swing.JFrame {
         jTabbedPane1.remove(jPanel5);
         jButton4.setEnabled(false);
         
+        // Desativar partes da base de Dados
+        jMenu1.setEnabled(false);
+        
         // disabling teacher's header
         jLabel49.setVisible(false);
         jLabel53.setVisible(false);
@@ -118,9 +121,19 @@ public class View extends javax.swing.JFrame {
         swapOffer.add(2, callback);
     }
     
-    public void loadButton(Consumer<ArrayList<String>> callback) {
+    public void loadFromBD(Consumer<ArrayList<String>> callback) {
         
         IO.add(0, callback);
+    }
+    
+    public void enrollInCourses(Consumer<ArrayList<String>> callback) {
+        
+        IO.add(1, callback);
+    }
+    
+    public void enrollInShifts(Consumer<ArrayList<String>> callback) {
+        
+        IO.add(2, callback);
     }
     
     public void showCourseStudents(Consumer<ArrayList<String>> callback) {
@@ -244,27 +257,45 @@ public class View extends javax.swing.JFrame {
         jButton2.setVisible(true);
         jButton5.setVisible(true);
         
+        jMenu1.setEnabled(true);
+        
     }
     
-    public void teacherInterface(String teacherName, String teacherCourse) {
+    public void teacherInterface(String teacherName, ArrayList<String> teacherCourse) {
         
         // show "Logado como: ...."
         jLabel1.setVisible(true);
         
         // show teacher tab
-        jTabbedPane1.addTab("Gestão da UC", jPanel9);
+        jTabbedPane1.addTab("Gestão de UCs", jPanel9);
         jTabbedPane1.remove(jPanel10);
         
         jLabel49.setVisible(true);
         jLabel53.setVisible(true);
-        jLabel53.setText(teacherCourse);
-        jLabel1.setText(teacherName);
         
-        String[] course = new String[1];
-            course[0] = teacherCourse;
+        
+        StringBuilder builder = new StringBuilder();
+        
+        for (int i = 0; i < teacherCourse.size(); i++) {
+            
+            builder.append(teacherCourse.get(i));
+            if (i != teacherCourse.size() -1)
+                builder.append(" e ");
+        }
+        
+        String courses = builder.toString();
+        
+        
+        jLabel53.setText(courses);
+        jLabel1.setText(teacherName);
+            
+        String[] coursesList = new String[teacherCourse.size()];
+        for (int i = 0; i < teacherCourse.size(); i++) {
+            coursesList[i] = teacherCourse.get(i);
+        }
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(course));
-        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(course));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
+        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel(coursesList));
         
         jButton2.setVisible(false);
         jButton5.setVisible(false);
@@ -387,6 +418,8 @@ public class View extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -1033,7 +1066,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLabel49.setText("A minha UC:");
+        jLabel49.setText("As minhas UCs:");
 
         jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
 
@@ -1175,15 +1208,31 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setText("Ficheiro");
+        jMenu1.setText("Admin");
 
-        jMenuItem1.setText("Carregar");
+        jMenuItem1.setText("Carregar UCs e Alunos da BD");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Associar estudantes às UCs");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem4.setText("Associar estudantes aos turnos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
 
@@ -1283,6 +1332,9 @@ public class View extends javax.swing.JFrame {
         // disabling teacher's header
         jLabel49.setVisible(false);
         jLabel53.setVisible(false);
+        
+        // desativar admin
+        jMenu1.setEnabled(false);
         
     }//GEN-LAST:event_jButton4ActionPerformed
     
@@ -1534,6 +1586,21 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
         
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = IO.get(1);
+        method.accept(sc);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = IO.get(2);
+        method.accept(sc);
+        
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     // method that fills fields where the list of user courses is required
     public void setCoursesList(ArrayList<String> userCourses) {
@@ -1955,7 +2022,9 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;

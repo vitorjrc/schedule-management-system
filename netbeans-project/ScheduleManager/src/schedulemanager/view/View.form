@@ -13,15 +13,31 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ficheiro"/>
+            <Property name="text" type="java.lang.String" value="Admin"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Carregar"/>
+                <Property name="text" type="java.lang.String" value="Carregar UCs e Alunos da BD"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Associar estudantes &#xe0;s UCs"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Associar estudantes aos turnos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem4ActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -1442,7 +1458,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel49">
               <Properties>
-                <Property name="text" type="java.lang.String" value="A minha UC:"/>
+                <Property name="text" type="java.lang.String" value="As minhas UCs:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel53">

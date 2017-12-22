@@ -34,7 +34,10 @@ public class Controller {
     	view.onRegister(this::onRegister);
         view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
-        view.loadButton(this::loadButton);
+        
+        view.loadFromBD(this::loadFromBD);
+        view.enrollInCourses(this::enrollInCourses);
+        view.enrollInShifts(this::enrollInShifts);
         
         view.checkedCourse(this::ShiftOfCourseSelected);
         view.checkedOfferedShift(this::destinationShiftPossible);
@@ -190,21 +193,26 @@ public class Controller {
     
     private void showTeacherInterface() {
         
-        String course = null;
-        if (userTeacher.getCourseManagedID() == null) {
+        if (userTeacher.getCoursesManagedID() == null || userTeacher.getCoursesManagedID().isEmpty()) {
             view.showLoginError("Não tem unidade curricular atribuída.");
             return;
         }
         
-        else course = model.getCourses().get(userTeacher.getCourseManagedID()).getName();
+        ArrayList<String> coursesName = new ArrayList<>();
         
-        view.teacherInterface(userTeacher.getName(), course);
+        for (String s: userTeacher.getCoursesManagedID()) {
+            coursesName.add(model.getNameOfCourse(s));
+        }
+        
+        view.teacherInterface(userTeacher.getName(), coursesName);
     }
     
-    private void loadButton(ArrayList<String> data) {
+    private void loadFromBD(ArrayList<String> data) {
 
         model.loadCoursesToDB();
         model.loadStudentsToDB();
+        
+        view.showSucessMessage();
     }       
     
     private HashMap<String, ArrayList<String>> getShiftsOfUser() {
@@ -675,6 +683,19 @@ public class Controller {
         }
         
         model.assignTeacherToCourse(teacherID, courseID);
+        view.showSucessMessage();
+    }
+    
+    
+    private void enrollInCourses(ArrayList<String> data) {
+        
+        model.enrollStudentsInCourses();
+        view.showSucessMessage();
+    }
+        
+    private void enrollInShifts(ArrayList<String> data) {
+        
+        model.enrollStudentsInShifts();
         view.showSucessMessage();
     }
 }
