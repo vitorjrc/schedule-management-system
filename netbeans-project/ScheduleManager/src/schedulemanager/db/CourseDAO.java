@@ -415,6 +415,27 @@ public class CourseDAO implements Map<String, Course> {
     }
     
     /**
+     * Check if a student is in any course
+     */
+    public boolean isStudentInAnyCourse(String studentID) {
+    	
+    	boolean r = false;
+        try {
+            conn = Connect.connect();
+            String sql = "SELECT student_id FROM student_course WHERE student_id = ?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1, studentID);
+            ResultSet rs = stm.executeQuery();
+            r = rs.next();
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
+        } finally {
+            Connect.close(conn);
+        }
+        return r;
+    }
+    
+    /**
      * Assigns a teacher as the manager of a course
      */
     public void setCourseManager(String teacherID, String courseID) {

@@ -4,6 +4,8 @@ import schedulemanager.model.Student;
 import schedulemanager.model.Course;
 
 import java.io.*;
+import java.util.Collection;
+import java.util.Random;
 
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -95,5 +97,60 @@ public class CustomJSONParser {
 	
 	public void clearDBCourses() {
 		this.courseDAO.clear();
+	}
+	
+	public void enrollStudentsInCourses() {
+		
+		// Used for testing
+		// Finds students in database with no courses,
+		// and enrolls them in a given year's courses
+		
+		Collection<Student> students = this.studentDAO.values();
+		
+		for (Student s : students) {
+			
+			if (!this.courseDAO.isStudentInAnyCourse(s.getID())) {
+				
+				// Choose a random year between 1 and 3
+				int year = new Random().nextInt(3) + 1;
+				
+				if (year == 1) {
+					
+					for (int i = 1; i <= 6; i++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H501N" + String.valueOf(i));
+					}
+					
+					for (int j = 1; j <= 6; j++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H502N" + String.valueOf(j));
+					}
+					
+				} else if (year == 2) {
+					
+					for (int i = 1; i <= 6; i++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H503N" + String.valueOf(i));
+					}
+					
+					for (int j = 1; j <= 6; j++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H504N" + String.valueOf(j));
+					}
+					
+				} else if (year == 3) {
+					
+					for (int i = 1; i <= 6; i++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H505N" + String.valueOf(i));
+					}
+					
+					for (int j = 1; j <= 6; j++) {
+						this.courseDAO.assignStudentToCourse(s.getID(), "H506N" + String.valueOf(j));
+					}
+					
+				}
+			}
+		}
+		
+	}
+	
+	public void enrollStudentsInShifts() {
+		
 	}
 }
