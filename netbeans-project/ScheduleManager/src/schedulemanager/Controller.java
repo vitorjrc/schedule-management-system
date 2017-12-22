@@ -666,7 +666,7 @@ public class Controller {
     
     private void assignTeacherToCourse(ArrayList<String> data) {
         
-        String courseID = data.get(0);
+        String courseID = model.getIDOfCourse(data.get(0));
         String teacherID = data.get(1);
         
         if (courseID == null || teacherID == null) {
