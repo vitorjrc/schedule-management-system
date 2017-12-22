@@ -135,6 +135,11 @@ public class View extends javax.swing.JFrame {
         IO.add(2, callback);
     }
     
+    public void generateShifts(Consumer<ArrayList<String>> callback) {
+        
+        IO.add(3, callback);
+    }
+    
     public void showCourseStudents(Consumer<ArrayList<String>> callback) {
         
         enrollStudent.add(0, callback);
@@ -418,6 +423,7 @@ public class View extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -1225,6 +1231,14 @@ public class View extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
+        jMenuItem5.setText("Gerar turnos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
         jMenuItem4.setText("Associar estudantes aos turnos");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1334,6 +1348,21 @@ public class View extends javax.swing.JFrame {
         
         // desativar admin
         jMenu1.setEnabled(false);
+        
+        // remove all combobox items
+        jComboBox10.removeAllItems();
+        jComboBox11.removeAllItems();
+        jComboBox12.removeAllItems();
+        jComboBox13.removeAllItems();
+        jComboBox14.removeAllItems();
+        jComboBox15.removeAllItems();
+        jComboBox2.removeAllItems();
+        jComboBox3.removeAllItems();
+        jComboBox4.removeAllItems();
+        jComboBox6.removeAllItems();
+        jComboBox7.removeAllItems();
+        jComboBox8.removeAllItems();
+        jComboBox9.removeAllItems();
         
     }//GEN-LAST:event_jButton4ActionPerformed
     
@@ -1600,6 +1629,13 @@ public class View extends javax.swing.JFrame {
         method.accept(sc);
         
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = IO.get(3);
+        method.accept(sc);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     // method that fills fields where the list of user courses is required
     public void setCoursesList(ArrayList<String> userCourses) {
@@ -2024,6 +2060,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;

@@ -261,6 +261,10 @@ public class Model {
         this.jsonParser.enrollStudentsInShifts();
     }
     
+    public void createDefaultShifts() {
+        this.jsonParser.createDefaultShifts();
+    }
+    
     public HashMap<String, Swap> getAcceptedSwaps(String studentID) {
         return this.swapManager.getAcceptedSwaps(studentID);
     }

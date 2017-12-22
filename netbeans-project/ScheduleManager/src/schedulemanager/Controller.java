@@ -38,6 +38,7 @@ public class Controller {
         view.loadFromBD(this::loadFromBD);
         view.enrollInCourses(this::enrollInCourses);
         view.enrollInShifts(this::enrollInShifts);
+        view.generateShifts(this::generateShifts);
         
         view.checkedCourse(this::ShiftOfCourseSelected);
         view.checkedOfferedShift(this::destinationShiftPossible);
@@ -273,6 +274,8 @@ public class Controller {
         
         String courseName = data.get(0);
         String courseID = model.getIDOfCourse(courseName);
+        
+        if (courseID == null) return;
         
         ArrayList<String> myShifts = new ArrayList<>();  
         ArrayList<Shift> shifts = new ArrayList<>(userStudent.getShifts());
@@ -696,6 +699,12 @@ public class Controller {
     private void enrollInShifts(ArrayList<String> data) {
         
         model.enrollStudentsInShifts();
+        view.showSucessMessage();
+    }
+    
+    private void generateShifts(ArrayList<String> data) {
+        
+        model.createDefaultShifts();
         view.showSucessMessage();
     }
 }
