@@ -253,4 +253,8 @@ public class Model {
         this.jsonParser.loadStudentsToDB();
     }
     
+    public HashMap<String, Swap> getAcceptedSwaps(String studentID) {
+        return this.swapManager.getAcceptedSwaps(studentID);
+    }
+    
 }

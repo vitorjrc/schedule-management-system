@@ -90,6 +90,10 @@ public class SwapManager implements Serializable{
     	
     	return this.swapDAO.getClosedSwapsOfStudent(studentID);
     }
+    
+    public HashMap<String, Swap> getAcceptedSwaps(String studentID) {
+        return this.swapDAO.getAcceptedSwaps(studentID);
+    }
 	
 	public void lockSwaps() {
 		if (this.authManager.isAdminLoggedIn()) {

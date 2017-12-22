@@ -384,11 +384,23 @@ public class Controller {
     
     private void showStudentOffersHistory() {
         
-        if (model.getClosedSwapsOfStudent(userStudent.getID()) == null || model.getClosedSwapsOfStudent(userStudent.getID()).isEmpty()) return;
+        if ((model.getClosedSwapsOfStudent(userStudent.getID()) == null || model.getClosedSwapsOfStudent(userStudent.getID()).isEmpty())
+                && (model.getAcceptedSwaps(userStudent.getID()) == null || model.getAcceptedSwaps(userStudent.getID()).isEmpty())) return;
         
         ArrayList<String> studentOffersHistory = new ArrayList<>();
 
         for (Swap swap: model.getClosedSwapsOfStudent(userStudent.getID()).values()) {
+            
+            Shift s = model.getShifts().get(swap.getShiftOfferedID());
+            String UC = model.getNameOfCourse(s.getCourseID());
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy HH:mm").withZone(ZoneId.systemDefault());
+            String date = formatter.format(swap.getDateTaken());
+
+            studentOffersHistory.add(UC + " -> mudei do turno " + swap.getShiftOfferedID() + " para o " + swap.getShiftWantedID() + " em " + date);
+        }
+        
+        for (Swap swap: model.getAcceptedSwaps(userStudent.getID()).values()) {
             
             Shift s = model.getShifts().get(swap.getShiftOfferedID());
             String UC = model.getNameOfCourse(s.getCourseID());
