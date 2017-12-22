@@ -42,22 +42,22 @@ public class View extends javax.swing.JFrame {
         
         initComponents();
         
-    try {
-        
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+        try {
+
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+
+        } catch (InstantiationException ex) {
+        } catch (ClassNotFoundException ex) {
+        } catch (IllegalAccessException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
         }
-        
-    } catch (InstantiationException ex) {
-    } catch (ClassNotFoundException ex) {
-    } catch (IllegalAccessException ex) {
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-    }
-        
+
         loginDialog = new LoginArea(View.this, true);
         registrationDialog = new RegistrationArea(View.this);
         
@@ -77,7 +77,6 @@ public class View extends javax.swing.JFrame {
         jTable1.getTableHeader();
         ((DefaultTableCellRenderer)jTable1.getTableHeader().getDefaultRenderer())
             .setHorizontalAlignment(JLabel.LEFT);
-        
         
         // disabling tabs
         jTabbedPane1.remove(jPanel1);
