@@ -440,7 +440,7 @@ public class View extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logotipo_Interface.jpg"))); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel18.setText("Os meus Turnos:");
+        jLabel18.setText("As minhas UCs:");
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
