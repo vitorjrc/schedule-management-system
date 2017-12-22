@@ -117,40 +117,51 @@ public class CustomJSONParser {
 				// Choose a random year between 1 and 3
 				int year = new Random().nextInt(3) + 1;
 				
+				String key1 = null, key2 = null;
+				
 				if (year == 1) {
 					
-					for (int i = 1; i <= 6; i++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H501N" + String.valueOf(i));
-					}
-					
-					for (int j = 1; j <= 6; j++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H502N" + String.valueOf(j));
-					}
-					
+					key1 = "H501N";
+					key2 = "H502N";
+
 				} else if (year == 2) {
 					
-					for (int i = 1; i <= 6; i++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H503N" + String.valueOf(i));
-					}
-					
-					for (int j = 1; j <= 6; j++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H504N" + String.valueOf(j));
-					}
+					key1 = "H503N";
+					key2 = "H504N";
 					
 				} else if (year == 3) {
 					
-					for (int i = 1; i <= 6; i++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H505N" + String.valueOf(i));
+					key1 = "H505N";
+					key2 = "H506N";
+				}
+				
+				for (int i = 1; i <= 6; i++) {
+
+					if (this.courseDAO.containsKey(key1 + String.valueOf(i))) {
+						
+						this.courseDAO.assignStudentToCourse(s.getID(), key1 + String.valueOf(i));
+					
+					} else {
+						
+						System.out.println("CustomJSONParser > enrollStudentsInCourses: Couldn't find course with id:");
+						
+						System.out.println(key2 + String.valueOf(i));
+						
 					}
 					
-					for (int j = 1; j <= 6; j++) {
-						this.courseDAO.assignStudentToCourse(s.getID(), "H506N" + String.valueOf(j));
+					if (this.courseDAO.containsKey(key2 + String.valueOf(i))){
+						
+						this.courseDAO.assignStudentToCourse(s.getID(), key2 + String.valueOf(i));
+						
+					} else {
+						
+						System.out.println("CustomJSONParser > enrollStudentsInCourses: Couldn't find course with id:");
+						
+						System.out.println(key2 + String.valueOf(i));
 					}
-					
 				}
 			}
 		}
-		
 	}
 	
 	public void enrollStudentsInShifts() {
