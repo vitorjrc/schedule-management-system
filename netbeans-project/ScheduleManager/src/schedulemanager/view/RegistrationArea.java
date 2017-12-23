@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
 import java.util.*;
 import java.util.function.Consumer;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 
 public class RegistrationArea extends javax.swing.JDialog {
@@ -21,6 +22,9 @@ public class RegistrationArea extends javax.swing.JDialog {
     public RegistrationArea(javax.swing.JFrame parent) {
         super(parent);
         initComponents();
+        
+        // disabling scroll pane border
+        jScrollPane1.setBorder(BorderFactory.createEmptyBorder());
        
         // background - White
         getContentPane().setBackground(Color.WHITE);
