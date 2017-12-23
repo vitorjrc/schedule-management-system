@@ -233,8 +233,8 @@ public class Controller {
                 if (s.getCourseID().equals(c.getID())) {   
                 
                     shifts = s.getID();
-                    teacher = s.getTeacher();
-                    classroom = s.getClassroom();
+                    if (s.getTeacher() != null) teacher = s.getTeacher();
+                    if (s.getClassroom() != null) classroom = s.getClassroom();
                 }
             }
             
