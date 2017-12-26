@@ -187,6 +187,9 @@ public class Controller {
     private void showAdminInterface() {
         
         view.adminInterface();
+        
+        view.setSwapsAllowed(model.areSwapsAllowed());
+        
         this.showTeachers();
         this.showAllCourses();
         

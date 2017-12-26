@@ -96,17 +96,21 @@ public class SwapManager implements Serializable{
         return this.swapDAO.getAcceptedSwaps(studentID);
     }
 	
-	public void lockSwaps() {
-		if (this.authManager.isAdminLoggedIn()) {
-			this.swapDAO.setSwapsAllowed(false);
-		}
-	}
-	
-	public void unlockSwaps() {
-		if (this.authManager.isAdminLoggedIn()) {
-			this.swapDAO.setSwapsAllowed(true);
-		}
-	}
+    public void lockSwaps() {
+            if (this.authManager.isAdminLoggedIn()) {
+                    this.swapDAO.setSwapsAllowed(false);
+            }
+    }
+
+    public void unlockSwaps() {
+            if (this.authManager.isAdminLoggedIn()) {
+                    this.swapDAO.setSwapsAllowed(true);
+            }
+    }
+    
+    public boolean areSwapsAllowed() {
+        return this.swapDAO.areSwapsAllowed();
+    }
 
 	// Creates a swap offer
 	// Returns true if swap offer is created successfully, false otherwise

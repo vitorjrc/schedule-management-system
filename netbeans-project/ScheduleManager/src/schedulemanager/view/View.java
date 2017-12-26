@@ -1949,6 +1949,18 @@ public class View extends javax.swing.JFrame {
         jComboBox12.setModel(new javax.swing.DefaultComboBoxModel(studentsList));
         
     }
+    
+    public void setSwapsAllowed(boolean swapsAllowed) {
+        
+        if (swapsAllowed == true) {
+            jButton2.setEnabled(false);
+            jButton5.setEnabled(true);
+        }
+        else {
+            jButton2.setEnabled(true);
+            jButton5.setEnabled(false);
+        }
+    }
    
     public static void start() {
         try {

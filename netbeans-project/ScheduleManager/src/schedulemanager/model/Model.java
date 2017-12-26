@@ -269,4 +269,8 @@ public class Model {
         return this.swapManager.getAcceptedSwaps(studentID);
     }
     
+    public boolean areSwapsAllowed() {
+        return this.swapManager.areSwapsAllowed();
+    }
+    
 }
