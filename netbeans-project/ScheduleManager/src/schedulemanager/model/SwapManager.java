@@ -12,19 +12,20 @@ public class SwapManager implements Serializable{
     private static final long serialVersionUID = 7526472295622776147L;
 
     private SwapDAO swapDAO;
-	private boolean swapsAllowed;        // Keeps track of whether Swaps are still allowed.
 	private AuthManager authManager;     // Keeps an instance of authManager to check student info
 	
     public SwapManager(AuthManager authManager) {
 		this.authManager = authManager;
 		this.swapDAO = new SwapDAO();
-		this.swapsAllowed = true;
+
+		this.swapDAO.setSwapsAllowed(true);
 	}
 	
     public SwapManager(AuthManager authManager, boolean swapsAllowed) {
 		this.authManager = authManager;
 		this.swapDAO = new SwapDAO();
-		this.swapsAllowed = swapsAllowed;
+		
+		this.swapDAO.setSwapsAllowed(swapsAllowed);
 	}
 	
 	// Checks whether a swap offer is legal, given a bidder and the courseID & shiftID of the offered shift
@@ -97,13 +98,13 @@ public class SwapManager implements Serializable{
 	
 	public void lockSwaps() {
 		if (this.authManager.isAdminLoggedIn()) {
-			this.swapsAllowed = false;
+			this.swapDAO.setSwapsAllowed(false);
 		}
 	}
 	
 	public void unlockSwaps() {
 		if (this.authManager.isAdminLoggedIn()) {
-			this.swapsAllowed = true;
+			this.swapDAO.setSwapsAllowed(true);
 		}
 	}
 
@@ -111,7 +112,7 @@ public class SwapManager implements Serializable{
 	// Returns true if swap offer is created successfully, false otherwise
 	public boolean createSwapOffer(String bidderID, String courseID, String offeredShiftID, String wantedShiftID) {
 		
-		if (!this.swapsAllowed || !this.swapOfferAllowed(bidderID, courseID, offeredShiftID)) {
+		if (!this.swapDAO.areSwapsAllowed() || !this.swapOfferAllowed(bidderID, courseID, offeredShiftID)) {
 			System.out.println("Swaps are locked or attempted swap offer is not allowed.");
 			return false;
 		}
