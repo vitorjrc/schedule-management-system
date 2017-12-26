@@ -528,7 +528,7 @@ public class SwapDAO implements Map<String, Swap> {
         
         try {
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("SELECT value FROM config WHERE name = swaps_allowed");
+            PreparedStatement stm = conn.prepareStatement("SELECT value FROM config WHERE name = \"swaps_allowed\"");
 
             ResultSet rs = stm.executeQuery();
             
