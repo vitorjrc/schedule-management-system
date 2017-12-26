@@ -555,10 +555,12 @@ public class SwapDAO implements Map<String, Swap> {
             if (allowed) {
             	
             	stm.setInt(1, 1);
+            	stm.setInt(2, 1);
             
             } else {
             	
             	stm.setInt(1, 0);
+            	stm.setInt(2, 0);
             }
             
             stm.executeUpdate();
