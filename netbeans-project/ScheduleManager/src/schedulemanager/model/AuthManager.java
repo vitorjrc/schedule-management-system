@@ -30,7 +30,7 @@ public class AuthManager implements Serializable{
             this.studentDAO = new StudentDAO();
             this.teacherDAO = new TeacherDAO();
 	
-        }
+	}
 	
 	public Student registerStudent(String id, String name, String password, String regimen) {
 		

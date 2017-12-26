@@ -524,4 +524,26 @@ public class SwapDAO implements Map<String, Swap> {
         return s;
     }
     
+    public boolean areSwapsAllowed() {
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("SELECT value FROM config WHERE name = swaps_allowed");
+
+            ResultSet rs = stm.executeQuery();
+            
+            if (rs.next()) {
+            	
+                return (rs.getInt("value") != 0);    
+            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+
+        return true; // Allowed by default
+    }
+    
 }
