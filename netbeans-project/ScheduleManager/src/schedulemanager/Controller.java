@@ -668,12 +668,14 @@ public class Controller {
     private void unlockSwaps(ArrayList<String> data) {
         
         model.unlockSwaps();
+        view.setSwapsAllowed(model.areSwapsAllowed());
         view.showSucessMessage();
     }
     
     private void lockSwaps(ArrayList<String> data) {
         
         model.lockSwaps();
+        view.setSwapsAllowed(model.areSwapsAllowed());
         view.showSucessMessage();
     }
     
