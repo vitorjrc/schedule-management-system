@@ -546,4 +546,27 @@ public class SwapDAO implements Map<String, Swap> {
         return true; // Allowed by default
     }
     
+    public void setSwapsAllowed(boolean allowed) {
+        
+        try {
+            conn = Connect.connect();
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO config (name, value) VALUES (\"swaps_allowed\", ?) ON DUPLICATE KEY UPDATE value=?");
+            
+            if (allowed) {
+            	
+            	stm.setInt(1, 1);
+            
+            } else {
+            	
+            	stm.setInt(1, 0);
+            }
+            
+            stm.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Connect.close(conn);
+        }
+    }
 }
