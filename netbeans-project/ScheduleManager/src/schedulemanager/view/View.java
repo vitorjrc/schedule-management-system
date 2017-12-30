@@ -1213,7 +1213,7 @@ public class View extends javax.swing.JFrame {
 
         jMenu1.setText("Admin");
 
-        jMenuItem1.setText("Carregar UCs e Alunos da BD");
+        jMenuItem1.setText("Carregar UCs e Alunos do JSON");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
