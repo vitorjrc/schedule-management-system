@@ -1758,10 +1758,13 @@ public class View extends javax.swing.JFrame {
                 for (ArrayList<String> list: pendingOffers) {
                     
                     String toBePrinted = "UC: " + list.get(0) + " do " + list.get(2) + " para o "+ list.get(3) + " do " + list.get(4);
+                    String paragraph = "";
                     JLabel lb = new JLabel(toBePrinted);
+                    JLabel lb1 = new JLabel(paragraph);
                     
                     lb.setHorizontalAlignment(JLabel.CENTER);
                     jPanel4.add(lb);
+                    jPanel4.add(lb1);
                     
                     if(list.get(6).equals("true")) {
                         
