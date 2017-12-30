@@ -13,8 +13,6 @@ import javax.swing.table.*;
 import javax.swing.event.*;
 import java.awt.Dimension;
 import java.awt.event.*;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 
 /**
@@ -1364,6 +1362,8 @@ public class View extends javax.swing.JFrame {
         jComboBox8.removeAllItems();
         jComboBox9.removeAllItems();
         
+        jMenu2.setEnabled(true);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
     
     // botão oferta
@@ -1743,6 +1743,7 @@ public class View extends javax.swing.JFrame {
         loginDialog.setVisible(false);
         jButton1.setEnabled(false);
         jButton4.setEnabled(true);
+        jMenu2.setEnabled(false);
     }
     
     public void showPendingOffers(ArrayList<ArrayList<String>> pendingOffers) {
