@@ -180,15 +180,14 @@ public class SwapDAO implements Map<String, Swap> {
             
             ResultSet rs = stm.executeQuery();
             
-            if (rs.next()) {
+            while (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
                 
                 Instant dateTaken = null;
-                if (rs.getString("date_taken") != null) 
+                if (rs.getString("date_taken") != null) {
                     dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
-                
-                    // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+                }
                 
                 s.put(rs.getString("id"), new Swap(
                 	rs.getString("id"),
@@ -238,17 +237,17 @@ public class SwapDAO implements Map<String, Swap> {
             
             ResultSet rs = stm.executeQuery();
             
-            if (rs.next()) {
+            while (rs.next()) {
             	
                 Instant dateCreated = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_created")));
                 
                 Instant dateTaken = null;
-                if (rs.getString("date_taken") != null)
+                
+                if (rs.getString("date_taken") != null) {
                     dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
+            	}
                 
-                // Instant dateTaken = Instant.ofEpochMilli(Long.parseLong(rs.getString("date_taken")));
-                
-                s.put(rs.getString("id"), new Swap(
+            	s.put(rs.getString("id"), new Swap(
                 	rs.getString("id"),
                 	rs.getString("bidder_id"),
                 	rs.getString("taker_id"),
