@@ -1774,6 +1774,7 @@ public class View extends javax.swing.JFrame {
                                 acceptOfferButtonClick(list.get(1));
                                 jPanel4.remove(b);
                                 jPanel4.remove(lb);
+                                jPanel4.remove(lb1);
                             }
                         });
                         
