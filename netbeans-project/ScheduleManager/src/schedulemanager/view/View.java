@@ -1764,7 +1764,6 @@ public class View extends javax.swing.JFrame {
                     
                     lb.setHorizontalAlignment(JLabel.CENTER);
                     jPanel4.add(lb);
-                    jPanel4.add(lb1);
                     
                     if(list.get(6).equals("true")) {
                         
@@ -1783,6 +1782,7 @@ public class View extends javax.swing.JFrame {
                     jPanel4.repaint();
                     
                     }
+                    jPanel4.add(lb1);
                     
                     jPanel4.revalidate();
                     jPanel4.repaint(); 
