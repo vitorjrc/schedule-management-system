@@ -1,6 +1,6 @@
 
 Ligar Servidor
-./mongod.exe --dbpath "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\MongoDB\"
+./mongod.exe
 
 Guardar BD
 mongodump -d TrocaTurnos -o "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\"
