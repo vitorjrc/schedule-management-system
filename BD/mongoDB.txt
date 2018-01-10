@@ -3,7 +3,7 @@ Ligar Servidor
 ./mongod.exe
 
 Guardar BD
-mongodump -d TrocaTurnos -o "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\"
+mongodump.exe -d TrocaTurnos --out "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\NoSQL - DB"
 
 Restaurar BD
-mongorestore -d TrocaTurnos "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\"
+mongorestore.exe "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\NoSQL - DB"
