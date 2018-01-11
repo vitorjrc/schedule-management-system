@@ -1,27 +1,19 @@
 
 import java.util.*;
 
-public class Turno {
+public class Aluno {
 
-	private int codigoUC;
-	private String nomeUC;
-	private int ano;
-	private int ects;
-	private String turno;
-	private int anoLetivo;
-	private ArrayList<Docente> docentes;
-	private ArrayList<Aluno> alunos;
+	private int numero;
+	private String nome;
+	private String curso;
+	private ArrayList<Turno> turnos;
 
-	public Turno(int codigoUC, String nomeUC, int ano, int ects, String turno, int anoLetivo, ArrayList<Docente> docentes, Arraylist<Aluno> alunos) {
+	public Aluno(int numero, String nome, String curso, Arraylist<Turno> turnos) {
 
-		this.codigoUC = codigoUC;
-		this.nomeUC = nomeUC;
-		this.ano = ano;
-		this.ects = ects;
-		this.turno = turno;
-		this.anoLetivo = anoLetivo;
-		this.docentes = docentes;
-		this.alunos = alunos;
+		this.numero = numero;
+		this.nome = nome;
+		this.curso = curso;
+		this.turnos = turnos;
 	}
 
 }
