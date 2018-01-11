@@ -48,6 +48,25 @@ public class Turno {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+		try {
+            PreparedStatement stm = con.prepareStatement("SELECT distinct docente.numero, docente.nome, docente.Escola_Nome FROM docente
+				JOIN docenteuc ON docenteuc.docente_numero = docente.Numero
+				JOIN uc ON uc.Codigo = docenteuc.uc_codigo
+    			JOIN ucaluno on ucaluno.uc_codigo = uc.codigo
+    			where (uc.codigo = ? && turno = ? && anoletivo = ?)");
+            stm.setInt(1, ucCodigo);
+            stm.setString(2, turno);
+            stm.setInt(3, anoLetivo);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                docentes.add(new Docente(rs.getInt("numero"), rs.getString("nome"), rs.getString("Escola_Nome")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 	}
 
 	/* PARA OS DOCENTES
