@@ -1,3 +1,6 @@
+import java.sql.DriverManager;
+import java.sql.Connection;
+
 public class SQLReader() {
 	
 	private static final String URL = "localhost";
