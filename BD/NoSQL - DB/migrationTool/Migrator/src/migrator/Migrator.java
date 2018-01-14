@@ -8,11 +8,9 @@ package migrator;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.SerializationConfig;
-import org.codehaus.jackson.type.TypeReference;
-
+import org.codehaus.jackson.annotate.JsonMethod;
+import org.codehaus.jackson.map.*;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 /**
  *
  * @author Vitor Castro
@@ -30,6 +28,7 @@ public class Migrator {
         FileWriter alunosFile;
 
         ObjectMapper doc = new ObjectMapper();
+        doc.setVisibility(JsonMethod.FIELD, Visibility.ANY);
         doc.enable(SerializationConfig.Feature.INDENT_OUTPUT);
         doc.writerWithDefaultPrettyPrinter();
 
