@@ -33,6 +33,7 @@ public class Migrator {
         doc.writerWithDefaultPrettyPrinter();
 
         ObjectMapper alu = new ObjectMapper();
+        alu.setVisibility(JsonMethod.FIELD, Visibility.ANY);
         alu.enable(SerializationConfig.Feature.INDENT_OUTPUT);
         alu.writerWithDefaultPrettyPrinter();
 
