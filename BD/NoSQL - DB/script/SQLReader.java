@@ -7,31 +7,29 @@ public class SQLReader() {
     private static final String TABLE = "TrocaTurnos";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin";
+    private static final Connection cn = null;
     //private static final String PASSWORD = "admin1";
 
     // Iniciar a ligação à base de dados
-    public static Connection iniciarCon() {
+    public static void iniciarCon() {
 
         try {
 
-            Connection cn = DriverManager.getConnection("jdbc:mysql://"+ URL + "/" + TABLE + "?user=" + USERNAME + "&password=" + PASSWORD);
-
-            return cn;
+            cn = DriverManager.getConnection("jdbc:mysql://"+ URL + "/" + TABLE + "?user=" + USERNAME + "&password=" + PASSWORD);
 
         } catch(Exception e) {
 
             e.printStackTrace();
         }
 
-        return null;
     }
 
     // Fechar ligação à base de dados
-    public static void fecharCon(Connection connection) {
+    public static void fecharCon() {
 
         try {
 
-            connection.close();
+            cn.close();
 
         } catch (Exception e) {
 
@@ -43,8 +41,10 @@ public class SQLReader() {
 
 	public void migrateDocentes(List<Docente> d) {
 
-		ResultSet doc =  null;
-		PreparedStatement stDOC = null;
+		ResultSet docente =  null;
+		ResultSet uc = null;
+		PreparedStatement stDocente = null;
+		PreparedStatement stUcs = null;
 		ArrayList<Docente> docentes = d;
 
 		try {
