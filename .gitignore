@@ -24,3 +24,5 @@ hs_err_pid*
 /netbeans-project/ScheduleManager/build/
 /netbeans-project/ScheduleManager/dist/
 /BD/MongoDB/diagnostic.data
+/BD/NoSQL - DB/migrationTool/Migration/nbproject/private/
+/BD/NoSQL - DB/migrationTool/Migrator/nbproject/private/
