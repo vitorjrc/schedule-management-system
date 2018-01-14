@@ -8,6 +8,11 @@ package migrator;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.map.DeserializationConfig;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.type.TypeReference;
+
 /**
  *
  * @author Vitor Castro
