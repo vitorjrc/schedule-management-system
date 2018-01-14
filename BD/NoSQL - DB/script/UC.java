@@ -7,7 +7,7 @@ public class UC {
 	private int Ano;
 	private int ECTS;
 
-	public Turno(int codigoUC, String nomeUC, int ano, int ects) {
+	public UC(int codigoUC, String nomeUC, int ano, int ects) {
 
 		Codigo = codigoUC;
 		Nome = nomeUC;

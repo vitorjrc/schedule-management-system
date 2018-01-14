@@ -48,16 +48,106 @@ public class SQLReader() {
 		ArrayList<Docente> docentes = d;
 
 		try {
-			stDOC = connection.prepareStatement("SELECT * FROM Docente;");
-			doc = stDOC.executeQuery();
-			while(doc.next()) {
+			stDocente = cn.prepareStatement("SELECT * FROM Docente;"); // alterar
+			docente = stDocente.executeQuery();
+			while(docente.next()) {
 				int numero = doc.getInt("Numero");
 				String nome = doc.getString("Nome");
 				String escola = doc.getString("Escola");
-				stTUR = con.prepareStatement("SELECT * FROM UC, UCAluno")
+				// Ler as UCs em que aquele docente está inscrito
+				ArrayList<UC> ucs = new ArrayList<UC>();
+				stUcs = cn.prepareStatement("SELECT * FROM UC, UCAluno;"); // alterar
+				uc = stUcs.executeQuery();
+				while(uc.next()) {
+					int codigo = uc.getInt("Codigo");
+					String nome = uc.getString("Nome");
+					int ano = uc.getInt("Ano");
+					int ects = uc.getInt("ECTS");
+					ucs.add(new UC(codigo, nome, ano, ects));
+				}
+				docentes.add(new Docente(numero, nome, escola, ucs));
+			}
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Version.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+		finally {
+			try {
+				if (uc != null) {
+					uc.close();
+				}
+				if (docente != null) {
+					docente.close();
+				}
+				if (stUcs != null) {
+					stUcs.close();
+				}
+				if (stDocente != null) {
+					stDocente.close();
+				}
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Version.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
 			}
 		}
 
+		return;
 	}
+
+	public void migrateAlunos(List<Aluno> a) {
+
+		ResultSet aluno =  null;
+		ResultSet turno = null;
+		PreparedStatement stAluno = null;
+		PreparedStatement stTurno = null;
+		ArrayList<Aluno> alunos = a;
+
+		try {
+			stAluno = cn.prepareStatement("SELECT * FROM Aluno;"); // alterar
+			aluno = stAluno.executeQuery();
+			while(aluno.next()) {
+				int numero = doc.getInt("Numero");
+				String nome = doc.getString("Nome");
+				String escola = doc.getString("Escola");
+				// Ler as UCs em que aquele aluno está inscrito
+				ArrayList<UC> ucs = new ArrayList<UC>();
+				stTurno = cn.prepareStatement("SELECT * FROM UC, UCAluno;"); // alterar
+				turno = stTurno.executeQuery();
+				while(turno.next()) {
+					int codigo = turno.getInt("Codigo");
+					String nome = turno.getString("Nome");
+					int ano = turno.getInt("Ano");
+					int ects = turno.getInt("ECTS");
+					ucs.add(new UC(codigo, nome, ano, ects));
+				}
+				alunos.add(new Aluno(numero, nome, escola, ucs));
+			}
+		} catch (SQLException ex) {
+			Logger lgr = Logger.getLogger(Version.class.getName());
+			lgr.log(Level.SEVERE, ex.getMessage(), ex);
+		}
+		finally {
+			try {
+				if (turno != null) {
+					turno.close();
+				}
+				if (aluno != null) {
+					aluno.close();
+				}
+				if (stTurno != null) {
+					stTurno.close();
+				}
+				if (stAluno != null) {
+					stAluno.close();
+				}
+			} catch (SQLException ex) {
+				Logger lgr = Logger.getLogger(Version.class.getName());
+				lgr.log(Level.WARNING, ex.getMessage(), ex);
+			}
+		}
+
+		return;
+	}
+
 
 }
