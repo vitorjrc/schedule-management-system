@@ -54,33 +54,3 @@ public class SQL {
 	}
 }
 
-public class SQLreader() {
-	
-	public iniciarCon() {
-		// iniciar conexão
-	}
-
-	public fecharCon() {
-		// fechar conexão
-	}
-
-	public void migrateDocentes(List<Docente> d) {
-
-		ResultSet doc =  null;
-		PreparedStatement stDOC = null;
-		ArrayList<Docente> docentes = d;
-
-		try {
-			stDOC = connection.prepareStatement("SELECT * FROM Docente;");
-			doc = stDOC.executeQuery();
-			while(doc.next()) {
-				int numero = doc.getInt("Numero");
-				String nome = doc.getString("Nome");
-				String escola = doc.getString("Escola");
-				stTUR = con.prepareStatement("SELECT * FROM UC, UCAluno")
-			}
-		}
-
-	}
-
-}
