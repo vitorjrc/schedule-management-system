@@ -53,10 +53,12 @@ public class SQLReader() {
 			while(docente.next()) {
 				int numero = doc.getInt("Numero");
 				String nome = doc.getString("Nome");
-				String escola = doc.getString("Escola");
+				String escola = doc.getString("Escola_Nome");
 				// Ler as UCs em que aquele docente está inscrito
 				ArrayList<UC> ucs = new ArrayList<UC>();
-				stUcs = cn.prepareStatement("SELECT * FROM UC, UCAluno;"); // alterar
+				stUcs = cn.prepareStatement("SELECT * FROM DocenteUC 
+														JOIN UC ON UC.Codigo = DocenteUC.UC_Codigo
+														WHERE DocenteUC.Docente_Numero = " + numero);
 				uc = stUcs.executeQuery();
 				while(uc.next()) {
 					int codigo = uc.getInt("Codigo");
@@ -108,10 +110,12 @@ public class SQLReader() {
 			while(aluno.next()) {
 				int numero = doc.getInt("Numero");
 				String nome = doc.getString("Nome");
-				String escola = doc.getString("Escola");
-				// Ler as UCs em que aquele aluno está inscrito
+				String curso = doc.getString("Curso_Nome");
+				// Ler os turnos em que aquele aluno está inscrito
 				ArrayList<UC> ucs = new ArrayList<UC>();
-				stTurno = cn.prepareStatement("SELECT * FROM UC, UCAluno;"); // alterar
+				stTurno = cn.prepareStatement("SELECT * FROM UCAluno
+															JOIN UC ON UC.Codigo = UCAluno.UC_Codigo
+														WHERE UCAluno.Aluno_Numero = " + numero); // alterar
 				turno = stTurno.executeQuery();
 				while(turno.next()) {
 					int codigo = turno.getInt("Codigo");
@@ -120,7 +124,7 @@ public class SQLReader() {
 					int ects = turno.getInt("ECTS");
 					ucs.add(new UC(codigo, nome, ano, ects));
 				}
-				alunos.add(new Aluno(numero, nome, escola, ucs));
+				alunos.add(new Aluno(numero, nome, curso, ucs));
 			}
 		} catch (SQLException ex) {
 			Logger lgr = Logger.getLogger(Version.class.getName());
