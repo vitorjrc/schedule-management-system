@@ -2,8 +2,7 @@
 Ligar Servidor
 ./mongod.exe
 
-Guardar BD
-mongodump.exe -d TrocaTurnos --out "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\NoSQL - DB"
+JSON TO MONGODB
+./mongoimport.exe --db TrocaTurnos --jsonArray --collection Docente --drop --file "C:\Users\sergi\Desktop\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\docentes.json"
 
-Restaurar BD
-mongorestore.exe "C:\Users\Sergio\Desktop\Cenas\schedule-management-system\BD\NoSQL - DB"
+./mongoimport.exe --db TrocaTurnos --jsonArray --collection Aluno --drop --file "C:\Users\sergi\Desktop\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\alunos.json"
