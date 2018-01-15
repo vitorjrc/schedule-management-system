@@ -1,0 +1,211 @@
+[ {
+  "Numero" : 13212,
+  "Nome" : "Ivone Costa",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 50,
+    "Nome" : "Programação Orientada aos Objetos",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 400,
+    "Nome" : "Elementos de Engenharia de Sistemas",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 18054,
+  "Nome" : "Amélia Campos",
+  "Escola" : "Escola de Ciências",
+  "UCS" : [ {
+    "Codigo" : 93,
+    "Nome" : "Lógica",
+    "Ano" : 1,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 365,
+    "Nome" : "Álgebra Linear",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 24759,
+  "Nome" : "Maria Minho",
+  "Escola" : "Escola de Ciências",
+  "UCS" : [ {
+    "Codigo" : 312,
+    "Nome" : "Estatística Aplicada",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 399,
+    "Nome" : "Métodos Numéricos e Otimização não Linear",
+    "Ano" : 3,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 498,
+    "Nome" : "Introdução aos Sistemas Dinâmicos",
+    "Ano" : 2,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 26548,
+  "Nome" : "Dinis Gabriel",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 39,
+    "Nome" : "Arquitetura de Computadores",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 94,
+    "Nome" : "Desenvolvimento de Sistemas de Software",
+    "Ano" : 3,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 210,
+    "Nome" : "Laboratórios de Informática II",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 41495,
+  "Nome" : "António Macedo",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 327,
+    "Nome" : "Cálculo de Programas",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 403,
+    "Nome" : "Sistemas Operativos",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 455,
+    "Nome" : "Programacão Imperativa",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 43923,
+  "Nome" : "Cornélio Belo",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 10,
+    "Nome" : "Laboratórios de Informática IV",
+    "Ano" : 3,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 103,
+    "Nome" : "Laboratórios de Informática I",
+    "Ano" : 1,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 605,
+    "Nome" : "Engenharia Económica",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 612,
+    "Nome" : "Sistemas de Computação",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 48592,
+  "Nome" : "Carla Santos",
+  "Escola" : "Escola de Ciências",
+  "UCS" : [ {
+    "Codigo" : 67,
+    "Nome" : "Electromagnetismo",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 423,
+    "Nome" : "Cálculo",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 59341,
+  "Nome" : "Serafim Andrade",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 122,
+    "Nome" : "Algoritmos e Complexidade",
+    "Ano" : 2,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 604,
+    "Nome" : "Computação Gráfica",
+    "Ano" : 3,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 702,
+    "Nome" : "Comunicações por Computador",
+    "Ano" : 3,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 59479,
+  "Nome" : "José Frade",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 552,
+    "Nome" : "Redes de Computadores",
+    "Ano" : 3,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 64850,
+  "Nome" : "Dulce Oliveira",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 323,
+    "Nome" : "Programacão Funcional",
+    "Ano" : 1,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 455,
+    "Nome" : "Programacão Imperativa",
+    "Ano" : 1,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 604,
+    "Nome" : "Computação Gráfica",
+    "Ano" : 3,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 74123,
+  "Nome" : "Carlos Castro",
+  "Escola" : "Escola de Engenharia",
+  "UCS" : [ {
+    "Codigo" : 389,
+    "Nome" : "Processamento de Linguagens",
+    "Ano" : 3,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 667,
+    "Nome" : "Bases de Dados",
+    "Ano" : 3,
+    "ECTS" : 5
+  } ]
+}, {
+  "Numero" : 79194,
+  "Nome" : "Valério Quintas",
+  "Escola" : "Escola de Ciências",
+  "UCS" : [ {
+    "Codigo" : 93,
+    "Nome" : "Lógica",
+    "Ano" : 1,
+    "ECTS" : 5
+  }, {
+    "Codigo" : 112,
+    "Nome" : "Análise",
+    "Ano" : 1,
+    "ECTS" : 5
+  } ]
+} ]

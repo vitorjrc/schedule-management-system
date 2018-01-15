@@ -1,6 +1,6 @@
 [ {
   "Codigo" : 10,
-  "Nome" : "LaboratÃ³rios de InformÃ¡tica IV",
+  "Nome" : "Laboratórios de Informática IV",
   "Ano" : 3,
   "ECTS" : 5,
   "Alunos" : [ 73941, 81122, 67848, 72974, 68892, 72111, 81682 ]
@@ -12,7 +12,7 @@
   "Alunos" : [ 77321, 78404, 78789, 69545, 73435, 76935 ]
 }, {
   "Codigo" : 50,
-  "Nome" : "ProgramaÃ§Ã£o Orientada aos Objetos",
+  "Nome" : "Programação Orientada aos Objetos",
   "Ano" : 2,
   "ECTS" : 5,
   "Alunos" : [ 77730, 79116, 68503, 81230, 76935, 78415 ]
@@ -24,7 +24,7 @@
   "Alunos" : [ 70815, 71544 ]
 }, {
   "Codigo" : 93,
-  "Nome" : "LÃ³gica",
+  "Nome" : "Lógica",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 68503, 76111, 73314, 78789, 80979 ]
@@ -36,13 +36,13 @@
   "Alunos" : [ 77321, 78404, 75820, 78789 ]
 }, {
   "Codigo" : 103,
-  "Nome" : "LaboratÃ³rios de InformÃ¡tica I",
+  "Nome" : "Laboratórios de Informática I",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 76111, 77870, 66906, 68503, 80979 ]
 }, {
   "Codigo" : 112,
-  "Nome" : "AnÃ¡lise",
+  "Nome" : "Análise",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 78790, 81230, 70608, 80828, 69634, 72111 ]
@@ -54,31 +54,31 @@
   "Alunos" : [ 77870, 78415, 78985 ]
 }, {
   "Codigo" : 210,
-  "Nome" : "LaboratÃ³rios de InformÃ¡tica II",
+  "Nome" : "Laboratórios de Informática II",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 66906, 75820 ]
 }, {
   "Codigo" : 312,
-  "Nome" : "EstatÃ­stica Aplicada",
+  "Nome" : "Estatística Aplicada",
   "Ano" : 2,
   "ECTS" : 5,
   "Alunos" : [ 69545, 73435, 51146, 81230 ]
 }, {
   "Codigo" : 323,
-  "Nome" : "ProgramacÃ£o Funcional",
+  "Nome" : "Programacão Funcional",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 68503, 76111, 78789, 80885 ]
 }, {
   "Codigo" : 327,
-  "Nome" : "CÃ¡lculo de Programas",
+  "Nome" : "Cálculo de Programas",
   "Ano" : 2,
   "ECTS" : 5,
   "Alunos" : [ 70629, 77209, 79116 ]
 }, {
   "Codigo" : 365,
-  "Nome" : "Ãlgebra Linear",
+  "Nome" : "Álgebra Linear",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 78985, 79116, 78415, 80885 ]
@@ -90,7 +90,7 @@
   "Alunos" : [ 70815, 76275, 78633, 80460, 80885 ]
 }, {
   "Codigo" : 399,
-  "Nome" : "MÃ©todos NumÃ©ricos e OtimizaÃ§Ã£o nÃ£o Linear",
+  "Nome" : "Métodos Numéricos e Otimização não Linear",
   "Ano" : 3,
   "ECTS" : 5,
   "Alunos" : [ 73314, 78633, 67848, 72111, 80460 ]
@@ -108,19 +108,19 @@
   "Alunos" : [ 70629, 77730, 79116 ]
 }, {
   "Codigo" : 423,
-  "Nome" : "CÃ¡lculo",
+  "Nome" : "Cálculo",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 77730, 78985, 77209, 78415 ]
 }, {
   "Codigo" : 455,
-  "Nome" : "ProgramacÃ£o Imperativa",
+  "Nome" : "Programacão Imperativa",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 69545, 73435, 51146 ]
 }, {
   "Codigo" : 498,
-  "Nome" : "IntroduÃ§Ã£o aos Sistemas DinÃ¢micos",
+  "Nome" : "Introdução aos Sistemas Dinâmicos",
   "Ano" : 2,
   "ECTS" : 5,
   "Alunos" : [ 69308, 70920, 70815, 71544, 77209 ]
@@ -132,19 +132,19 @@
   "Alunos" : [ 69308, 70629, 77730 ]
 }, {
   "Codigo" : 604,
-  "Nome" : "ComputaÃ§Ã£o GrÃ¡fica",
+  "Nome" : "Computação Gráfica",
   "Ano" : 3,
   "ECTS" : 5,
   "Alunos" : [ 70815, 76275, 70608, 71544 ]
 }, {
   "Codigo" : 605,
-  "Nome" : "Engenharia EconÃ³mica",
+  "Nome" : "Engenharia Económica",
   "Ano" : 2,
   "ECTS" : 5,
   "Alunos" : [ 69308, 69634, 80828, 70920, 73941 ]
 }, {
   "Codigo" : 612,
-  "Nome" : "Sistemas de ComputaÃ§Ã£o",
+  "Nome" : "Sistemas de Computação",
   "Ano" : 1,
   "ECTS" : 5,
   "Alunos" : [ 78790, 81230, 69634, 75820, 80828 ]
@@ -156,7 +156,7 @@
   "Alunos" : [ 76111, 77321, 77870, 74584, 78404, 67848, 80828, 80979, 66906, 68892, 81682 ]
 }, {
   "Codigo" : 702,
-  "Nome" : "ComunicaÃ§Ãµes por Computador",
+  "Nome" : "Comunicações por Computador",
   "Ano" : 3,
   "ECTS" : 5,
   "Alunos" : [ 73941, 81122, 72974, 80979, 67848, 76935, 68892, 81682 ]
