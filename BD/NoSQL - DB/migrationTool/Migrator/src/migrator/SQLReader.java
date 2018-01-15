@@ -175,4 +175,58 @@ public class SQLReader {
 
     }
 
+    void migrateUCS(ArrayList<AlunosUC> ucs) {
+
+        ResultSet uc = null;
+        ResultSet aluno = null;
+        PreparedStatement stUc = null;
+        PreparedStatement stAluno = null;
+        ArrayList<AlunosUC> alunosUC = ucs;
+
+        try {
+            stUc = cn.prepareStatement("SELECT * FROM Aluno;"); // alterar
+            uc = stUc.executeQuery();
+            while (uc.next()) {
+                int codigo = uc.getInt("Codigo");
+                String nome = uc.getString("Nome");
+                int ano = uc.getInt("Ano");
+                int ects = uc.getInt("ECTS");
+                // Ler os alunos que estao inscritos na uc
+                ArrayList<Integer> alunos = new ArrayList<Integer>();
+                stAluno = cn.prepareStatement("SELECT * FROM UC JOIN UCAluno ON UC.Codigo = UCAluno.UC_Codigo WHERE UCAluno.UC_Codigo = " + codigo); // obtem lista de turnos para o aluno com aquele 'numero'
+                aluno = stAluno.executeQuery();
+                while (aluno.next()) {
+                    int numero = aluno.getInt("Aluno_Numero");
+                    alunos.add(new Integer(numero));
+                }
+                alunosUC.add(new AlunosUC(codigo, nome, ano, ects, alunos));
+
+            }
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Version.class
+                    .getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            try {
+                if (aluno != null) {
+                    aluno.close();
+                }
+                if (uc != null) {
+                    uc.close();
+                }
+                if (stAluno != null) {
+                    stAluno.close();
+                }
+                if (stUc != null) {
+                    stUc.close();
+
+                }
+            } catch (SQLException ex) {
+                Logger lgr = Logger.getLogger(Version.class
+                        .getName());
+                lgr.log(Level.WARNING, ex.getMessage(), ex);
+            }
+        }
+    }
+
 }
