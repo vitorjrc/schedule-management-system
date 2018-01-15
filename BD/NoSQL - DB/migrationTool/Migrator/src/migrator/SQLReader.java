@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdk.nashorn.internal.runtime.Version;
@@ -184,7 +183,7 @@ public class SQLReader {
         ArrayList<AlunosUC> alunosUC = ucs;
 
         try {
-            stUc = cn.prepareStatement("SELECT * FROM Aluno;"); // alterar
+            stUc = cn.prepareStatement("SELECT * FROM UC;"); // alterar
             uc = stUc.executeQuery();
             while (uc.next()) {
                 int codigo = uc.getInt("Codigo");
