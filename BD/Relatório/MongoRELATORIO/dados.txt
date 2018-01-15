@@ -1,8 +1,0 @@
-Para o processo de migração dos dados da Base de Dados relacional para uma não relacional foram consideradas várias opções, sendo que se verificou que o desenvolvimento de uma aplicação que fizesse isso tornaria o processo muito mais flexível, simples e intuitivo. Assim, codificou-se em Java um pequeno programa que, fundamentalmente, acede à base de dados de MySQL e obtém o seu conteúdo. De seguida, transfere a informação para ficheiros em formato JSON que são posteriormente importados para coleções em MongoDB.
-
-Para a ligação ao SGBD relacional, usaram-se os drivers que permitem a conexão a partir de Java e, deste modo, tendo em conta o esquema delineado para as duas bases de dados, criaram-se classes que pudessem resultar em documentos no MongoDB numa estrutura tal que tornasse possível responder com sucesso às queries que eram sucedidamente respondidas em MySQL.
-
-Portanto, a recolha dos dados de MySQL consistiu em 3 operações responsáveis por obter os dados necessários para formar os documentos, sendo que cada operação corresponde a uma coleção em Mongo e, por isso, obtém-se as coleções Aluno, Docente e UC.
-
-Usámos, por fim, a biblioteca Jackson que trata de exportar objetos em Java para ficheiros em formato JSON. Foram obtidos, assim, três ficheiros JSON relativos a três coleções e, uma vez que, este formato é aceite pelo MongoDBImport, todo o processo de importação dos documentos na base de dados não relacional foi feito de forma quase imediata e a base de dados foi criada com sucesso.
-
