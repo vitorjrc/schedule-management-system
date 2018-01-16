@@ -9,3 +9,11 @@ Lista de Alunos com nome e numero e nome de UCs.
 Número total de UCs no curso
 Número total de alunos
 Top 3 de UCs com mais alunos e docente de cada uma
+
+TRANSACOES
+criacao de aluno
+criacao de docente
+criacao de ucs
+mudar nome de UC
+mudar nome de curso do aluno
+mudar turno de aluno
