@@ -1,0 +1,11 @@
+Alunos capazes de:
+obter lista de cadeiras a que estao inscritos + turnos
+
+Docentes capazes de:
+obter lista de alunos das UC's que lecionam, NOME + Numero
+
+DIRETOR DE CURSO
+Lista de Alunos com nome e numero e nome de UCs.
+Número total de UCs no curso
+Número total de alunos
+Top 3 de UCs com mais alunos e docente de cada uma
