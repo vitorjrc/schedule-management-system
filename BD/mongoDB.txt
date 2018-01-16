@@ -13,3 +13,7 @@ CMDS diana
 mongoimport.exe --db TrocaTurnos --jsonArray --collection Docente --drop --file "C:\Users\Diana\Documents\DSS_BD\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\docentes.json"
 
 mongoimport.exe --db TrocaTurnos --jsonArray --collection Aluno --drop --file "C:\Users\Diana\Documents\DSS_BD\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\alunos.json"
+
+mongoimport.exe --db TrocaTurnos --jsonArray --collection UC --drop --file "C:\Users\Diana\Documents\DSS_BD\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\ucs.json"
+
+use TrocaTurnos !!!!!!!!!!!!!!!!!!!
