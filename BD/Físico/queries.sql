@@ -35,6 +35,7 @@ DELIMITER ;
 
 CALL lista_turnos(78985);
 
+
 -- --------------------------------------------------------------------
 /*
  Os docentes devem ser capazes de obter a lista dos alunos das UC's
@@ -44,10 +45,10 @@ DROP PROCEDURE IF EXISTS lista_alunos;
 DELIMITER $$
 CREATE PROCEDURE lista_alunos(id_docente INT)
 BEGIN
-	SELECT Aluno.Nome, UC.Nome FROM Aluno
-    INNER JOIN UCAluno ON UCAluno.Aluno_Numero = Aluno.Numero
-    INNER JOIN UC ON UC.Codigo = UCAluno.UC_Codigo
-    INNER JOIN DocenteUC ON DocenteUC.UC_Codigo = UC.Codigo
+	SELECT a.Nome as NomeAluno, b.Nome as NomeUC FROM Aluno a
+    INNER JOIN UCAluno ON UCAluno.Aluno_Numero = a.Numero
+    INNER JOIN UC b ON b.Codigo = UCAluno.UC_Codigo
+    INNER JOIN DocenteUC ON DocenteUC.UC_Codigo = b.Codigo
     WHERE DocenteUC.Docente_Numero = id_docente;
 END
 $$
@@ -281,6 +282,7 @@ DELIMITER ;
 								-- VISTAS DOS UTILIZADORES
 								--  		&
 								--   REGRAS DE ACESSO
+drop user admin@localhost;
 /*
  Criação de um administrador.
 */ 
@@ -322,6 +324,8 @@ CREATE USER 'stud3'@'localhost';
  Pode "fazer o que quiser".
 */
 GRANT SELECT, INSERT, UPDATE, DELETE ON trocaturnos.* TO 'admin'@'localhost';
+
+GRANT EXECUTE ON lista_turnos TO 'admin'@'localhost';
 
 -- -----------------------------------------------------------------------
 /*
@@ -450,8 +454,6 @@ CREATE VIEW viewAluno AS
 $$
 DELIMITER ;
 SELECT * FROM trocaturnos.viewAluno;
-
-
 
 -- -----------------------------------------------------------------------
 
