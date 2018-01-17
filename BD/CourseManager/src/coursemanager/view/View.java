@@ -1,18 +1,14 @@
 package coursemanager.view;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.function.Consumer; // This is the type we are going to use for callback methods. A Consumer<T> is a function that receives one parameter of type T and returns nothing.
 import javax.swing.JOptionPane;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import javax.swing.BorderFactory;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.event.*;
-import java.awt.Dimension;
-import java.awt.event.*;
+
 
 
 /**
@@ -59,6 +55,12 @@ public class View extends javax.swing.JFrame {
         jScrollPane3.getViewport().setBackground(Color.WHITE);
         jScrollPane4.getViewport().setBackground(Color.WHITE);
         
+        
+        jScrollPane1.setBorder(null);
+        jScrollPane2.setBorder(null);
+        jScrollPane3.setBorder(null);
+        jScrollPane4.setBorder(null);
+        
         // set JFrame to center of screen
         this.setLocationRelativeTo(null);
         
@@ -72,15 +74,15 @@ public class View extends javax.swing.JFrame {
             .setHorizontalAlignment(JLabel.LEFT);
         jTable2.getTableHeader().setReorderingAllowed(false);
         jTable2.getTableHeader();
-        ((DefaultTableCellRenderer)jTable1.getTableHeader().getDefaultRenderer())
+        ((DefaultTableCellRenderer)jTable2.getTableHeader().getDefaultRenderer())
             .setHorizontalAlignment(JLabel.LEFT);
         jTable3.getTableHeader().setReorderingAllowed(false);
         jTable3.getTableHeader();
-        ((DefaultTableCellRenderer)jTable1.getTableHeader().getDefaultRenderer())
+        ((DefaultTableCellRenderer)jTable3.getTableHeader().getDefaultRenderer())
             .setHorizontalAlignment(JLabel.LEFT);
         jTable4.getTableHeader().setReorderingAllowed(false);
         jTable4.getTableHeader();
-        ((DefaultTableCellRenderer)jTable1.getTableHeader().getDefaultRenderer())
+        ((DefaultTableCellRenderer)jTable4.getTableHeader().getDefaultRenderer())
             .setHorizontalAlignment(JLabel.LEFT);
         
         
