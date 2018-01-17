@@ -26,6 +26,7 @@ public class View extends javax.swing.JFrame {
     private ArrayList<Consumer<ArrayList<String>>> createUC = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> changeCourseName = new ArrayList<Consumer<ArrayList<String>>>();
     private ArrayList<Consumer<ArrayList<String>>> createTeacher = new ArrayList<Consumer<ArrayList<String>>>();
+    private ArrayList<Consumer<ArrayList<String>>> createStudent = new ArrayList<Consumer<ArrayList<String>>>();
     
     
     //construtor da view
@@ -116,6 +117,11 @@ public class View extends javax.swing.JFrame {
     public void createTeacher(Consumer<ArrayList<String>> callback) {
         
         createTeacher.add(0, callback);
+    }
+    
+    public void createStudent(Consumer<ArrayList<String>> callback) {
+        
+        createStudent.add(0, callback);
     }
     
     public void studentInterface() {
@@ -257,13 +263,13 @@ public class View extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jLabel57 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
@@ -607,7 +613,7 @@ public class View extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        jLabel11.setText("Por favor, efetue o login ou registe-se.");
+        jLabel11.setText("Por favor, efetue o login.");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -738,11 +744,11 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "UC", "Turno"
+                "UC", "Professor", "Contagem"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -771,7 +777,7 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "UC", "Turno"
+                "Nome", "UC"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -816,11 +822,12 @@ public class View extends javax.swing.JFrame {
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel13)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel41, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(54, 54, 54)))
                             .addGap(48, 48, 48)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel14)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(52, 52, 52)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 837, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -834,11 +841,10 @@ public class View extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel41)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel56)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel9))
+                .addGap(17, 17, 17)
                 .addComponent(jLabel57)
                 .addGap(13, 13, 13)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -954,20 +960,18 @@ public class View extends javax.swing.JFrame {
     // botao criar uc
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         
-        String selectedCourse = jComboBox4.getItemAt(jComboBox4.getSelectedIndex());
         String newID = jTextField11.getText();
-        String newLimit = jTextField12.getText();
-        String newTeacher = jTextField18.getText();
-        String newClassroom = jTextField19.getText();
+        String newName = jTextField12.getText();
+        String newYear = jTextField18.getText();
+        String newECTS = jTextField19.getText();
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createUC.get(0);
         
-        sc.add(0, selectedCourse);
-        sc.add(1, newID);
-        sc.add(2, newLimit);
-        sc.add(3, newTeacher);
-        sc.add(4, newClassroom);
+        sc.add(0, newID);
+        sc.add(2, newName);
+        sc.add(3, newYear);
+        sc.add(4, newECTS);
         
         method.accept(sc);
         
@@ -981,16 +985,16 @@ public class View extends javax.swing.JFrame {
     // botao criar docente
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         
-        String teacherName = jTextField20.getText();
-        String teacherID = jTextField21.getText();
-        String teacherPassword = jTextField22.getText();
+        String teacherID = jTextField20.getText();
+        String teacherName = jTextField21.getText();
+        String teacherSchool = jTextField22.getText();
         
         ArrayList<String> sc = new ArrayList<String>(); 
         Consumer method = createTeacher.get(0);
         
         sc.add(0, teacherName);
         sc.add(1, teacherID);
-        sc.add(2, teacherPassword);
+        sc.add(2, teacherSchool);
         
         method.accept(sc);
         
@@ -1001,7 +1005,23 @@ public class View extends javax.swing.JFrame {
 
     // botao criar aluno
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
+        
+        String studentID = jTextField23.getText();
+        String studentName = jTextField24.getText();
+        String studentSchool = jTextField25.getText();
+        
+        ArrayList<String> sc = new ArrayList<String>(); 
+        Consumer method = createStudent.get(0);
+        
+        sc.add(0, studentName);
+        sc.add(1, studentID);
+        sc.add(2, studentSchool);
+        
+        method.accept(sc);
+        
+        jTextField23.setText("");
+        jTextField24.setText("");
+        jTextField25.setText("");
     }//GEN-LAST:event_jButton13ActionPerformed
    
     //dados pessoais
@@ -1011,58 +1031,52 @@ public class View extends javax.swing.JFrame {
         jLabel20.setText(status);
     }
     
-    public void showStudentUCs(HashMap<String, ArrayList<String>> userInfo) { 
+    public void showStudentUCs(HashMap<String, String> userInfo) { 
        
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         
         tableModel.setRowCount(0); // Remover todas as entradas da table
         String[] data = new String[2];
         
-        for (Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()) {
+        for (Map.Entry<String, String> entry: userInfo.entrySet()) {
             data[0] = entry.getKey();
-            data[1] = entry.getValue().get(0);
-            data[2] = entry.getValue().get(1);
-            data[3] = entry.getValue().get(2); 
+            data[1] = entry.getValue();
         
-            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3]});
+            tableModel.addRow(new Object[]{data[0], data[1]});
         }
             
         tableModel.fireTableDataChanged();
     }
     
-    public void showTeacherStudents(HashMap<String, ArrayList<String>> userInfo) { 
+    public void showTeacherStudents(HashMap<String, String> userInfo) { 
        
         DefaultTableModel tableModel = (DefaultTableModel) jTable2.getModel();
         
         tableModel.setRowCount(0); // Remover todas as entradas da table
         String[] data = new String[2];
         
-        for (Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()) {
+        for (Map.Entry<String, String> entry: userInfo.entrySet()) {
             data[0] = entry.getKey();
-            data[1] = entry.getValue().get(0);
-            data[2] = entry.getValue().get(1);
-            data[3] = entry.getValue().get(2); 
+            data[1] = entry.getValue();
         
-            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3]});
+            tableModel.addRow(new Object[]{data[0], data[1]});
         }
             
         tableModel.fireTableDataChanged();
     }
     
-    public void showStudentsToAdmin(HashMap<String, ArrayList<String>> userInfo) { 
+    public void showStudentsToAdmin(HashMap<String, String> userInfo) { 
        
         DefaultTableModel tableModel = (DefaultTableModel) jTable4.getModel();
         
         tableModel.setRowCount(0); // Remover todas as entradas da table
         String[] data = new String[2];
         
-        for (Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()) {
+        for (Map.Entry<String, String> entry: userInfo.entrySet()) {
             data[0] = entry.getKey();
-            data[1] = entry.getValue().get(0);
-            data[2] = entry.getValue().get(1);
-            data[3] = entry.getValue().get(2); 
+            data[1] = entry.getValue();
         
-            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3]});
+            tableModel.addRow(new Object[]{data[0], data[1]});
         }
             
         tableModel.fireTableDataChanged();
@@ -1073,18 +1087,23 @@ public class View extends javax.swing.JFrame {
         DefaultTableModel tableModel = (DefaultTableModel) jTable3.getModel();
         
         tableModel.setRowCount(0); // Remover todas as entradas da table
-        String[] data = new String[2];
+        String[] data = new String[3];
         
         for (Map.Entry<String, ArrayList<String>> entry: userInfo.entrySet()) {
             data[0] = entry.getKey();
             data[1] = entry.getValue().get(0);
             data[2] = entry.getValue().get(1);
-            data[3] = entry.getValue().get(2); 
         
-            tableModel.addRow(new Object[]{data[0], data[1], data[2], data[3]});
+            tableModel.addRow(new Object[]{data[0], data[1], data[2]});
         }
             
         tableModel.fireTableDataChanged();
+    }
+    
+    public void showStats(String numberUCs, String numberStudents) {
+        
+        jLabel2.setText(numberUCs);
+        jLabel9.setText(numberStudents);
     }
     
     public LoginArea getLoginArea() {
@@ -1170,6 +1189,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1181,7 +1201,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
@@ -1195,11 +1214,11 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
