@@ -41,13 +41,15 @@ public class Controller {
         String userID = data.get(0);
         String userPassword = data.get(1);
         
-        if (model.login(userID, userPassword) == 0) {
-            view.LoginSuccess();
+        String id, name, school;
+        ArrayList<String> list = new ArrayList<>();
+        
+        if (model.login(userID, userPassword) == null || model.login(userID, userPassword).isEmpty()) {
+            return;
+        }
+        
+        else if (model.getUser() == 0) {
             
-            //System.out.println(model.showStudentUCs(Integer.parseInt("78985")));
-            // System.out.println(model.showTeacherStudents(Integer.parseInt("79194")));
-            view.showStudentUCs(model.showStudentUCs(Integer.parseInt("78985")));
-            view.showTeacherStudents(model.showTeacherStudents(Integer.parseInt("79194")));
             view.showStudentsToAdmin(model.showAllStudents());
             view.showTopUCs(model.getTop());
             view.showStats(model.numberOfUCs(), model.numberOfStudents());
@@ -56,18 +58,36 @@ public class Controller {
             this.adminInterface();
         }
         
-        else if (model.login(userID, userPassword) == 1) {
+        // student
+        else if (model.getUser() == 1) {
+            
+            list = model.login(userID, userPassword);
+            
+            id = list.get(0);
+            name = list.get(1);
+            school = list.get(2);
+            
             view.LoginSuccess();
-            view.showStudentUCs(model.showStudentUCs(Integer.parseInt("78985")));
+            view.showStudentUCs(model.showStudentUCs(Integer.parseInt(id)));
             view.studentInterface();
+            
+            view.setUserData(name, id, school);
         }
-        
-        else if (model.login(userID, userPassword) == 2) {
+        // teacher
+        else if (model.getUser() == 2) 
+            
+            list = model.login(userID, userPassword);
+            
+            id = list.get(0);
+            name = list.get(1);
+            school = list.get(2);
+            
             view.LoginSuccess();
-            //view.teacherInterface();
+            view.showTeacherStudents(model.showTeacherStudents(Integer.parseInt(id)));
+            view.setUserData(name, id, school);
+            view.teacherInterface();
         }
-        
-    }
+       
     
     private void adminInterface() {
         

@@ -23,30 +23,43 @@ public class Model {
 
     public Model() {
         Connect connection = new Connect();
-        
     }
     
-    public int login(String userID, String userPassword) {
+    public ArrayList<String> login(String userID, String userPassword) {
         
-        if (userID.substring(0, 1).equals("D") && connection.connect(userID, userPassword) != null) {
-            user = 2;
-            cn = connection.connect(userID, userPassword);
-            return 2;
-        }
-        
-        else if (userID.substring(0, 1).equals("A") && connection.connect(userID, userPassword) != null) {
-            user = 1;
-            cn = connection.connect(userID, userPassword);
-            return 1;
-        }
-        
-        else if (userID.equals("admin") && connection.connect(userID, userPassword) != null) {
+        if (userID.equals("admin") && userPassword.equals("admin1")) {
+            
+            ArrayList<String> list = new ArrayList<>();
+            list.add("admin");
+            
             user = 0;
             cn = connection.connect(userID, userPassword);
-            return 0;
+            return list;
         }
         
-        else return -1;
+        else if (this.isTeacherLoggedIn(Integer.parseInt(userID)) != null && !this.isTeacherLoggedIn(Integer.parseInt(userID)).isEmpty()) {
+            
+            int id = Integer.parseInt(userID);    
+            ArrayList<String> list = this.isTeacherLoggedIn(id);
+            
+            user = 2;
+            cn = connection.connect("doc1", "doc1");
+            if (cn != null) return list;
+        }
+        
+        else if (this.isStudentLoggedIn(Integer.parseInt(userID)) != null) {
+            
+            int id = Integer.parseInt(userID);
+            ArrayList<String> list = this.isStudentLoggedIn(id);
+            
+            user = 1;
+            cn = connection.connect("stud1", "stud1");
+            if (cn != null) return list;
+        }
+        
+        else return null;
+        
+        return null;
         
     }
     
@@ -342,6 +355,74 @@ public class Model {
         return result;
     }
     
+        public ArrayList<String> isStudentLoggedIn(int userID) {
+
+        ResultSet uc = null;
+        PreparedStatement stUc = null;
+        cn = connection.connect("admin", "admin1");
+
+        try {
+            
+            stUc = cn.prepareStatement("SELECT * FROM Aluno where Aluno.Numero = ?;");
+            stUc.setInt(1, userID);
+            uc = stUc.executeQuery();
+            if (uc.next()) {
+                int idStudent = uc.getInt("Numero");
+                String nameStudent = uc.getString("Nome");
+                String schoolStudent = uc.getString("Curso_Nome");
+                
+                ArrayList<String> list = new ArrayList<>();
+                list.add(Integer.toString(idStudent));
+                list.add(nameStudent);
+                list.add(schoolStudent);
+                
+                return list;
+            }
+            
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Version.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        
+        return null;
+    }
+        
+        public ArrayList<String> isTeacherLoggedIn(int userID) {
+
+        ResultSet uc = null;
+        PreparedStatement stUc = null;
+        cn = connection.connect("admin", "admin1");
+
+        try {
+            
+            stUc = cn.prepareStatement("SELECT * FROM Docente where Docente.Numero = ?;");
+            stUc.setInt(1, userID);
+            uc = stUc.executeQuery();
+            if (uc.next()) {
+                int idTeacher = uc.getInt("Numero");
+                String nameTeacher = uc.getString("Nome");
+                String schoolTeacher = uc.getString("Escola_Nome");
+                
+                ArrayList<String> list = new ArrayList<>();
+                list.add(Integer.toString(idTeacher));
+                list.add(nameTeacher);
+                list.add(schoolTeacher);
+                
+                return list;
+            }
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Version.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        
+        return null;
+    }
+        
+        public int getUser() {
+            return this.user;
+        }
     
     
         

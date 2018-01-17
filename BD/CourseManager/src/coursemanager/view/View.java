@@ -87,12 +87,14 @@ public class View extends javax.swing.JFrame {
         
         
         // disabling tabs
-        /*
+        
         jTabbedPane1.remove(jPanel1);
         jTabbedPane1.remove(jPanel6);
         jTabbedPane1.remove(jPanel5);
-        jButton4.setEnabled(false);
-        */
+        jTabbedPane1.remove(jPanel2);
+        jTabbedPane1.remove(jPanel3);
+        // jButton4.setEnabled(false);
+        
         
     }
     
@@ -142,8 +144,9 @@ public class View extends javax.swing.JFrame {
         */
         
         // show student tabs
-        jTabbedPane1.addTab("Minha Área", jPanel1);
+        jTabbedPane1.addTab("Minha Área - Aluno", jPanel1);
         jTabbedPane1.remove(jPanel10);
+        jTabbedPane1.remove(jPanel2);
        
         
     }
@@ -153,8 +156,10 @@ public class View extends javax.swing.JFrame {
         jLabel1.setVisible(true);
         
         // show admin tabs
-        jTabbedPane1.addTab("Criar UCs e Turnos", jPanel6);
-        jTabbedPane1.addTab("Docentes", jPanel5);
+
+        jTabbedPane1.addTab("Minha Área - Admin", jPanel3);
+        jTabbedPane1.addTab("UCs", jPanel6);
+        jTabbedPane1.addTab("Pessoal", jPanel5);
         jTabbedPane1.remove(jPanel10);
         
         // show "Logado como Administrador"
@@ -162,7 +167,7 @@ public class View extends javax.swing.JFrame {
         
     }
     
-    public void teacherInterface(String teacherName, ArrayList<String> teacherCourse) {
+    public void teacherInterface() {
         
         // show "Logado como: ...."
         jLabel1.setVisible(true);
@@ -170,24 +175,7 @@ public class View extends javax.swing.JFrame {
         // show teacher tab
         jTabbedPane1.remove(jPanel10);
         
-        StringBuilder builder = new StringBuilder();
-        
-        for (int i = 0; i < teacherCourse.size(); i++) {
-            
-            builder.append(teacherCourse.get(i));
-            if (i != teacherCourse.size() -1)
-                builder.append(" e ");
-        }
-        
-        String courses = builder.toString();
-        
-        jLabel1.setText(teacherName);
-            
-        String[] coursesList = new String[teacherCourse.size()];
-        for (int i = 0; i < teacherCourse.size(); i++) {
-            coursesList[i] = teacherCourse.get(i);
-        }
-        
+        //jTabbedPane1.addTab("Minha Área - Docente", jPanel2);
         
     }
     
@@ -1031,6 +1019,11 @@ public class View extends javax.swing.JFrame {
         jLabel1.setText(name);
         jLabel19.setText(id);
         jLabel20.setText(status);
+        
+        jLabel42.setText(id);
+        jLabel43.setText(status);
+        
+        
     }
     
     public void showStudentUCs(HashMap<String, String> userInfo) { 
