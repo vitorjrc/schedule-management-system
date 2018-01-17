@@ -16,8 +16,6 @@ public class Controller {
     
     private Model model;
     private View view;
-    private Student userStudent = null;
-    private Teacher userTeacher = null;
     
     public void setModel(Model model) {
         this.model = model;
@@ -30,17 +28,48 @@ public class Controller {
     // Tell view what methods from this class to call when certain events happen
     public void attachToView() {
         
-    	view.onRegister(this::onRegister);
-        view.getRegistrationArea().RegisterButton(this::RegisterButton);
+        //view.getRegistrationArea().RegisterButton(this::RegisterButton);
         view.getLoginArea().loginButton(this::loginButton);
         
+    }
+    
+    private void loginButton(ArrayList<String> data) {
+        
+        String userID = data.get(0);
+        String userPassword = data.get(1);
+        
+        if (model.login(userID, userPassword) == 0) {
+            view.LoginSuccess();
+            
+            System.out.println(model.showStudentUCs(Integer.parseInt("78985")));
+            System.out.println(model.showTeacherStudents(Integer.parseInt("79194")));
+            
+            this.adminInterface();
+        }
+        
+        else if (model.login(userID, userPassword) == 1) {
+            view.LoginSuccess();
+            view.studentInterface();
+        }
+        
+        else if (model.login(userID, userPassword) == 2) {
+            view.LoginSuccess();
+            //view.teacherInterface();
+        }
+        
+    }
+    
+    private void adminInterface() {
+        
+        view.adminInterface();
+        view.showCourses(model.getUCs());
     }
     
     // Called when the view sends an onRegister event
     private void onRegister(ArrayList<String> data) {
         
         
-        view.getRegistrationArea().showCourses(courses);
+        //view.getRegistrationArea().showCourses(courses);
     }
     
     
