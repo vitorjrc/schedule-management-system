@@ -4,7 +4,7 @@
   "Escola" : "Escola de Engenharia",
   "UCS" : [ {
     "Codigo" : 50,
-    "Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Ano" : 2,
     "ECTS" : 5
   }, {
@@ -15,36 +15,36 @@
   } ]
 }, {
   "Numero" : 18054,
-  "Nome" : "AmÈlia Campos",
-  "Escola" : "Escola de CiÍncias",
+  "Nome" : "Am√©lia Campos",
+  "Escola" : "Escola de Ci√™ncias",
   "UCS" : [ {
     "Codigo" : 93,
-    "Nome" : "LÛgica",
+    "Nome" : "L√≥gica",
     "Ano" : 1,
     "ECTS" : 5
   }, {
     "Codigo" : 365,
-    "Nome" : "¡lgebra Linear",
+    "Nome" : "√Ålgebra Linear",
     "Ano" : 1,
     "ECTS" : 5
   } ]
 }, {
   "Numero" : 24759,
   "Nome" : "Maria Minho",
-  "Escola" : "Escola de CiÍncias",
+  "Escola" : "Escola de Ci√™ncias",
   "UCS" : [ {
     "Codigo" : 312,
-    "Nome" : "EstatÌstica Aplicada",
+    "Nome" : "Estat√≠stica Aplicada",
     "Ano" : 2,
     "ECTS" : 5
   }, {
     "Codigo" : 399,
-    "Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Ano" : 3,
     "ECTS" : 5
   }, {
     "Codigo" : 498,
-    "Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Ano" : 2,
     "ECTS" : 5
   } ]
@@ -64,17 +64,17 @@
     "ECTS" : 5
   }, {
     "Codigo" : 210,
-    "Nome" : "LaboratÛrios de Inform·tica II",
+    "Nome" : "Laborat√≥rios de Inform√°tica II",
     "Ano" : 1,
     "ECTS" : 5
   } ]
 }, {
   "Numero" : 41495,
-  "Nome" : "AntÛnio Macedo",
+  "Nome" : "Ant√≥nio Macedo",
   "Escola" : "Escola de Engenharia",
   "UCS" : [ {
     "Codigo" : 327,
-    "Nome" : "C·lculo de Programas",
+    "Nome" : "C√°lculo de Programas",
     "Ano" : 2,
     "ECTS" : 5
   }, {
@@ -84,39 +84,39 @@
     "ECTS" : 5
   }, {
     "Codigo" : 455,
-    "Nome" : "Programac„o Imperativa",
+    "Nome" : "Programac√£o Imperativa",
     "Ano" : 1,
     "ECTS" : 5
   } ]
 }, {
   "Numero" : 43923,
-  "Nome" : "CornÈlio Belo",
+  "Nome" : "Corn√©lio Belo",
   "Escola" : "Escola de Engenharia",
   "UCS" : [ {
     "Codigo" : 10,
-    "Nome" : "LaboratÛrios de Inform·tica IV",
+    "Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Ano" : 3,
     "ECTS" : 5
   }, {
     "Codigo" : 103,
-    "Nome" : "LaboratÛrios de Inform·tica I",
+    "Nome" : "Laborat√≥rios de Inform√°tica I",
     "Ano" : 1,
     "ECTS" : 5
   }, {
     "Codigo" : 605,
-    "Nome" : "Engenharia EconÛmica",
+    "Nome" : "Engenharia Econ√≥mica",
     "Ano" : 2,
     "ECTS" : 5
   }, {
     "Codigo" : 612,
-    "Nome" : "Sistemas de ComputaÁ„o",
+    "Nome" : "Sistemas de Computa√ß√£o",
     "Ano" : 1,
     "ECTS" : 5
   } ]
 }, {
   "Numero" : 48592,
   "Nome" : "Carla Santos",
-  "Escola" : "Escola de CiÍncias",
+  "Escola" : "Escola de Ci√™ncias",
   "UCS" : [ {
     "Codigo" : 67,
     "Nome" : "Electromagnetismo",
@@ -124,7 +124,7 @@
     "ECTS" : 5
   }, {
     "Codigo" : 423,
-    "Nome" : "C·lculo",
+    "Nome" : "C√°lculo",
     "Ano" : 1,
     "ECTS" : 5
   } ]
@@ -139,18 +139,18 @@
     "ECTS" : 5
   }, {
     "Codigo" : 604,
-    "Nome" : "ComputaÁ„o Gr·fica",
+    "Nome" : "Computa√ß√£o Gr√°fica",
     "Ano" : 3,
     "ECTS" : 5
   }, {
     "Codigo" : 702,
-    "Nome" : "ComunicaÁıes por Computador",
+    "Nome" : "Comunica√ß√µes por Computador",
     "Ano" : 3,
     "ECTS" : 5
   } ]
 }, {
   "Numero" : 59479,
-  "Nome" : "JosÈ Frade",
+  "Nome" : "Jos√© Frade",
   "Escola" : "Escola de Engenharia",
   "UCS" : [ {
     "Codigo" : 552,
@@ -164,17 +164,17 @@
   "Escola" : "Escola de Engenharia",
   "UCS" : [ {
     "Codigo" : 323,
-    "Nome" : "Programac„o Funcional",
+    "Nome" : "Programac√£o Funcional",
     "Ano" : 1,
     "ECTS" : 5
   }, {
     "Codigo" : 455,
-    "Nome" : "Programac„o Imperativa",
+    "Nome" : "Programac√£o Imperativa",
     "Ano" : 1,
     "ECTS" : 5
   }, {
     "Codigo" : 604,
-    "Nome" : "ComputaÁ„o Gr·fica",
+    "Nome" : "Computa√ß√£o Gr√°fica",
     "Ano" : 3,
     "ECTS" : 5
   } ]
@@ -195,16 +195,16 @@
   } ]
 }, {
   "Numero" : 79194,
-  "Nome" : "ValÈrio Quintas",
-  "Escola" : "Escola de CiÍncias",
+  "Nome" : "Val√©rio Quintas",
+  "Escola" : "Escola de Ci√™ncias",
   "UCS" : [ {
     "Codigo" : 93,
-    "Nome" : "LÛgica",
+    "Nome" : "L√≥gica",
     "Ano" : 1,
     "ECTS" : 5
   }, {
     "Codigo" : 112,
-    "Nome" : "An·lise",
+    "Nome" : "An√°lise",
     "Ano" : 1,
     "ECTS" : 5
   } ]

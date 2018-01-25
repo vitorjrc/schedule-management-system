@@ -325,7 +325,7 @@ CREATE USER 'stud3'@'localhost';
 */
 GRANT SELECT, INSERT, UPDATE, DELETE ON trocaturnos.* TO 'admin'@'localhost';
 
-GRANT EXECUTE ON lista_turnos TO 'admin'@'localhost';
+-- GRANT EXECUTE ON lista_cadeiras TO 'admin'@'localhost';
 
 -- -----------------------------------------------------------------------
 /*
@@ -394,7 +394,9 @@ GRANT SELECT ON trocaturnos.Curso TO 'doc1'@'localhost',
 REVOKE INSERT, DELETE, UPDATE ON trocaturnos.Curso FROM 'doc1'@'localhost',
 													    'doc2'@'localhost',
 													    'doc3'@'localhost';
-
+                                                        
+					
+GRANT EXECUTE ON PROCEDURE lista_cadeiras TO 'stud1'@'localhost';
 -- -----------------------------------------------------------------------
 /*
  Permissões dos alunos.

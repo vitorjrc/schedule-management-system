@@ -10,7 +10,12 @@ JSON TO MONGODB
 ./mongoimport.exe --db TrocaTurnos --jsonArray --collection UCs --drop --file "C:\Users\sergi\Desktop\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\ucs.json"
 
 -----------------------------------------------------
+
 CMDS diana
+
+mongod.exe -> ligar servidor
+
+db.dropDatabase()
 
 mongoimport.exe --db TrocaTurnos --jsonArray --collection Docente --drop --file "C:\Users\Diana\Documents\DSS_BD\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\docentes.json"
 
@@ -18,4 +23,20 @@ mongoimport.exe --db TrocaTurnos --jsonArray --collection Aluno --drop --file "C
 
 mongoimport.exe --db TrocaTurnos --jsonArray --collection UC --drop --file "C:\Users\Diana\Documents\DSS_BD\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\ucs.json"
 
+mongo.exe
+
+quit()
+
 use TrocaTurnos !!!!!!!!!!!!!!!!!!!
+
+------------------------------------------------------
+
+QUERIES MONGODB
+
+db.aluno.count()
+
+db.UC.count()    OU    db.Docente.distinct("UCS").length
+
+db.Aluno.find({},{Numero: 1, Nome: 1}).pretty()
+
+db.Aluno.find({Curso: "MIEI"},{Numero: 1, Nome: 1, Turnos: 1}).pretty()
