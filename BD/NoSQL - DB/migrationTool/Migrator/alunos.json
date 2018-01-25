@@ -1,15 +1,15 @@
 [ {
   "Numero" : 51146,
-  "Nome" : "AndrÈ Azevedo",
+  "Nome" : "Andr√© Azevedo",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 312,
-    "UC_Nome" : "EstatÌstica Aplicada",
+    "UC_Nome" : "Estat√≠stica Aplicada",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 455,
-    "UC_Nome" : "Programac„o Imperativa",
+    "UC_Nome" : "Programac√£o Imperativa",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -19,12 +19,12 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 210,
-    "UC_Nome" : "LaboratÛrios de Inform·tica II",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica II",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 103,
-    "UC_Nome" : "LaboratÛrios de Inform·tica I",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica I",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -35,16 +35,16 @@
   } ]
 }, {
   "Numero" : 67848,
-  "Nome" : "Jo„o Soares",
+  "Nome" : "Jo√£o Soares",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 399,
-    "UC_Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "UC_Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -54,7 +54,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
@@ -64,22 +64,22 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 93,
-    "UC_Nome" : "LÛgica",
+    "UC_Nome" : "L√≥gica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 323,
-    "UC_Nome" : "Programac„o Funcional",
+    "UC_Nome" : "Programac√£o Funcional",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 103,
-    "UC_Nome" : "LaboratÛrios de Inform·tica I",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica I",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -89,7 +89,7 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   }, {
@@ -99,7 +99,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL4",
     "AnoLetivo" : 1617
   } ]
@@ -109,7 +109,7 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 498,
-    "UC_Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "UC_Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -119,22 +119,22 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 605,
-    "UC_Nome" : "Engenharia EconÛmica",
+    "UC_Nome" : "Engenharia Econ√≥mica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 69545,
-  "Nome" : "GonÁalo Oliveira",
+  "Nome" : "Gon√ßalo Oliveira",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 312,
-    "UC_Nome" : "EstatÌstica Aplicada",
+    "UC_Nome" : "Estat√≠stica Aplicada",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 455,
-    "UC_Nome" : "Programac„o Imperativa",
+    "UC_Nome" : "Programac√£o Imperativa",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -149,17 +149,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 605,
-    "UC_Nome" : "Engenharia EconÛmica",
+    "UC_Nome" : "Engenharia Econ√≥mica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 612,
-    "UC_Nome" : "Sistemas de ComputaÁ„o",
+    "UC_Nome" : "Sistemas de Computa√ß√£o",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
@@ -169,22 +169,22 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 604,
-    "UC_Nome" : "ComputaÁ„o Gr·fica",
+    "UC_Nome" : "Computa√ß√£o Gr√°fica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 70629,
-  "Nome" : "Anderson VÌtor",
+  "Nome" : "Anderson V√≠tor",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 327,
-    "UC_Nome" : "C·lculo de Programas",
+    "UC_Nome" : "C√°lculo de Programas",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -214,27 +214,27 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 604,
-    "UC_Nome" : "ComputaÁ„o Gr·fica",
+    "UC_Nome" : "Computa√ß√£o Gr√°fica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 498,
-    "UC_Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "UC_Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 70920,
-  "Nome" : "AndrÈ Maia",
+  "Nome" : "Andr√© Maia",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 498,
-    "UC_Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "UC_Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 605,
-    "UC_Nome" : "Engenharia EconÛmica",
+    "UC_Nome" : "Engenharia Econ√≥mica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -249,12 +249,12 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 498,
-    "UC_Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "UC_Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 604,
-    "UC_Nome" : "ComputaÁ„o Gr·fica",
+    "UC_Nome" : "Computa√ß√£o Gr√°fica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -264,42 +264,42 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 399,
-    "UC_Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "UC_Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 72974,
-  "Nome" : "Jo„o Cunha",
+  "Nome" : "Jo√£o Cunha",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 73314,
-  "Nome" : "Jo„o Cruz",
+  "Nome" : "Jo√£o Cruz",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 399,
-    "UC_Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "UC_Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -309,7 +309,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 93,
-    "UC_Nome" : "LÛgica",
+    "UC_Nome" : "L√≥gica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -319,12 +319,12 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 312,
-    "UC_Nome" : "EstatÌstica Aplicada",
+    "UC_Nome" : "Estat√≠stica Aplicada",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 455,
-    "UC_Nome" : "Programac„o Imperativa",
+    "UC_Nome" : "Programac√£o Imperativa",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -339,17 +339,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 605,
-    "UC_Nome" : "Engenharia EconÛmica",
+    "UC_Nome" : "Engenharia Econ√≥mica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -369,7 +369,7 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 210,
-    "UC_Nome" : "LaboratÛrios de Inform·tica II",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica II",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -379,7 +379,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 612,
-    "UC_Nome" : "Sistemas de ComputaÁ„o",
+    "UC_Nome" : "Sistemas de Computa√ß√£o",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -389,17 +389,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 93,
-    "UC_Nome" : "LÛgica",
+    "UC_Nome" : "L√≥gica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 103,
-    "UC_Nome" : "LaboratÛrios de Inform·tica I",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica I",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 323,
-    "UC_Nome" : "Programac„o Funcional",
+    "UC_Nome" : "Programac√£o Funcional",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -419,13 +419,13 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 604,
-    "UC_Nome" : "ComputaÁ„o Gr·fica",
+    "UC_Nome" : "Computa√ß√£o Gr√°fica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 76935,
-  "Nome" : "V·lter Carvalho",
+  "Nome" : "V√°lter Carvalho",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 39,
@@ -434,12 +434,12 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
@@ -449,17 +449,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 327,
-    "UC_Nome" : "C·lculo de Programas",
+    "UC_Nome" : "C√°lculo de Programas",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 423,
-    "UC_Nome" : "C·lculo",
+    "UC_Nome" : "C√°lculo",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 498,
-    "UC_Nome" : "IntroduÁ„o aos Sistemas Din‚micos",
+    "UC_Nome" : "Introdu√ß√£o aos Sistemas Din√¢micos",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -485,11 +485,11 @@
   } ]
 }, {
   "Numero" : 77730,
-  "Nome" : "VÌtor Campos",
+  "Nome" : "V√≠tor Campos",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -499,7 +499,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 423,
-    "UC_Nome" : "C·lculo",
+    "UC_Nome" : "C√°lculo",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -514,7 +514,7 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 103,
-    "UC_Nome" : "LaboratÛrios de Inform·tica I",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica I",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -559,17 +559,17 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 365,
-    "UC_Nome" : "¡lgebra Linear",
+    "UC_Nome" : "√Ålgebra Linear",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 423,
-    "UC_Nome" : "C·lculo",
+    "UC_Nome" : "C√°lculo",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
@@ -579,7 +579,7 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 399,
-    "UC_Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "UC_Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -604,7 +604,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 93,
-    "UC_Nome" : "LÛgica",
+    "UC_Nome" : "L√≥gica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -614,7 +614,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 323,
-    "UC_Nome" : "Programac„o Funcional",
+    "UC_Nome" : "Programac√£o Funcional",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
@@ -624,18 +624,18 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 612,
-    "UC_Nome" : "Sistemas de ComputaÁ„o",
+    "UC_Nome" : "Sistemas de Computa√ß√£o",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 78985,
-  "Nome" : "Maria InÍs Machado",
+  "Nome" : "Maria In√™s Machado",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 122,
@@ -644,32 +644,32 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 365,
-    "UC_Nome" : "¡lgebra Linear",
+    "UC_Nome" : "√Ålgebra Linear",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 423,
-    "UC_Nome" : "C·lculo",
+    "UC_Nome" : "C√°lculo",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 79116,
-  "Nome" : "SÈrgio Godinho",
+  "Nome" : "S√©rgio Godinho",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 327,
-    "UC_Nome" : "C·lculo de Programas",
+    "UC_Nome" : "C√°lculo de Programas",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 365,
-    "UC_Nome" : "¡lgebra Linear",
+    "UC_Nome" : "√Ålgebra Linear",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -694,7 +694,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 399,
-    "UC_Nome" : "MÈtodos NumÈricos e OtimizaÁ„o n„o Linear",
+    "UC_Nome" : "M√©todos Num√©ricos e Otimiza√ß√£o n√£o Linear",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   } ]
@@ -704,17 +704,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 605,
-    "UC_Nome" : "Engenharia EconÛmica",
+    "UC_Nome" : "Engenharia Econ√≥mica",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 612,
-    "UC_Nome" : "Sistemas de ComputaÁ„o",
+    "UC_Nome" : "Sistemas de Computa√ß√£o",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -729,12 +729,12 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 323,
-    "UC_Nome" : "Programac„o Funcional",
+    "UC_Nome" : "Programac√£o Funcional",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 365,
-    "UC_Nome" : "¡lgebra Linear",
+    "UC_Nome" : "√Ålgebra Linear",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -754,17 +754,17 @@
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 93,
-    "UC_Nome" : "LÛgica",
+    "UC_Nome" : "L√≥gica",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 103,
-    "UC_Nome" : "LaboratÛrios de Inform·tica I",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica I",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
@@ -775,16 +775,16 @@
   } ]
 }, {
   "Numero" : 81122,
-  "Nome" : "Catarina Ara˙jo",
+  "Nome" : "Catarina Ara√∫jo",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
@@ -795,36 +795,36 @@
   } ]
 }, {
   "Numero" : 81230,
-  "Nome" : "Jo„o Afonso",
+  "Nome" : "Jo√£o Afonso",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 112,
-    "UC_Nome" : "An·lise",
+    "UC_Nome" : "An√°lise",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 612,
-    "UC_Nome" : "Sistemas de ComputaÁ„o",
+    "UC_Nome" : "Sistemas de Computa√ß√£o",
     "Turno" : "PL1",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 50,
-    "UC_Nome" : "ProgramaÁ„o Orientada aos Objetos",
+    "UC_Nome" : "Programa√ß√£o Orientada aos Objetos",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 312,
-    "UC_Nome" : "EstatÌstica Aplicada",
+    "UC_Nome" : "Estat√≠stica Aplicada",
     "Turno" : "PL2",
     "AnoLetivo" : 1617
   } ]
 }, {
   "Numero" : 81682,
-  "Nome" : "Fl·vio Martins",
+  "Nome" : "Fl√°vio Martins",
   "Curso" : "MIEI",
   "Turnos" : [ {
     "UC_Codigo" : 10,
-    "UC_Nome" : "LaboratÛrios de Inform·tica IV",
+    "UC_Nome" : "Laborat√≥rios de Inform√°tica IV",
     "Turno" : "PL3",
     "AnoLetivo" : 1617
   }, {
@@ -834,7 +834,7 @@
     "AnoLetivo" : 1617
   }, {
     "UC_Codigo" : 702,
-    "UC_Nome" : "ComunicaÁıes por Computador",
+    "UC_Nome" : "Comunica√ß√µes por Computador",
     "Turno" : "PL4",
     "AnoLetivo" : 1617
   } ]
