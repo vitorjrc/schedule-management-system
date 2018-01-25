@@ -7,6 +7,8 @@ JSON TO MONGODB
 
 ./mongoimport.exe --db TrocaTurnos --jsonArray --collection Aluno --drop --file "C:\Users\sergi\Desktop\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\alunos.json"
 
+./mongoimport.exe --db TrocaTurnos --jsonArray --collection UCs --drop --file "C:\Users\sergi\Desktop\schedule-management-system\BD\NoSQL - DB\migrationTool\Migrator\ucs.json"
+
 -----------------------------------------------------
 CMDS diana
 
